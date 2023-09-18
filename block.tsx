@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { get } from 'lodash'
 import { getIndentLevelClass } from 'notion-nextjs-lib/dist/helpers/block-helpers'
 import * as types from 'notion-types'
 import {
@@ -24,7 +25,6 @@ import { Text } from './components/text'
 import { useNotionContext } from './context'
 import { LinkIcon } from './icons/link-icon'
 import { cs, getListNumber, isUrl } from './utils'
-import { get } from 'lodash'
 
 interface BlockProps {
   block: types.Block
@@ -103,7 +103,7 @@ export const Block: React.FC<BlockProps> = props => {
 
   const basicBlockGap = cn('pl-0 my-3')
 
-  /* ###Thi */ console.log(`💛💛💛 block: ${JSON.stringify(block)}`)
+  // /* ###Thi */ console.log(`💛💛💛 block: ${JSON.stringify(block)}`)
 
   switch (block.type) {
     case 'collection_view_page':
@@ -710,16 +710,18 @@ export const Block: React.FC<BlockProps> = props => {
 
     case 'table':
       return (
-        <table className={cs('notion-simple-table table-auto', blockId)}>
-          <tbody
-            className={cn({
-              table_block_column_header: block?.format?.table_block_column_header,
-              table_block_row_header: get(block, 'format.table_block_row_header', false)
-            })}
-          >
-            {children}
-          </tbody>
-        </table>
+        <div className={cn(basicBlockGap, 'overflow-auto m2it-scrollbar')}>
+          <table className={cs('notion-simple-table table-auto my-0', blockId)}>
+            <tbody
+              className={cn({
+                table_block_column_header: block?.format?.table_block_column_header,
+                table_block_row_header: get(block, 'format.table_block_row_header', false)
+              })}
+            >
+              {children}
+            </tbody>
+          </table>
+        </div>
       )
 
     case 'table_row': {

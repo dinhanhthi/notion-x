@@ -1,0 +1,25 @@
+// FOR UNOFFICIAL NOTION APIS
+// Check if below lines are already in your project
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
+
+.notion-simple-table-row {
+  td {
+    min-width: 150px;
+  }
+}
+
+.table_block_column_header {
+  tr:first-child {
+    @apply bg-gray-100 font-semibold;
+  }
+}
+
+.table_block_row_header {
+  tr {
+    td:first-child {
+      @apply bg-gray-100 font-semibold;
+    }
+  }
+}

@@ -4,7 +4,7 @@ My customization of NotionX's react-notion-x. For personal use only!
 
 ## Install
 
-You have to clone this repo to `src/` of your Next.js project.
+You have to clone this repo to `src/` of your Next.js project **under the name `notion-x`**! Other words, you must have `src/notion-x/`.
 
 You have to install following packages,
 

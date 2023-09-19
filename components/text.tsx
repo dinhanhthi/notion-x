@@ -116,16 +116,16 @@ export const Text: React.FC<{
               return <code className="notion-inline-code">{element}</code>
 
             case 'b':
-              return <b>{element}</b>
+              return <b className="font-semibold">{element}</b>
 
             case 'i':
-              return <em>{element}</em>
+              return <em className="italic">{element}</em>
 
             case 's':
               return <s>{element}</s>
 
             case '_':
-              return <span className="notion-inline-underscore">{element}</span>
+              return <span className="underline underline-offset-4">{element}</span>
 
             case 'e':
               return <components.Equation math={decorator[1]} inline />

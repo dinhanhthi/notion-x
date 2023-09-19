@@ -101,3 +101,20 @@
 .notion-red {
   @apply text-red-500;
 }
+
+// List
+ol > ol > ul, ul > ul > ol {
+  margin-left: -1.625em;
+}
+
+ul > ul > li, ol > ul > li {
+  list-style-type: circle;
+}
+
+ul > ul > ul > li {
+  list-style-type: square;
+}
+
+li::marker {
+  color: #555 !important;
+}

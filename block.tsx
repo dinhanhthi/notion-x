@@ -101,9 +101,7 @@ export const Block: React.FC<BlockProps> = props => {
 
   const blockId = hideBlockId ? 'notion-block' : `notion-block-${uuidToId(block.id)}`
 
-  const basicBlockGap = cn('pl-0 my-3')
-
-  // /* ###Thi */ console.log(`💛💛💛 block: ${JSON.stringify(block)}`)
+  const basicBlockGap = cn('my-3')
 
   switch (block.type) {
     case 'collection_view_page':
@@ -394,9 +392,14 @@ export const Block: React.FC<BlockProps> = props => {
     case 'numbered_list': {
       const wrapList = (content: React.ReactNode, start?: number) =>
         block.type === 'bulleted_list' ? (
-          <ul className={cs('notion-list', 'notion-list-disc', blockId)}>{content}</ul>
+          <ul className={cs('notion-list my-0', 'notion-list-disc', blockId, basicBlockGap)}>
+            {content}
+          </ul>
         ) : (
-          <ol start={start} className={cs('notion-list', 'notion-list-numbered', blockId)}>
+          <ol
+            start={start}
+            className={cs('notion-list my-0', 'notion-list-numbered', blockId, basicBlockGap)}
+          >
             {content}
           </ol>
         )

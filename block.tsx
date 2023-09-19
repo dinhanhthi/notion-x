@@ -1,7 +1,5 @@
 import cn from 'classnames'
 import { get } from 'lodash'
-import BsCheckSquare from 'notion-nextjs-lib/dist/icons/BsCheckSquare'
-import BsSquare from 'notion-nextjs-lib/dist/icons/BsSquare'
 import * as types from 'notion-types'
 import {
   getBlockIcon,
@@ -12,6 +10,7 @@ import {
 } from 'notion-utils'
 import * as React from 'react'
 
+import BlockHeadingToggle from './components/ToggleHeading'
 import { AssetWrapper } from './components/asset-wrapper'
 import { Audio } from './components/audio'
 import { EOI } from './components/eoi'
@@ -23,7 +22,9 @@ import { PageIcon } from './components/page-icon'
 import { PageTitle } from './components/page-title'
 import { Text } from './components/text'
 import { useNotionContext } from './context'
-import { LinkIcon } from './icons/link-icon'
+import BsCheckSquare from './icons/BsCheckSquare'
+import BsSquare from './icons/BsSquare'
+import CiLink from './icons/CiLink'
 import { cs, getListNumber, isUrl } from './utils'
 
 interface BlockProps {
@@ -312,45 +313,46 @@ export const Block: React.FC<BlockProps> = props => {
       const isH3 = block.type === 'sub_sub_header'
 
       const classNameStr = cs(
-        isH1 && 'notion-h notion-h2',
-        isH2 && 'notion-h notion-h3',
-        isH3 && 'notion-h notion-h4',
+        isH1 && 'notion-h notion-h1',
+        isH2 && 'notion-h notion-h2',
+        isH3 && 'notion-h notion-h3',
         blockColor && `notion-${blockColor}`,
         indentLevelClass,
         blockId
       )
 
       const innerHeader = (
-        <span>
-          <div id={id} className="notion-header-anchor" />
-          {!block.format?.toggleable && (
-            <a className="notion-hash-link" href={`#${id}`} title={title}>
-              <LinkIcon />
-            </a>
-          )}
-
+        <>
+          {/* <div id={id} className="notion-header-anchor" /> */}
           <span className="notion-h-title">
             <Text value={block.properties.title} block={block} />
           </span>
-        </span>
+          {!block.format?.toggleable && (
+            <a className={cn('opacity-0 group-hover:opacity-100')} href={`#${id}`} title={title}>
+              <CiLink />
+            </a>
+          )}
+        </>
       )
       let headerBlock = null
 
+      const headingCommonClasss = 'my-0 flex items-center gap-2 scroll-mt-[70px]'
+
       if (isH1) {
         headerBlock = (
-          <h1 className={classNameStr} data-id={id}>
+          <h1 id={id} className={classNameStr} data-id={id}>
             {innerHeader}
           </h1>
         )
       } else if (isH2) {
         headerBlock = (
-          <h2 className={classNameStr} data-id={id}>
+          <h2 id={id} className={cn(classNameStr, headingCommonClasss)} data-id={id}>
             {innerHeader}
           </h2>
         )
       } else {
         headerBlock = (
-          <h3 className={classNameStr} data-id={id}>
+          <h3 id={id} className={cn(classNameStr, headingCommonClasss, 'my-0 group')} data-id={id}>
             {innerHeader}
           </h3>
         )
@@ -358,13 +360,31 @@ export const Block: React.FC<BlockProps> = props => {
 
       if (block.format?.toggleable) {
         return (
-          <details className={cs('notion-toggle', blockId)}>
-            <summary>{headerBlock}</summary>
-            <div>{children}</div>
-          </details>
+          // <details className={cs('notion-toggle', blockId)}>
+          //   <summary>{headerBlock}</summary>
+          //   <div>{children}</div>
+          // </details>
+          <BlockHeadingToggle
+            className={cn('my-3 mt-6 group', {
+              'border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
+                isH2
+            })}
+            headingElement={headerBlock}
+          >
+            {children}
+          </BlockHeadingToggle>
         )
       } else {
-        return headerBlock
+        return (
+          <div
+            className={cn('my-3 mt-6 group', {
+              'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
+                isH2
+            })}
+          >
+            {headerBlock}
+          </div>
+        )
       }
     }
 

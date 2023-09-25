@@ -47,7 +47,7 @@ export default function BlockCode(props: BlockCodeProps) {
       <div
         className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[14px]`}
       >
-        {/* Client Component */}
+        {/* @ts-expect-error Client Component */}
         <SyntaxHighlighter
           language={formatCodeLang(language)}
           style={prism}
@@ -68,7 +68,7 @@ export default function BlockCode(props: BlockCodeProps) {
           )}
           data-title={copied ? copiedLabel : copyLabel}
         >
-          {/* Client Component */}
+          {/* @ts-expect-error Client Component */}
           <CopyToClipboard text={content} onCopy={onSuccess}>
             <button>
               {!copied && <RxCopy className="text-lg text-slate-400 hover:text-slate-700" />}

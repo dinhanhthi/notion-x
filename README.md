@@ -6,36 +6,21 @@ My customization of [NotionX's react-notion-x](https://github.com/NotionX/react-
 
 You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in your project.
 
-You have to clone this repo to the root `/` of your Next.js project **under the name `notion-x`**!
+Install this repo as a submodule in your project under the root folder.
 
-You have to install following packages (just copy them to your `package.json`).
+```bash
+# first install only
+git submodule add https://github.com/dinhanhthi/notion-x.git
 
-```json
-"dependencies": {
-  "@fisch0920/medium-zoom": "^1.0.7",
-  "@matejmazur/react-katex": "^3.1.3",
-  "katex": "^0.16.8",
-  "moment": "^2.29.4",
-  "mermaid": "^10.4.0",
-  "notion-client": "^6.16.0",
-  "notion-types": "^6.16.0",
-  "notion-utils": "^6.16.0",
-  "open-graph-scraper": "^6.2.2",
-  "react-copy-to-clipboard": "5.1.0",
-  "react-fast-compare": "^3.2.2",
-  "react-hotkeys-hook": "^4.4.1",
-  "react-image": "^4.1.0",
-  "react-lazy-images": "^1.1.0",
-  "react-snap-carousel": "^0.3.2",
-  "react-syntax-highlighter": "^15.5.0",
-  "slugify": "^1.6.6",
-  "swr": "^2.2.2"
-},
-"devDependencies": {
-  "@types/react-copy-to-clipboard": "^5.0.4",
-  "@types/react-syntax-highlighter": "^15.5.7"
-}
+# in case your repo has already added this repo as a submodule
+# and this is the first time you clone your repo to local
+git submodule update --init --recursive
+
+# to update submodule
+git submodule update --recursive --remote
 ```
+
+You have to install the packages lised in `package.json` for both `"dependencies"` and `"devDependencies"`.
 
 Put in your `tsconfig.json`,
 

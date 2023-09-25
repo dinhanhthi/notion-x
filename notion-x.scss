@@ -262,6 +262,11 @@ li::marker {
     @apply px-4 py-2;
   }
 
+  .m2it-code {
+    @apply break-words rounded border-[1px_solid_#ddd] bg-[#ececec] p-[1px_4px_2px_4px]
+    font-mono text-[85%] text-[#067b26] before:content-[''] after:content-[''] font-normal;
+  }
+
   .m2it-prose {
     @apply prose max-w-none leading-normal;
     @apply prose-a:m2it-link;
@@ -275,6 +280,7 @@ li::marker {
     @apply prose-ul:m2it-list;
     @apply prose-td:m2it-td;
     @apply prose-hr:my-6;
+    @apply prose-code:m2it-code;
   }
 
   .m2it-box-shadow {

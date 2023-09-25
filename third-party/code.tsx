@@ -1,9 +1,9 @@
 'use client'
 
+import Mermaid from '@notion-x/components/Mermaid'
+import FiCheck from '@notion-x/icons/FiCheck'
+import RxCopy from '@notion-x/icons/RxCopy'
 import cn from 'classnames'
-import Mermaid from 'notion-nextjs-lib/dist/components/Mermaid'
-import FiCheck from 'notion-nextjs-lib/dist/icons/FiCheck'
-import RxCopy from 'notion-nextjs-lib/dist/icons/RxCopy'
 import { CodeBlock } from 'notion-types'
 import { getBlockTitle } from 'notion-utils'
 import * as React from 'react'

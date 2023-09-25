@@ -264,7 +264,7 @@ li::marker {
 
   .m2it-code {
     @apply break-words rounded border-[1px_solid_#ddd] bg-[#ececec] p-[1px_4px_2px_4px]
-    font-mono text-[85%] text-[#067b26] before:content-[''] after:content-[''] font-normal;
+    font-mono text-[85%] font-normal text-[#067b26] before:content-[''] after:content-[''];
   }
 
   .m2it-prose {

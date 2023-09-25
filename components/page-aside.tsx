@@ -1,3 +1,5 @@
+'use client'
+
 import { throttle } from 'lodash'
 import { TableOfContentsEntry, uuidToId } from 'notion-utils'
 import * as React from 'react'

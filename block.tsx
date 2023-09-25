@@ -10,6 +10,10 @@ import {
 } from 'notion-utils'
 import * as React from 'react'
 
+import BlockCallout from './components/BlockCallout'
+import BlockToggle from './components/BlockToggle'
+import BlockVideo from './components/BlockVideo'
+import PostToc from './components/PostToc'
 import BlockHeadingToggle from './components/ToggleHeading'
 import { AssetWrapper } from './components/asset-wrapper'
 import { Audio } from './components/audio'
@@ -20,8 +24,10 @@ import { LazyImage } from './components/lazy-image'
 import { PageAside } from './components/page-aside'
 import { PageIcon } from './components/page-icon'
 import { PageTitle } from './components/page-title'
+import { SyncPointerBlock } from './components/sync-pointer-block'
 import { Text } from './components/text'
 import { useNotionContext } from './context'
+import { generateAnchor } from './helpers'
 import BsCheckSquare from './icons/BsCheckSquare'
 import BsSquare from './icons/BsSquare'
 import CiLink from './icons/CiLink'
@@ -36,7 +42,6 @@ interface BlockProps {
 
   header?: React.ReactNode
   footer?: React.ReactNode
-  pageHeader?: React.ReactNode
   pageFooter?: React.ReactNode
   pageTitle?: React.ReactNode
   pageAside?: React.ReactNode
@@ -47,6 +52,8 @@ interface BlockProps {
 
   children?: React.ReactNode
 }
+
+export const basicBlockGap = cn('!my-4')
 
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
@@ -67,8 +74,8 @@ export const Block: React.FC<BlockProps> = props => {
     showTableOfContents,
     minTableOfContentsItems,
     defaultPageIcon,
-    defaultPageCover,
-    defaultPageCoverPosition
+    defaultPageCoverPosition,
+    blockOptions
   } = ctx
 
   const [activeSection, setActiveSection] = React.useState(null)
@@ -81,11 +88,8 @@ export const Block: React.FC<BlockProps> = props => {
     bodyClassName,
     header,
     footer,
-    pageHeader,
     pageFooter,
-    // pageTitle,
     pageAside,
-    pageCover,
     hideBlockId,
     disableHeader
   } = props
@@ -102,29 +106,18 @@ export const Block: React.FC<BlockProps> = props => {
 
   const blockId = hideBlockId ? 'notion-block' : `notion-block-${uuidToId(block.id)}`
 
-  const basicBlockGap = cn('my-3')
-
   switch (block.type) {
     case 'collection_view_page':
     // fallthrough
     case 'page':
       if (level === 0) {
         const {
-          page_icon = defaultPageIcon,
-          page_cover = defaultPageCover,
           page_cover_position = defaultPageCoverPosition,
           page_full_width,
           page_small_text
         } = block.format || {}
 
         if (fullPage) {
-          // const properties =
-          //   block.type === 'page'
-          //     ? block.properties
-          //     : {
-          //         title: recordMap.collection[getBlockCollectionId(block, recordMap)!]?.value?.name
-          //       }
-
           const coverPosition = (1 - (page_cover_position || 0.5)) * 100
           const pageCoverObjectPosition = `center ${coverPosition}%`
           let pageCoverStyle = pageCoverStyleCache[pageCoverObjectPosition]
@@ -137,11 +130,10 @@ export const Block: React.FC<BlockProps> = props => {
           const pageIcon = getBlockIcon(block, recordMap) ?? defaultPageIcon
           const isPageIconUrl = pageIcon && isUrl(pageIcon)
 
-          const toc = getPageTableOfContents(block as types.PageBlock, recordMap)
+          const tocs = getPageTableOfContents(block as types.PageBlock, recordMap)
 
-          const hasToc = showTableOfContents && toc.length >= minTableOfContentsItems
+          const hasToc = showTableOfContents && tocs.length >= minTableOfContentsItems
           const hasAside = (hasToc || pageAside) && !page_full_width
-          const hasPageCover = pageCover || page_cover
 
           return (
             <div
@@ -160,26 +152,9 @@ export const Block: React.FC<BlockProps> = props => {
                 {header}
 
                 <div className="notion-page-scroller">
-                  {/* {hasPageCover &&
-                    (pageCover ? (
-                      pageCover
-                    ) : (
-                      <div className="notion-page-cover-wrapper">
-                        <LazyImage
-                          src={mapImageUrl(page_cover as any, block)}
-                          alt={getTextContent(properties?.title)}
-                          priority={true}
-                          className="notion-page-cover"
-                          style={pageCoverStyle}
-                        />
-                      </div>
-                    ))} */}
-
                   <main
                     className={cs(
                       'notion-page m2it-prose',
-                      hasPageCover ? 'notion-page-has-cover' : 'notion-page-no-cover',
-                      page_icon ? 'notion-page-has-icon' : 'notion-page-no-icon',
                       isPageIconUrl ? 'notion-page-has-image-icon' : 'notion-page-has-text-icon',
                       'notion-full-page',
                       page_full_width && 'notion-full-width',
@@ -187,21 +162,6 @@ export const Block: React.FC<BlockProps> = props => {
                       bodyClassName
                     )}
                   >
-                    {/* {page_icon && (
-                      <PageIcon block={block} defaultIcon={defaultPageIcon} inline={false} />
-                    )}
-
-                    {pageHeader} */}
-
-                    {/* <h1 className="notion-title">
-                      {pageTitle ?? <Text value={properties?.title as any} block={block} />}
-                    </h1> */}
-
-                    {/* {(block.type === 'collection_view_page' ||
-                      (block.type === 'page' && block.parent_table === 'collection')) && (
-                      <components.Collection block={block} ctx={ctx} />
-                    )} */}
-
                     {block.type !== 'collection_view_page' && (
                       <div
                         className={cs(
@@ -210,11 +170,19 @@ export const Block: React.FC<BlockProps> = props => {
                           hasToc && 'notion-page-content-has-toc'
                         )}
                       >
-                        <article className="notion-page-content-inner">{children}</article>
+                        <article className="notion-page-content-inner">
+                          <PostToc
+                            showToc={true}
+                            tocs={tocs}
+                            inPost={true}
+                            labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}
+                          />
+                          {children}
+                        </article>
 
                         {hasAside && (
                           <PageAside
-                            toc={toc}
+                            toc={tocs}
                             activeSection={activeSection}
                             setActiveSection={setActiveSection as any}
                             hasToc={hasToc}
@@ -248,16 +216,6 @@ export const Block: React.FC<BlockProps> = props => {
               )}
             >
               <div className="notion-viewport" />
-
-              {pageHeader}
-
-              {/* {(block.type === 'collection_view_page' ||
-                (block.type === 'page' && block.parent_table === 'collection')) && (
-                <components.Collection block={block} ctx={ctx} />
-              )} */}
-
-              {/* {block.type !== 'collection_view_page' && children} */}
-
               {pageFooter}
             </main>
           )
@@ -285,6 +243,7 @@ export const Block: React.FC<BlockProps> = props => {
       const blockColor = block.format?.block_color
       const id = uuidToId(block.id)
       const title = getTextContent(block.properties.title) || `Notion Header ${id}`
+      const anchor = generateAnchor(id, title)
 
       // we use a cache here because constructing the ToC is non-trivial
       let indentLevel = tocIndentLevelCache[block.id]
@@ -323,12 +282,15 @@ export const Block: React.FC<BlockProps> = props => {
 
       const innerHeader = (
         <>
-          {/* <div id={id} className="notion-header-anchor" /> */}
           <span className="notion-h-title">
             <Text value={block.properties.title} block={block} />
           </span>
           {!block.format?.toggleable && (
-            <a className={cn('opacity-0 group-hover:opacity-100')} href={`#${id}`} title={title}>
+            <a
+              className={cn('opacity-0 group-hover:opacity-100')}
+              href={`#${anchor}`}
+              title={title}
+            >
               <CiLink />
             </a>
           )}
@@ -336,23 +298,30 @@ export const Block: React.FC<BlockProps> = props => {
       )
       let headerBlock = null
 
-      const headingCommonClasss = 'my-0 flex items-center gap-2 scroll-mt-[70px]'
+      const headingCommonClasss = cn(
+        '!my-0 flex items-center gap-2',
+        blockOptions?.headingScrollMarginTopClass ?? 'scroll-mt-[70px]'
+      )
 
       if (isH1) {
         headerBlock = (
-          <h1 id={id} className={classNameStr} data-id={id}>
+          <h1 id={anchor} className={classNameStr} data-id={id}>
             {innerHeader}
           </h1>
         )
       } else if (isH2) {
         headerBlock = (
-          <h2 id={id} className={cn(classNameStr, headingCommonClasss)} data-id={id}>
+          <h2 id={anchor} className={cn(classNameStr, headingCommonClasss)} data-id={id}>
             {innerHeader}
           </h2>
         )
       } else {
         headerBlock = (
-          <h3 id={id} className={cn(classNameStr, headingCommonClasss, 'my-0 group')} data-id={id}>
+          <h3
+            id={anchor}
+            className={cn(classNameStr, headingCommonClasss, 'my-0 group')}
+            data-id={id}
+          >
             {innerHeader}
           </h3>
         )
@@ -360,12 +329,8 @@ export const Block: React.FC<BlockProps> = props => {
 
       if (block.format?.toggleable) {
         return (
-          // <details className={cs('notion-toggle', blockId)}>
-          //   <summary>{headerBlock}</summary>
-          //   <div>{children}</div>
-          // </details>
           <BlockHeadingToggle
-            className={cn('my-3 mt-6 group', {
+            className={cn(basicBlockGap, 'mt-6 group', {
               'border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2
             })}
@@ -377,7 +342,7 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <div
-            className={cn('my-3 mt-6 group', {
+            className={cn(basicBlockGap, 'mt-6 group', {
               'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2
             })}
@@ -399,7 +364,14 @@ export const Block: React.FC<BlockProps> = props => {
       const blockColor = block.format?.block_color
 
       return (
-        <div className={cs('notion-text pl-0 my-3', blockColor && `notion-${blockColor}`, blockId)}>
+        <div
+          className={cs(
+            'notion-text',
+            basicBlockGap,
+            blockColor && `notion-${blockColor}`,
+            blockId
+          )}
+        >
           {block.properties?.title && <Text value={block.properties.title} block={block} />}
 
           {children && <div className="notion-text-children">{children}</div>}
@@ -412,14 +384,9 @@ export const Block: React.FC<BlockProps> = props => {
     case 'numbered_list': {
       const wrapList = (content: React.ReactNode, start?: number) =>
         block.type === 'bulleted_list' ? (
-          <ul className={cs('notion-list my-0', 'notion-list-disc', blockId, basicBlockGap)}>
-            {content}
-          </ul>
+          <ul className={cs('notion-list', 'notion-list-disc', blockId)}>{content}</ul>
         ) : (
-          <ol
-            start={start}
-            className={cs('notion-list my-0', 'notion-list-numbered', blockId, basicBlockGap)}
-          >
+          <ol start={start} className={cs('notion-list', 'notion-list-numbered', blockId)}>
             {content}
           </ol>
         )
@@ -472,9 +439,16 @@ export const Block: React.FC<BlockProps> = props => {
     case 'image':
     // fallthrough
     case 'gist':
-    // fallthrough
-    case 'video':
       return <AssetWrapper blockId={blockId} block={block} />
+
+    case 'video':
+      return (
+        <BlockVideo
+          className={cn(blockId, basicBlockGap)}
+          caption={<Text value={block.properties.caption!} block={block} />}
+          videoUrl={block?.properties?.source?.[0]?.[0]}
+        />
+      )
 
     case 'drive': {
       const properties = block.format?.drive_properties
@@ -506,27 +480,24 @@ export const Block: React.FC<BlockProps> = props => {
     case 'code':
       return <components.Code block={block as types.CodeBlock} className={basicBlockGap} />
 
-    case 'column_list':
-      return <div className={cs('notion-row', blockId)}>{children}</div>
+    case 'column_list': {
+      return (
+        <div className={cn('md:flex md:flex-nowrap md:gap-4 md:-my-2', blockId)}>{children}</div>
+      )
+    }
 
     case 'column': {
-      // note: notion uses 46px
-      const spacerWidth = `min(32px, 4vw)`
-      const ratio = block.format?.column_ratio || 0.5
+      const ratio = block.format?.column_ratio
       const parent = recordMap.block[block.parent_id]?.value
-      const columns = parent?.content?.length || Math.max(2, Math.ceil(1.0 / ratio))
-
-      const width = `calc((100% - (${columns - 1} * ${spacerWidth})) * ${ratio})`
-      const style = { width }
+      const nCols = parent?.content?.length || 1
+      let width = `100%`
+      if (!ratio || ratio === 1 || nCols >= 5) width = `${100 / nCols}%`
+      else width = `${ratio * 100}%`
 
       return (
-        <>
-          <div className={cs('notion-column', blockId)} style={style}>
-            {children}
-          </div>
-
-          <div className="notion-spacer" />
-        </>
+        <div className={cn('!min-w-full md:!min-w-0')} style={{ width }}>
+          {children}
+        </div>
       )
     }
 
@@ -536,11 +507,20 @@ export const Block: React.FC<BlockProps> = props => {
       const blockColor = block.format?.block_color
 
       return (
-        <blockquote className={cs('notion-quote', blockColor && `notion-${blockColor}`, blockId)}>
-          <div>
+        <blockquote
+          className={cn(
+            'notion-quote',
+            {
+              [`notion-${blockColor}`]: blockColor,
+              'text-[115%]': get(block, 'format.quote_size') === 'large'
+            },
+            blockId
+          )}
+        >
+          <div className={cn('quote-title')}>
             <Text value={block.properties.title} block={block} />
           </div>
-          {children}
+          <div className="quote-children">{children}</div>
         </blockquote>
       )
     }
@@ -553,20 +533,14 @@ export const Block: React.FC<BlockProps> = props => {
         return <components.Callout block={block} className={blockId} />
       } else {
         return (
-          <div
-            className={cs(
-              'notion-callout',
-              block.format?.block_color && `notion-${block.format?.block_color}_co`,
-              blockId
-            )}
+          <BlockCallout
+            className={basicBlockGap}
+            icon={<PageIcon block={block} />}
+            text={<Text value={block.properties?.title} block={block} />}
+            color={block.format?.block_color}
           >
-            <PageIcon block={block} />
-
-            <div className="notion-callout-text">
-              <Text value={block.properties?.title} block={block} />
-              {children}
-            </div>
-          </div>
+            {children}
+          </BlockCallout>
         )
       }
 
@@ -593,45 +567,42 @@ export const Block: React.FC<BlockProps> = props => {
       }
 
       return (
-        <div className="notion-row">
-          <components.Link
-            target="_blank"
-            rel="noopener noreferrer"
-            className={cs(
-              'notion-bookmark',
-              block.format?.block_color && `notion-${block.format.block_color}`,
-              blockId
+        <div className={cn(basicBlockGap)}>
+          <a
+            className={cn(
+              'flex gap-4 w-full overflow-hidden rounded-md border border-slate-200 p-3',
+              'hover:cursor-pointer hover:border-sky-300 hover:shadow-sm'
             )}
             href={link[0][0]}
+            target="_blank"
+            rel="noreferrer"
           >
-            <div>
-              {title && (
-                <div className="notion-bookmark-title">
-                  <Text value={[[title]]} block={block} />
-                </div>
-              )}
-
-              {block.properties?.description && (
-                <div className="notion-bookmark-description">
-                  <Text value={block.properties?.description} block={block} />
-                </div>
-              )}
-
-              <div className="notion-bookmark-link">
+            <div className="flex flex-[4_1_180px] flex-col justify-between gap-4 overflow-hidden">
+              <div className="flex flex-col gap-1.5">
+                {title && (
+                  <div className="truncate font-normal">
+                    <Text value={[[title]]} block={block} />
+                  </div>
+                )}
+                {block.properties?.description && (
+                  <div className="truncate text-sm font-normal text-slate-600">
+                    <Text value={block.properties?.description} block={block} />
+                  </div>
+                )}
+              </div>
+              <div className="flex items-center gap-1">
                 {block.format?.bookmark_icon && (
-                  <div className="notion-bookmark-link-icon">
+                  <div className="relative h-4 w-4 shrink-0">
                     <LazyImage src={mapImageUrl(block.format?.bookmark_icon, block)} alt={title} />
                   </div>
                 )}
-
-                <div className="notion-bookmark-link-text">
+                <div className="text-sm font-normal text-slate-500 truncate">
                   <Text value={link} block={block} />
                 </div>
               </div>
             </div>
-
             {block.format?.bookmark_cover && (
-              <div className="notion-bookmark-image">
+              <div className="relative hidden flex-[1_1_100px] sm:block">
                 <LazyImage
                   src={mapImageUrl(block.format?.bookmark_cover, block)}
                   alt={getTextContent(block.properties?.title)}
@@ -641,20 +612,20 @@ export const Block: React.FC<BlockProps> = props => {
                 />
               </div>
             )}
-          </components.Link>
+          </a>
         </div>
       )
     }
 
     case 'toggle':
       return (
-        <details className={cs('notion-toggle', blockId)}>
-          <summary>
-            <Text value={block.properties?.title} block={block} />
-          </summary>
-
-          <div>{children}</div>
-        </details>
+        <BlockToggle
+          className={basicBlockGap}
+          text={<Text value={block.properties?.title} block={block} />}
+          color={get(block, 'format.block_color')}
+        >
+          {children}
+        </BlockToggle>
       )
 
     case 'table_of_contents': {
@@ -693,10 +664,12 @@ export const Block: React.FC<BlockProps> = props => {
       const isChecked = block.properties?.checked?.[0]?.[0] === 'Yes'
 
       return (
-        <div className={cs('notion-to-do', blockId, basicBlockGap)}>
-          <div className="flex items-center gap-2">
-            {isChecked && <BsCheckSquare className="text-slate-500" />}
-            {!isChecked && <BsSquare />}
+        <div className={cs('notion-to-do', blockId)}>
+          <div className="flex items-baseline gap-2 my-2">
+            <div className="w-4 h-4">
+              {isChecked && <BsCheckSquare className="text-slate-500 mt-0.5" />}
+              {!isChecked && <BsSquare className="mt-0.5" />}
+            </div>
             <Text value={block.properties?.title} block={block} />
           </div>
 
@@ -708,8 +681,8 @@ export const Block: React.FC<BlockProps> = props => {
     case 'transclusion_container':
       return <div className={cs('notion-sync-block', blockId)}>{children}</div>
 
-    // case 'transclusion_reference':
-    //   return <SyncPointerBlock block={block} level={level + 1} {...props} />
+    case 'transclusion_reference':
+      return <SyncPointerBlock blockObj={block} levelObj={level + 1} {...props} />
 
     case 'alias': {
       const blockPointerId = block?.format?.alias_pointer?.id
@@ -769,13 +742,9 @@ export const Block: React.FC<BlockProps> = props => {
             return (
               <td
                 key={column}
-                // className={color ? `notion-${color}` : ''}
-                className={cn('px-4 py-2 border border-slate-300', {
+                className={cn('border border-slate-300', {
                   [`notion-${color}`]: color
                 })}
-                // style={{
-                //   width: formatMap?.[column]?.width || 120
-                // }}
               >
                 <div className="notion-simple-table-cell">
                   <Text value={block.properties?.[column] || [['ㅤ']]} block={block} />

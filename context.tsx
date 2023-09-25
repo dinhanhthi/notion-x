@@ -6,11 +6,17 @@ import { ExtendedRecordMap } from 'notion-types'
 import * as React from 'react'
 
 import { AssetWrapper } from './components/asset-wrapper'
-import { Checkbox as DefaultCheckbox } from './components/checkbox'
-import { Header } from './components/header'
 import { wrapNextImage, wrapNextLink } from './next'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from './types'
 import { defaultMapImageUrl, defaultMapPageUrl } from './utils'
+
+export type BlockOptionsContextType = {
+  headingScrollMarginTopClass?: string // anchor scroll margin top class, depend on the height of nav
+  blockCodeCopyText?: string // used in BlockCode to customize copy text
+  blockCodeCopiedText?: string // used in BlockCode to customize copied text
+  siteDomain?: string // used in hyperlinks
+  labelTocTitle?: string // "In this page" or something like that
+}
 
 export interface NotionContext {
   recordMap: ExtendedRecordMap
@@ -24,6 +30,7 @@ export interface NotionContext {
 
   rootPageId?: string
   rootDomain?: string
+  blockOptions?: BlockOptionsContextType
 
   fullPage: boolean
   darkMode: boolean
@@ -79,7 +86,6 @@ const DefaultPageLink: React.FC = props => <a {...props} />
 const DefaultPageLinkMemo = React.memo(DefaultPageLink)
 
 const DefaultEmbed = (props: any) => <AssetWrapper {...props} />
-const DefaultHeader = Header
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const dummyLink = ({ href, rel, target, title, ...rest }: any) => <span {...rest} />
@@ -100,7 +106,6 @@ const defaultComponents: NotionComponents = {
   Image: null, // disable custom images by default
   Link: DefaultLinkMemo,
   PageLink: DefaultPageLinkMemo,
-  Checkbox: DefaultCheckbox as any,
   Callout: undefined, // use the built-in callout rendering by default
 
   Code: dummyComponent('Code'),
@@ -129,7 +134,7 @@ const defaultComponents: NotionComponents = {
   Tweet: dummyComponent('Tweet'),
   Modal: dummyComponent('Modal'),
 
-  Header: DefaultHeader,
+  Header: <></>,
   Embed: DefaultEmbed
 }
 
@@ -161,6 +166,7 @@ const defaultNotionContext: NotionContext = {
 
   showTableOfContents: false,
   minTableOfContentsItems: 3,
+  blockOptions: null as any,
 
   defaultPageIcon: null as any,
   defaultPageCover: null as any,

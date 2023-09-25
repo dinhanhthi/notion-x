@@ -3,6 +3,7 @@ import { parsePageId } from 'notion-utils'
 import * as React from 'react'
 
 import { useNotionContext } from '../context'
+import { mapNoteUri, removeBaseUrl } from '../helpers'
 import { formatDate, getHashFragmentValue } from '../utils'
 import { EOI } from './eoi'
 import { GracefulImage } from './graceful-image'
@@ -23,7 +24,8 @@ export const Text: React.FC<{
   linkProtocol?: string
   inline?: boolean // TODO: currently unused
 }> = ({ value, block, linkProps, linkProtocol }) => {
-  const { components, recordMap, mapPageUrl, mapImageUrl, rootDomain } = useNotionContext()
+  const { components, recordMap, mapPageUrl, mapImageUrl, rootDomain, blockOptions } =
+    useNotionContext()
 
   return (
     <React.Fragment>
@@ -54,9 +56,12 @@ export const Text: React.FC<{
 
               // console.log('p', blockId)
 
+              const postSlug =
+                linkedBlock?.properties?.[`${process.env.NEXT_PUBLIC_ID_SLUG}`]?.[0]?.[0]
+
               return (
-                <components.PageLink className="notion-link" href={mapPageUrl(blockId)}>
-                  <PageTitle block={linkedBlock} />
+                <components.PageLink className="notion-link" href={mapNoteUri(postSlug)}>
+                  <PageTitle block={linkedBlock} hideIcon={true} />
                 </components.PageLink>
               )
             }
@@ -88,7 +93,6 @@ export const Text: React.FC<{
 
                 default: {
                   const linkedBlock = recordMap.block[id]?.value
-
                   if (!linkedBlock) {
                     console.log('"‣" missing block', linkType, id)
                     return null
@@ -150,6 +154,17 @@ export const Text: React.FC<{
                   </components.PageLink>
                 )
               } else {
+                if (
+                  decorator[1]?.includes('localhost') ||
+                  decorator[1]?.includes(blockOptions?.siteDomain || 'cannotBeIncluded')
+                ) {
+                  return (
+                    <components.PageLink className="notion-link" href={removeBaseUrl(decorator[1])}>
+                      {element}
+                    </components.PageLink>
+                  )
+                }
+
                 return (
                   <components.Link
                     className="notion-link"

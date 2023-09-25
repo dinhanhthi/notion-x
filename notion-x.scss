@@ -1,12 +1,13 @@
 // FOR UNOFFICIAL NOTION APIS
 // Check if below lines are already in your project
-// @tailwind base;
+@tailwind base;
 // @tailwind components;
 // @tailwind utilities;
 
+@import 'katex/dist/katex.min.css';
+@import 'prismjs/themes/prism-tomorrow.css';
 
 // Table
-
 .notion-simple-table-row {
   td {
     min-width: 150px;
@@ -28,7 +29,6 @@
 }
 
 // Background
-
 .notion-gray_background {
   @apply bg-gray-100;
 }
@@ -103,11 +103,8 @@
 }
 
 // List
-ol > ol > ul, ul > ul > ol {
-  margin-left: -1.625em;
-}
-
-ul > ul > li, ol > ul > li {
+ul > ul > li,
+ol > ul > li {
   list-style-type: circle;
 }
 
@@ -115,6 +112,298 @@ ul > ul > ul > li {
   list-style-type: square;
 }
 
+ol,
+ul {
+  & > ol,
+  & > ul {
+    & > *:not(li):not(ol):not(ul) {
+      margin-left: -1rem;
+    }
+  }
+}
+
+ol > ol > ul,
+ul > ul > ol {
+  margin-left: -1.25rem;
+}
+
+ol > ol,
+ul > ul {
+  & > *:not(li):not(ol):not(ul) {
+    margin-left: -1.25rem !important;
+  }
+}
+
+ol,
+ul {
+  & > *:not(li):not(ol):not(ul) {
+    margin: 0.75rem 0 !important;
+    padding-left: 0 !important;
+  }
+}
+
 li::marker {
   color: #555 !important;
+}
+
+// Quote
+.quote-children {
+  & > * {
+    margin: 0.75rem 0 !important;
+  }
+}
+
+// Icon
+.notion-page-icon-inline {
+  width: 26px;
+
+  img {
+    margin-top: 5px;
+  }
+}
+
+.notion-page-icon-hero {
+  width: 38px;
+  font-size: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// Copied from notion-nextjs-lib
+.w-full > iframe {
+  width: 100%;
+  height: -webkit-fill-available;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.katex {
+  font-size: 1.2rem;
+}
+
+// First used for tech badge tooltip in about page
+.tooltip-auto {
+  position: relative;
+
+  &:not(&:hover) {
+    z-index: 0;
+  }
+
+  &:hover {
+    z-index: 1;
+    &:before {
+      opacity: 1;
+    }
+  }
+
+  &:before {
+    display: block;
+    opacity: 0;
+    pointer-events: none;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.75);
+    border-radius: 5px;
+    color: #fff;
+    content: attr(data-title);
+    font-size: 0.85rem;
+    padding: 2px 8px;
+    bottom: -30px;
+    left: 0;
+    white-space: nowrap;
+  }
+}
+
+@layer base {
+  .m2it-inside-box {
+    & > *:first-child {
+      margin-top: 0;
+    }
+    & > *:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .m2it-link-hover {
+    @apply text-pink-600;
+  }
+
+  .m2it-link {
+    @apply hover:m2it-link-hover font-normal text-[#015caa] no-underline;
+  }
+
+  .m2it-headings {
+    @apply my-0 font-semibold;
+  }
+
+  .m2it-prose-img {
+    @apply my-0;
+  }
+
+  .m2it-blockquote {
+    @apply my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
+  }
+
+  .m2it-li {
+    @apply my-1.5;
+  }
+
+  .m2it-list {
+    @apply my-0 pl-6;
+  }
+
+  .m2it-blockquote {
+    @apply my-4 py-3;
+  }
+
+  .m2it-td {
+    @apply px-4 py-2;
+  }
+
+  .m2it-prose {
+    @apply prose max-w-none leading-normal;
+    @apply prose-a:m2it-link;
+    @apply prose-headings:m2it-headings;
+    @apply prose-img:m2it-prose-img;
+    @apply prose-blockquote:m2it-blockquote;
+    @apply prose-h2:text-2xl;
+    @apply prose-h3:text-[1.35rem];
+    @apply prose-li:m2it-li;
+    @apply prose-ol:m2it-list;
+    @apply prose-ul:m2it-list;
+    @apply prose-td:m2it-td;
+    @apply prose-hr:my-6;
+  }
+
+  .m2it-box-shadow {
+    box-shadow: 8px 14px 38px #272c310f, 1px 3px 8px #272c3108;
+  }
+
+  .m2it-scrollbar {
+    &::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #ced4da;
+      border-radius: 10px;
+      &:hover {
+        background: #adb5bd;
+      }
+    }
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &.m2it-scrollbar-small {
+      &::-webkit-scrollbar {
+        width: 7px;
+        height: 7px;
+      }
+      &::-webkit-scrollbar-thumb {
+        border-radius: 7px;
+      }
+    }
+  }
+
+  // Hide webkit search cancel button
+  .m2it-hide-wscb {
+    &::-webkit-search-cancel-button {
+      -webkit-appearance: none;
+      display: none;
+    }
+  }
+}
+
+.post-card-wave {
+  background: #fff;
+  box-shadow: 8px 14px 38px #272c310f, 1px 3px 8px #272c3108;
+  height: 100%;
+  min-height: 8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem;
+  border-radius: 12px;
+  transition: all 0.3s ease-in-out;
+  position: relative;
+  overflow: hidden;
+
+  .bottom-wave {
+    position: absolute;
+    bottom: -2px;
+    width: 100%;
+
+    .waves {
+      position: relative;
+      width: 100%;
+      height: 5vh;
+      margin-bottom: -7px; /*Fix for safari gap*/
+      min-height: 60px;
+      max-height: 150px;
+
+      .parallax > use {
+        animation: move-forever 25s cubic-bezier(0.55, 0.5, 0.45, 0.5) infinite;
+      }
+      .parallax > use:nth-child(1) {
+        animation-delay: -2s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(2) {
+        animation-delay: -5s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(3) {
+        animation-delay: -7s;
+        animation-duration: 10s;
+      }
+      .parallax > use:nth-child(4) {
+        animation-delay: -1s;
+        animation-duration: 10s;
+      }
+    }
+  }
+}
+
+@keyframes move-forever {
+  0% {
+    transform: translate3d(-90px, 0, 0);
+  }
+  100% {
+    transform: translate3d(85px, 0, 0);
+  }
+}
+
+.saphire-blue {
+  background: #0067a5;
+  background: linear-gradient(to bottom, #0067a5 0%, #005896 100%);
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0%, #0067a5),
+    color-stop(100%, #005896)
+  );
+  background: -webkit-linear-gradient(top, #0067a5 0%, #005896 100%);
+  background: -moz-linear-gradient(top, #0067a5 0%, #005896 100%);
+  background: -o-linear-gradient(top, #0067a5 0%, #005896 100%);
+  background: -ms-linear-gradient(top, #0067a5 0%, #005896 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#0067A5', endColorstr='#005896', GradientType=0);
+  border: 1px solid #004987;
+  box-shadow: inset 0 1px 0 #0f76b4;
+  -webkit-box-shadow: inset 0 1px 0 #0f76b4;
+  -moz-box-shadow: inset 0 1px 0 #0f76b4;
+
+  h1,
+  .xem-them {
+    color: #fff;
+  }
+
+  .xem-them:hover {
+    color: #ffe200;
+  }
 }

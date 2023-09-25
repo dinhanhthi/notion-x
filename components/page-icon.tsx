@@ -65,7 +65,7 @@ export const PageIconImpl: React.FC<{
     } else {
       isImage = false
       content = (
-        <span className={cs(className, 'notion-page-icon')} role="img" aria-label={icon}>
+        <span className={cs(className, 'notion-page-icon icon-emoji')} role="img" aria-label={icon}>
           {icon}
         </span>
       )

@@ -5,7 +5,7 @@ import { ExtendedRecordMap } from 'notion-types'
 import * as React from 'react'
 
 import { Block } from './block'
-import { NotionContextProvider, useNotionContext } from './context'
+import { BlockOptionsContextType, NotionContextProvider, useNotionContext } from './context'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from './types'
 
 export const NotionRenderer: React.FC<{
@@ -20,6 +20,7 @@ export const NotionRenderer: React.FC<{
 
   rootPageId?: string
   rootDomain?: string
+  blockOptions?: BlockOptionsContextType
 
   // set fullPage to false to render page content only
   // this will remove the header, cover image, and footer
@@ -65,6 +66,7 @@ export const NotionRenderer: React.FC<{
   fullPage,
   rootPageId,
   rootDomain,
+  blockOptions,
   darkMode,
   previewImages,
   forceCustomImages,
@@ -109,6 +111,7 @@ export const NotionRenderer: React.FC<{
       linkTableTitleProperties={linkTableTitleProperties}
       isLinkCollectionToUrlProperty={isLinkCollectionToUrlProperty}
       showTableOfContents={showTableOfContents}
+      blockOptions={blockOptions}
       minTableOfContentsItems={minTableOfContentsItems}
       defaultPageIcon={defaultPageIcon}
       defaultPageCover={defaultPageCover}

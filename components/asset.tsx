@@ -3,9 +3,7 @@ import { getTextContent } from 'notion-utils'
 import * as React from 'react'
 
 import { useNotionContext } from '../context'
-import { getYoutubeId } from '../utils'
 import { LazyImage } from './lazy-image'
-import { LiteYouTubeEmbed } from './lite-youtube-embed'
 
 const isServer = typeof window === 'undefined'
 
@@ -203,18 +201,7 @@ export const Asset: React.FC<{
       let src = block.format?.display_source || source
 
       if (src) {
-        const youtubeVideoId: string | null = block.type === 'video' ? getYoutubeId(src) : null
-        // console.log({ youtubeVideoId, src, format: block.format, style })
-
-        if (youtubeVideoId) {
-          content = (
-            <LiteYouTubeEmbed
-              id={youtubeVideoId}
-              style={assetStyle}
-              className="notion-asset-object-fit"
-            />
-          )
-        } else if (block.type === 'gist') {
+        if (block.type === 'gist') {
           if (!src.endsWith('.pibb')) {
             src = `${src}.pibb`
           }

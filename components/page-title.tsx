@@ -11,7 +11,8 @@ export const PageTitleImpl: React.FC<{
   block: Block
   className?: string
   defaultIcon?: string
-}> = ({ block, className, defaultIcon, ...rest }) => {
+  hideIcon?: boolean
+}> = ({ block, className, defaultIcon, hideIcon, ...rest }) => {
   const { recordMap } = useNotionContext()
 
   if (!block) return null
@@ -26,7 +27,9 @@ export const PageTitleImpl: React.FC<{
 
     return (
       <span className={cs('notion-page-title', className)} {...rest}>
-        <PageIcon block={block} defaultIcon={defaultIcon} className="notion-page-title-icon" />
+        {!hideIcon && (
+          <PageIcon block={block} defaultIcon={defaultIcon} className="notion-page-title-icon" />
+        )}
 
         <span className="notion-page-title-text">
           <Text value={titleDecoration} block={block} />
@@ -41,7 +44,9 @@ export const PageTitleImpl: React.FC<{
 
   return (
     <span className={cs('notion-page-title', className)} {...rest}>
-      <PageIcon block={block} defaultIcon={defaultIcon} className="notion-page-title-icon" />
+      {!hideIcon && (
+        <PageIcon block={block} defaultIcon={defaultIcon} className="notion-page-title-icon" />
+      )}
 
       <span className="notion-page-title-text">
         <Text value={block.properties?.title} block={block} />

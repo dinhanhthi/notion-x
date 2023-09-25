@@ -76,7 +76,7 @@ export const LazyImage: React.FC<{
 
     return (
       <>
-        {/* @ts-expect-error Server Component */}
+        {/* @ts-expect-error Client Component */}
         <LazyImageFull src={src as any} {...rest} experimentalDecode={true}>
           {({ imageState, ref }) => {
             const isLoaded = imageState === ImageState.LoadSuccess

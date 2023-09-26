@@ -4,6 +4,7 @@ import {
 } from '@notionhq/client/build/src/api-endpoints'
 import cn from 'classnames'
 import slugify from 'slugify'
+import * as types from 'notion-types'
 
 import { AnnotationIgnoreField, Post, Tag } from './interface'
 
@@ -168,4 +169,24 @@ export function getStartCursorForCurrentPage(
   const numPages = Math.ceil(posts.length / postsPerPage)
   if (currentPage > numPages) return undefined
   return posts[(currentPage - 1) * postsPerPage]?.id
+}
+
+export function getCreatedDate(block: types.Block, createdId: string) {
+  const _cDf =
+    block.properties?.[`${createdId}`]?.[0]?.[1]?.[0]?.[1]?.[
+      'start_date'
+    ]
+  const createdDateField = _cDf ? new Date(_cDf).toISOString() : null
+  const created_time = new Date(block.created_time).toISOString()
+  return createdDateField || created_time
+}
+
+export function getModifedDate(block: types.Block, modifiedId: string) {
+  const _mDf =
+    block.properties?.[`${modifiedId}`]?.[0]?.[1]?.[0]?.[1]?.[
+      'start_date'
+    ]
+  const modifiedDateField = _mDf ? new Date(_mDf).toISOString() : null
+  const last_edited_time = new Date(block.last_edited_time).toISOString()
+  return modifiedDateField || last_edited_time
 }

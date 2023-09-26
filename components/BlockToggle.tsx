@@ -2,6 +2,7 @@
 
 import { Disclosure } from '@headlessui/react'
 import cn from 'classnames'
+import React from 'react'
 
 import { basicBlockGap } from '../block'
 import { mapColorClass } from '../helpers'

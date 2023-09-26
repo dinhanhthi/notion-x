@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import React from 'react'
 
 import { mapColorClass } from '../helpers'
 

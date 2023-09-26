@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import Link from 'next/link'
+import React from 'react'
 
 import TiTag from '../icons/TiTag'
 import { Category, Tag } from '../interface'

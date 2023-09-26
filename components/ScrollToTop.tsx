@@ -2,6 +2,7 @@
 
 import cn from 'classnames'
 import Image, { StaticImageData } from 'next/image'
+import React from 'react'
 import { useEffect, useRef } from 'react'
 
 type ScrollToTopProps = {

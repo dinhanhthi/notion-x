@@ -7,30 +7,41 @@
   "author": "Thi <me@dinhanhthi.com>",
   "license": "MIT",
   "private": false,
-  "scripts": {},
+  "engines": {
+    "npm": "^9.9.1",
+    "node": "^18.18.0"
+  },
+  "scripts": {
+    "reinstall": "rimraf node_modules && rimraf yarn.lock && yarn",
+    "prettier": "prettier --write \"**/*.{tsx,ts,css,scss}\""
+  },
   "dependencies": {
     "@fisch0920/medium-zoom": "^1.0.7",
     "@headlessui/react": "^1.7.15",
     "@matejmazur/react-katex": "^3.1.3",
     "@notionhq/client": "2.2.11",
+    "@tailwindcss/typography": "^0.5.9",
     "autoprefixer": "10.4.14",
     "classnames": "^2.3.2",
     "eslint": "8.42.0",
     "eslint-config-next": "13.4.4",
     "fs": "^0.0.1-security",
     "geopattern": "1",
+    "global": "^4.4.0",
     "katex": "^0.16.8",
     "lodash": "^4.17.21",
     "mermaid": "^10.4.0",
     "moment": "^2.29.4",
+    "next": "13.4.7",
     "notion-client": "^6.16.0",
     "notion-types": "^6.16.0",
     "notion-utils": "^6.16.0",
     "open-graph-scraper": "^6.2.2",
     "plaiceholder": "^3.0.0",
     "prismjs": "^1.29.0",
-    "react": "18.2.0",
+    "react": "^18.2.0",
     "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.2.0",
     "react-fast-compare": "^3.2.2",
     "react-hotkeys-hook": "^4.4.1",
     "react-image": "^4.1.0",
@@ -40,8 +51,7 @@
     "sharp": "^0.32.5",
     "slugify": "^1.6.6",
     "swr": "^2.2.2",
-    "typescript": "5.1.3",
-    "@tailwindcss/typography": "^0.5.9"
+    "typescript": "^5.2.2"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
@@ -65,7 +75,7 @@
     "postcss": "8.4.24",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",
-    "rimraf": "^5.0.1",
+    "rimraf": "^5.0.4",
     "sass": "^1.63.3",
     "tailwindcss": "3.3.2"
   }

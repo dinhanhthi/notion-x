@@ -9,6 +9,11 @@ You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in
 Install this repo as a submodule in your project under the root folder.
 
 ```bash
+npm i --g yarn
+npm i -g rimraf
+```
+
+```bash
 # first install only
 git submodule add https://github.com/dinhanhthi/notion-x.git
 

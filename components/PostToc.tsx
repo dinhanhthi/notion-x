@@ -3,6 +3,7 @@
 import cn from 'classnames'
 import { TableOfContentsEntry } from 'notion-utils'
 import { useState } from 'react'
+import React from 'react'
 
 import { generateAnchor } from '../helpers'
 import { useHeadsObserver } from '../hooks'

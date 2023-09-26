@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import { StaticImageData } from 'next/image'
+import React from 'react'
 
 import { ImageType } from '../interface'
 import ImageComponent from './ImageComponent'

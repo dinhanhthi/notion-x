@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import Link from 'next/link'
+import React from 'react'
 
 export type BadgeInfosProps = {
   id?: string

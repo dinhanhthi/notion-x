@@ -5,6 +5,7 @@ import {
 import cn from 'classnames'
 import { get } from 'lodash'
 import Link from 'next/link'
+import React from 'react'
 
 import { generateTextAnnotationClasses } from '../helpers'
 import { AnnotationIgnoreField, TextIgnoreField } from '../interface'

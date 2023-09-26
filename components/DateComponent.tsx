@@ -2,6 +2,7 @@
 
 import Moment from 'moment'
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 import BiDotsHorizontalRounded from '../icons/BiDotsHorizontalRounded'
 

@@ -2,6 +2,7 @@
 
 import { Disclosure } from '@headlessui/react'
 import cn from 'classnames'
+import React from 'react'
 
 import BsFillCaretRightFill from '../icons/BsFillCaretRightFill'
 

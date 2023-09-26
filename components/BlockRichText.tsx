@@ -4,6 +4,7 @@ import {
   TextRichTextItemResponse
 } from '@notionhq/client/build/src/api-endpoints'
 import dynamic from 'next/dynamic'
+import React from 'react'
 
 import { TextIgnoreField } from '../interface'
 import BlockText from './BlockText'

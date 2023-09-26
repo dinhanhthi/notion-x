@@ -1,6 +1,7 @@
 'use client'
 
 import cn from 'classnames'
+import React from 'react'
 
 import { ImageType } from '../interface'
 import ImageComponent from './ImageComponent'

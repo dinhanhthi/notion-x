@@ -1,3 +1,5 @@
+import React from 'react'
+
 type BlockYoutubeEmbedProps = {
   id: string
   width?: number

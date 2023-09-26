@@ -296,7 +296,7 @@ export const Block: React.FC<BlockProps> = props => {
           )}
         </>
       )
-      let headerBlock = null
+      let headerBlock = <></>
 
       const headingCommonClasss = cn(
         '!my-0 flex items-center gap-2',
@@ -490,7 +490,7 @@ export const Block: React.FC<BlockProps> = props => {
       const ratio = block.format?.column_ratio
       const parent = recordMap.block[block.parent_id]?.value
       const nCols = parent?.content?.length || 1
-      let width = `100%`
+      let width = '100%'
       if (!ratio || ratio === 1 || nCols >= 5) width = `${100 / nCols}%`
       else width = `${ratio * 100}%`
 

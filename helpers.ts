@@ -31,6 +31,23 @@ export function mapTag(tagName: string, tagPrefix: string): Tag {
   }
 }
 
+// Used for both tags and categories
+export type Taxonomy = {
+  id: string
+  name: string
+  slug: string
+  uri: string
+}
+export function mapTaxonomy(taxName: string, taxPrefix: string): Taxonomy {
+  if (!taxName) throw new Error('taxName is required')
+  return {
+    id: makeSlugText(taxName)!,
+    name: taxName,
+    slug: makeSlugText(taxName)!,
+    uri: `/${taxPrefix}/${makeSlugText(taxName)}/`
+  }
+}
+
 export function mapColorClass(color?: string): string | null {
   switch (color) {
     case 'gray':

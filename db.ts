@@ -22,7 +22,7 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN })
 /**
  * https://developers.notion.com/reference/post-database-query
  */
-export async function getNotionDatabaseWithoutCache(opts: {
+export async function queryDatabase(opts: {
   dbId: string
   filter?: QueryDatabaseParameters['filter']
   startCursor?: string
@@ -44,23 +44,30 @@ export async function getNotionDatabaseWithoutCache(opts: {
     if (retryAfter) {
       console.log(`Retrying after ${retryAfter} seconds`)
       await new Promise(resolve => setTimeout(resolve, retryAfter * 1000 + 500))
-      return await getNotionDatabaseWithoutCache({ dbId, filter, startCursor, pageSize, sorts })
+      return await queryDatabase({ dbId, filter, startCursor, pageSize, sorts })
     }
     return
   }
 }
 
 /**
+ * https://developers.notion.com/reference/retrieve-a-database
+ */
+export async function retrieveDatabase(dbId: string) {
+  return await notion.databases.retrieve({ database_id: dbId })
+}
+
+/**
  * https://developers.notion.com/reference/retrieve-a-page
  */
-export const getNotionPageWithoutCache = async (pageId: string) => {
+export const retrievePage = async (pageId: string) => {
   return await notion.pages.retrieve({ page_id: pageId })
 }
 
 /**
  * https://developers.notion.com/reference/get-block-children
  */
-export const getNotionBlocksWithoutCache = async (
+export const retrieveBlockChildren = async (
   pageId: string,
   pageSize?: number,
   startCursor?: string
@@ -72,20 +79,7 @@ export const getNotionBlocksWithoutCache = async (
   })
 }
 
-/**
- * https://developers.notion.com/reference/retrieve-a-database
- */
-export async function retrieveNotionDatabaseWithoutCache(dbId: string) {
-  return await notion.databases.retrieve({ database_id: dbId })
-}
-
-/**
- * This methods will get all posts from a Notion database. Especially, when the number of posts is
- * greater than 100, we need to use the "has_more" and "next_cursor" to get all posts.
- *
- * TODO: Update the client's usage to use this method instead of getNotionDatabaseWithoutCache()
- */
-export async function getPostsWithoutCache(opts: {
+export async function getPosts(opts: {
   dbId: string
   filter?: QueryDatabaseParameters['filter']
   startCursor?: string
@@ -94,13 +88,13 @@ export async function getPostsWithoutCache(opts: {
 }): Promise<any[]> {
   const { dbId, filter, startCursor, pageSize, sorts } = opts
 
-  let data = await getNotionDatabaseWithoutCache({ dbId, filter, startCursor, pageSize, sorts })
+  let data = await queryDatabase({ dbId, filter, startCursor, pageSize, sorts })
   let postsList = get(data, 'results', []) as any[]
 
   if (data && pageSize && data['has_more'] && data['next_cursor'] && pageSize >= notionMaxRequest) {
     while (data!['has_more']) {
       const nextCursor = data!['next_cursor']
-      data = await getNotionDatabaseWithoutCache({
+      data = await queryDatabase({
         dbId,
         filter,
         startCursor: nextCursor!,
@@ -126,7 +120,7 @@ export async function getBlocks(
   getPageUri?: (pageId: string) => Promise<string | undefined>,
   parseImgurUrl?: (url: string) => string
 ): Promise<ListBlockChildrenResponse['results']> {
-  let data = await getNotionBlocksWithoutCache(blockId)
+  let data = await retrieveBlockChildren(blockId)
   let blocks = data?.results as
     | (BlockObjectResponse & {
         list_item?: string
@@ -142,7 +136,7 @@ export async function getBlocks(
   if (data && data['has_more']) {
     while (data!['has_more']) {
       const startCursor = data!['next_cursor'] as string
-      data = await getNotionBlocksWithoutCache(blockId, undefined, startCursor)
+      data = await retrieveBlockChildren(blockId, undefined, startCursor)
       if (get(data, 'results') && get(data, 'results').length) {
         const lst = data!['results'] as any[]
         blocks = [...blocks, ...lst]

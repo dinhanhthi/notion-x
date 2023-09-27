@@ -1,3 +1,4 @@
+import { Client } from '@notionhq/client'
 import {
   BlockObjectResponse,
   ListBlockChildrenResponse,
@@ -16,56 +17,66 @@ import { BookmarkPreview, NotionSorts } from './interface'
 
 export const notionMaxRequest = 100
 
+const notion = new Client({ auth: process.env.NOTION_TOKEN })
+
 /**
- * We needs this method to be used in outside-nextjs environment. For example, in ./scripts/ud_images.ts
- *
+ * https://developers.notion.com/reference/post-database-query
  */
-export async function getNotionDatabaseWithoutCache(
-  dataId: string,
-  notionToken: string,
-  notionVersion: string,
-  filter?: QueryDatabaseParameters['filter'],
-  startCursor?: string,
-  pageSize?: number,
+export async function getNotionDatabaseWithoutCache(opts: {
+  dbId: string
+  filter?: QueryDatabaseParameters['filter']
+  startCursor?: string
+  pageSize?: number
   sorts?: NotionSorts[]
-): Promise<QueryDatabaseResponse | undefined> {
+}): Promise<QueryDatabaseResponse | undefined> {
+  const { dbId, filter, startCursor, pageSize, sorts } = opts
   try {
-    const url = `https://api.notion.com/v1/databases/${dataId}/query`
-    const requestBody = {
+    return await notion.databases.query({
+      database_id: dbId,
       filter,
       sorts,
       start_cursor: startCursor,
       page_size: pageSize
-    }
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${notionToken}`,
-        'Notion-Version': notionVersion as string,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(requestBody)
     })
-    return res.json()
   } catch (error: any) {
     console.error(error)
-    // Retry after a number of seconds in the returned header
     const retryAfter = error?.response?.headers['retry-after'] || error['retry-after']
     if (retryAfter) {
       console.log(`Retrying after ${retryAfter} seconds`)
       await new Promise(resolve => setTimeout(resolve, retryAfter * 1000 + 500))
-      return await getNotionDatabaseWithoutCache(
-        dataId,
-        notionToken,
-        notionVersion,
-        filter,
-        startCursor,
-        pageSize,
-        sorts
-      )
+      return await getNotionDatabaseWithoutCache({ dbId, filter, startCursor, pageSize, sorts })
     }
     return
   }
+}
+
+/**
+ * https://developers.notion.com/reference/retrieve-a-page
+ */
+export const getNotionPageWithoutCache = async (pageId: string) => {
+  return await notion.pages.retrieve({ page_id: pageId })
+}
+
+/**
+ * https://developers.notion.com/reference/get-block-children
+ */
+export const getNotionBlocksWithoutCache = async (
+  pageId: string,
+  pageSize?: number,
+  startCursor?: string
+) => {
+  return await notion.blocks.children.list({
+    block_id: pageId,
+    page_size: pageSize,
+    start_cursor: startCursor
+  })
+}
+
+/**
+ * https://developers.notion.com/reference/retrieve-a-database
+ */
+export async function retrieveNotionDatabaseWithoutCache(dbId: string) {
+  return await notion.databases.retrieve({ database_id: dbId })
 }
 
 /**
@@ -74,40 +85,28 @@ export async function getNotionDatabaseWithoutCache(
  *
  * TODO: Update the client's usage to use this method instead of getNotionDatabaseWithoutCache()
  */
-export async function getPostsWithoutCache(options: {
+export async function getPostsWithoutCache(opts: {
   dbId: string
-  notionToken: string
-  notionVersion: string
   filter?: QueryDatabaseParameters['filter']
   startCursor?: string
   pageSize?: number
   sorts?: NotionSorts[]
 }): Promise<any[]> {
-  const { dbId, notionToken, notionVersion, filter, startCursor, pageSize, sorts } = options
+  const { dbId, filter, startCursor, pageSize, sorts } = opts
 
-  let data = await getNotionDatabaseWithoutCache(
-    dbId,
-    notionToken,
-    notionVersion,
-    filter,
-    startCursor,
-    pageSize,
-    sorts
-  )
-
+  let data = await getNotionDatabaseWithoutCache({ dbId, filter, startCursor, pageSize, sorts })
   let postsList = get(data, 'results', []) as any[]
 
   if (data && pageSize && data['has_more'] && data['next_cursor'] && pageSize >= notionMaxRequest) {
     while (data!['has_more']) {
-      data = await getNotionDatabaseWithoutCache(
+      const nextCursor = data!['next_cursor']
+      data = await getNotionDatabaseWithoutCache({
         dbId,
-        notionToken,
-        notionVersion,
         filter,
-        startCursor,
+        startCursor: nextCursor!,
         pageSize,
         sorts
-      )
+      })
       if (get(data, 'results')) {
         const lst = data!['results'] as any[]
         postsList = [...postsList, ...lst]
@@ -118,83 +117,16 @@ export async function getPostsWithoutCache(options: {
 }
 
 /**
- * We needs this method to be used in outside-nextjs environment. For example, in ./scripts/ud_images.ts
- */
-export const getNotionPageWithoutCache = async (
-  pageId: string,
-  notionToken: string,
-  notionVersion: string
-) => {
-  const url = `https://api.notion.com/v1/pages/${pageId}`
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${notionToken}`,
-      'Notion-Version': notionVersion as string
-    }
-  })
-  return res.json()
-}
-
-/**
- * We needs this method to be used in outside-nextjs environment. For example, in ./scripts/ud_images.ts
- */
-export const getNotionBlocksWithoutCache = async (
-  pageId: string,
-  notionToken: string,
-  notionVersion: string,
-  pageSize?: number,
-  startCursor?: string
-) => {
-  let url = `https://api.notion.com/v1/blocks/${pageId}/children`
-
-  if (pageSize) {
-    url += `?page_size=${pageSize}`
-    if (startCursor) url += `&start_cursor=${startCursor}`
-  } else if (startCursor) url += `?start_cursor=${startCursor}`
-
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${notionToken}`,
-      'Notion-Version': notionVersion as string
-    }
-  })
-  return res.json()
-}
-
-/**
- * https://developers.notion.com/reference/retrieve-a-database
- */
-export async function retrieveNotionDatabaseWithoutCache(
-  dataId: string,
-  notionToken: string,
-  notionVersion: string
-) {
-  const url = `https://api.notion.com/v1/databases/${dataId}`
-  const res = await fetch(url, {
-    method: 'GET',
-    headers: {
-      Authorization: `Bearer ${notionToken}`,
-      'Notion-Version': notionVersion as string
-    }
-  })
-  return res.json()
-}
-
-/**
  * Get all nested blocks (in all levels) of a block.
  *
  */
 export async function getBlocks(
   blockId: string,
-  notionToken: string,
-  notionVersion: string,
   initNumbering?: string,
   getPageUri?: (pageId: string) => Promise<string | undefined>,
   parseImgurUrl?: (url: string) => string
 ): Promise<ListBlockChildrenResponse['results']> {
-  let data = await getNotionBlocksWithoutCache(blockId, notionToken, notionVersion)
+  let data = await getNotionBlocksWithoutCache(blockId)
   let blocks = data?.results as
     | (BlockObjectResponse & {
         list_item?: string
@@ -210,13 +142,7 @@ export async function getBlocks(
   if (data && data['has_more']) {
     while (data!['has_more']) {
       const startCursor = data!['next_cursor'] as string
-      data = await getNotionBlocksWithoutCache(
-        blockId,
-        notionToken,
-        notionVersion,
-        undefined,
-        startCursor
-      )
+      data = await getNotionBlocksWithoutCache(blockId, undefined, startCursor)
       if (get(data, 'results') && get(data, 'results').length) {
         const lst = data!['results'] as any[]
         blocks = [...blocks, ...lst]
@@ -266,14 +192,7 @@ export async function getBlocks(
     }
 
     if (block.has_children) {
-      const children = await getBlocks(
-        block.id,
-        notionToken,
-        notionVersion,
-        block['list_item'],
-        getPageUri,
-        parseImgurUrl
-      )
+      const children = await getBlocks(block.id, block['list_item'], getPageUri, parseImgurUrl)
       block['children'] = children
     }
 

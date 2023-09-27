@@ -10,9 +10,8 @@ import got from 'got'
 import { get, set } from 'lodash'
 import { SearchParams } from 'notion-types'
 import ogs from 'open-graph-scraper'
-import { getPlaiceholder } from 'plaiceholder'
 
-import { cleanText, idToUuid } from './helpers'
+import { cleanText, defaultBlurData, idToUuid } from './helpers'
 import { BookmarkPreview, NotionSorts } from './interface'
 
 export const notionMaxRequest = 100
@@ -194,9 +193,12 @@ export async function getBlocks(
     if (block.type === 'image') {
       const url = get(block, 'image.file.url') || get(block, 'image.external.url')
       if (url) {
-        // Resize the image to 1024x1024 max, except for gif and png (with transparent background)
         if (parseImgurUrl) block['imgUrl'] = parseImgurUrl(url)
-        block['imageInfo'] = await getPlaceholderImage(url) // { base64, width, height }
+        block['imageInfo'] = {
+          base64: defaultBlurData.url,
+          width: defaultBlurData.width,
+          height: defaultBlurData.height
+        }
       }
     }
 
@@ -243,21 +245,6 @@ async function parseMention(
     }
   }
   return newRichText
-}
-
-/**
- * Get blurDataURL (base64) of an image
- *
- * REMARK: This method MUST be placed in this file, otherwise, there will be an error of "Can't resolve 'fs'"
- */
-export const getPlaceholderImage = async function getPlaceholderImage(src: string) {
-  const res = await fetch(src)
-  const arrayBuffer = await res.arrayBuffer()
-  if (arrayBuffer.byteLength === 0) return { base64: '', width: 0, height: 0 }
-  const buffer = await fetch(src).then(async res => Buffer.from(await res.arrayBuffer()))
-
-  const { base64, metadata } = await getPlaiceholder(buffer)
-  return { base64, width: metadata.width, height: metadata.height }
 }
 
 // Used for unofficial APIs

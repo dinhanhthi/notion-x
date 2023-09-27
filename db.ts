@@ -38,13 +38,13 @@ export async function queryDatabase(opts: {
       page_size: pageSize
     })
   } catch (error: any) {
-    console.error(error)
     const retryAfter = error?.response?.headers['retry-after'] || error['retry-after']
-    if (retryAfter) {
+    if (retryAfter || error?.status === 502) {
       console.log(`Retrying after ${retryAfter} seconds`)
       await new Promise(resolve => setTimeout(resolve, retryAfter * 1000 + 500))
       return await queryDatabase({ dbId, filter, startCursor, pageSize, sorts })
     }
+    console.error(error)
     return
   }
 }

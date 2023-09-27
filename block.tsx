@@ -342,7 +342,7 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <div
-            className={cn(basicBlockGap, 'mt-6 group', {
+            className={cn('mt-6 mb-4 group', {
               'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2
             })}

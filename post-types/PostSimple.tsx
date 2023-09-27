@@ -3,6 +3,7 @@
 import cn from 'classnames'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
+import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { isDateAfter } from '../helpers'

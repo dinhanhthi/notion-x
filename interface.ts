@@ -79,6 +79,7 @@ export type Tag = {
   className?: string
   description?: string
   pinned?: boolean
+  color?: string
 }
 
 export type Author = {

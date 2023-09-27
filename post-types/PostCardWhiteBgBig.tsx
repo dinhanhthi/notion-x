@@ -1,5 +1,6 @@
 import cn from 'classnames'
 import Link from 'next/link'
+import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import Excerpt from '../components/Excerpt'

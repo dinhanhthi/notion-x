@@ -10,6 +10,7 @@ import got from 'got'
 import { get, set } from 'lodash'
 import { SearchParams } from 'notion-types'
 import ogs from 'open-graph-scraper'
+import pMemoize from 'p-memoize'
 
 import { cleanText, defaultBlurData, idToUuid } from './helpers'
 import { BookmarkPreview, NotionSorts } from './interface'
@@ -21,47 +22,77 @@ const notion = new Client({ auth: process.env.NOTION_TOKEN })
 /**
  * https://developers.notion.com/reference/post-database-query
  */
-export async function queryDatabase(opts: {
+export async function queryDatabaseImpl(opts: {
   dbId: string
   filter?: QueryDatabaseParameters['filter']
   startCursor?: string
   pageSize?: number
   sorts?: NotionSorts[]
-}): Promise<QueryDatabaseResponse | undefined> {
+}): Promise<QueryDatabaseResponse> {
   const { dbId, filter, startCursor, pageSize, sorts } = opts
   try {
-    return await notion.databases.query({
+    let data = await notion.databases.query({
       database_id: dbId,
       filter,
       sorts,
       start_cursor: startCursor,
       page_size: pageSize
     })
+    let children = data?.results as QueryDatabaseResponse['results']
+    if (data && data['has_more'] && data['next_cursor']) {
+      while (data!['has_more']) {
+        const nextCursor = data!['next_cursor']
+        data = await queryDatabaseImpl({
+          dbId,
+          filter,
+          startCursor: nextCursor!,
+          pageSize,
+          sorts
+        })
+        if (get(data, 'results')) {
+          const lst = data['results'] as any[]
+          children = [...children, ...lst]
+        }
+      }
+    }
+    return { results: children } as QueryDatabaseResponse
   } catch (error: any) {
     const retryAfter = error?.response?.headers['retry-after'] || error['retry-after']
     if (retryAfter || error?.status === 502) {
       console.log(`Retrying after ${retryAfter} seconds`)
       await new Promise(resolve => setTimeout(resolve, retryAfter * 1000 + 500))
-      return await queryDatabase({ dbId, filter, startCursor, pageSize, sorts })
+      return await queryDatabaseImpl({ dbId, filter, startCursor, pageSize, sorts })
     }
     console.error(error)
-    return
+    return { results: [] } as any
   }
 }
+
+export const queryDatabase = pMemoize(queryDatabaseImpl, {
+  cacheKey: (...args) => JSON.stringify(args)
+})
 
 /**
  * https://developers.notion.com/reference/retrieve-a-database
  */
-export async function retrieveDatabase(dbId: string) {
+export const retrieveDatabaseImpl = async (dbId: string) => {
   return await notion.databases.retrieve({ database_id: dbId })
 }
+
+export const retrieveDatabase = pMemoize(retrieveDatabaseImpl, {
+  cacheKey: (...args) => JSON.stringify(args)
+})
 
 /**
  * https://developers.notion.com/reference/retrieve-a-page
  */
-export const retrievePage = async (pageId: string) => {
+export const retrievePageImpl = async (pageId: string) => {
   return await notion.pages.retrieve({ page_id: pageId })
 }
+
+export const retrievePage = pMemoize(retrievePageImpl, {
+  cacheKey: (...args) => JSON.stringify(args)
+})
 
 /**
  * https://developers.notion.com/reference/get-block-children
@@ -76,37 +107,6 @@ export const retrieveBlockChildren = async (
     page_size: pageSize,
     start_cursor: startCursor
   })
-}
-
-export async function getPosts(opts: {
-  dbId: string
-  filter?: QueryDatabaseParameters['filter']
-  startCursor?: string
-  pageSize?: number
-  sorts?: NotionSorts[]
-}): Promise<any[]> {
-  const { dbId, filter, startCursor, pageSize, sorts } = opts
-
-  let data = await queryDatabase({ dbId, filter, startCursor, pageSize, sorts })
-  let postsList = get(data, 'results', []) as any[]
-
-  if (data && pageSize && data['has_more'] && data['next_cursor'] && pageSize >= notionMaxRequest) {
-    while (data!['has_more']) {
-      const nextCursor = data!['next_cursor']
-      data = await queryDatabase({
-        dbId,
-        filter,
-        startCursor: nextCursor!,
-        pageSize,
-        sorts
-      })
-      if (get(data, 'results')) {
-        const lst = data!['results'] as any[]
-        postsList = [...postsList, ...lst]
-      }
-    }
-  }
-  return postsList
 }
 
 /**

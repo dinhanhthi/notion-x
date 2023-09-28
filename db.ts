@@ -1,4 +1,3 @@
-import { Client } from '@notionhq/client'
 import {
   BlockObjectResponse,
   ListBlockChildrenResponse,
@@ -17,8 +16,6 @@ import { BookmarkPreview, NotionSorts } from './interface'
 
 export const notionMaxRequest = 100
 
-const notion = new Client({ auth: process.env.NOTION_TOKEN })
-
 /**
  * https://developers.notion.com/reference/post-database-query
  */
@@ -31,13 +28,24 @@ export async function queryDatabaseImpl(opts: {
 }): Promise<QueryDatabaseResponse> {
   const { dbId, filter, startCursor, pageSize, sorts } = opts
   try {
-    let data = await notion.databases.query({
-      database_id: dbId,
+    const url = `https://api.notion.com/v1/databases/${dbId}/query`
+    const requestBody = {
       filter,
       sorts,
       start_cursor: startCursor,
       page_size: pageSize
+    }
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
+        'Notion-Version': process.env.NOTION_VERSION as string,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(requestBody)
     })
+    let data = await res.json()
+
     let children = data?.results as QueryDatabaseResponse['results']
     if (data && data['has_more'] && data['next_cursor']) {
       while (data!['has_more']) {
@@ -76,7 +84,16 @@ export const queryDatabase = pMemoize(queryDatabaseImpl, {
  * https://developers.notion.com/reference/retrieve-a-database
  */
 export const retrieveDatabaseImpl = async (dbId: string) => {
-  return await notion.databases.retrieve({ database_id: dbId })
+  const url = `https://api.notion.com/v1/databases/${dbId}`
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
+      'Notion-Version': process.env.NOTION_VERSION as string,
+      'Content-Type': 'application/json'
+    }
+  })
+  return await res.json()
 }
 
 export const retrieveDatabase = pMemoize(retrieveDatabaseImpl, {
@@ -87,7 +104,16 @@ export const retrieveDatabase = pMemoize(retrieveDatabaseImpl, {
  * https://developers.notion.com/reference/retrieve-a-page
  */
 export const retrievePageImpl = async (pageId: string) => {
-  return await notion.pages.retrieve({ page_id: pageId })
+  const url = `https://api.notion.com/v1/pages/${pageId}`
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
+      'Notion-Version': process.env.NOTION_VERSION as string,
+      'Content-Type': 'application/json'
+    }
+  })
+  return await res.json()
 }
 
 export const retrievePage = pMemoize(retrievePageImpl, {
@@ -102,11 +128,20 @@ export const retrieveBlockChildren = async (
   pageSize?: number,
   startCursor?: string
 ) => {
-  return await notion.blocks.children.list({
-    block_id: pageId,
-    page_size: pageSize,
-    start_cursor: startCursor
+  let url = `https://api.notion.com/v1/blocks/${pageId}/children`
+  if (pageSize) {
+    url += `?page_size=${pageSize}`
+    if (startCursor) url += `&start_cursor=${startCursor}`
+  } else if (startCursor) url += `?start_cursor=${startCursor}`
+
+  const res = await fetch(url, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
+      'Notion-Version': process.env.NOTION_VERSION as string
+    }
   })
+  return res.json()
 }
 
 /**

@@ -47,7 +47,13 @@ export async function queryDatabaseImpl(opts: {
     let data = await res.json()
 
     let children = data?.results as QueryDatabaseResponse['results']
-    if (data && data['has_more'] && data['next_cursor']) {
+    if (
+      data &&
+      data['has_more'] &&
+      data['next_cursor'] &&
+      pageSize &&
+      pageSize >= notionMaxRequest
+    ) {
       while (data!['has_more']) {
         const nextCursor = data!['next_cursor']
         data = await queryDatabaseImpl({

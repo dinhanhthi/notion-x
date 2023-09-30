@@ -98,11 +98,10 @@ export default function PostSimple(props: PostSimpleProps) {
                       'bg-slate-200 text-slate-800': !isIn7Days,
                       'bg-green-200 text-green-900': isIn7Days
                     },
-                    'flex gap-1 items-center'
+                    'hidden lg:flex gap-1 items-center'
                   )}
                 >
                   <DateComponent
-                    className="hidden lg:inline-block"
                     dateString={post.date}
                     format="MMM DD, YYYY"
                     humanize={options?.humanizeDate}

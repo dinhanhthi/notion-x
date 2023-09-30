@@ -27,6 +27,13 @@ git submodule update --recursive --remote
 
 You have to install the packages lised in `package.json` for both `"dependencies"` and `"devDependencies"`.
 
+You have to have following environment variables (put them in `.env.local`),
+
+```bash
+NOTION_TOKEN = 'secret_xxx'
+NOTION_VERSION = '2022-06-28'
+```
+
 Put in your `tsconfig.json`,
 
 ```json
@@ -47,3 +54,5 @@ Put below line in `tailwind.config.ts`,
   ]
 }
 ```
+
+> 💡 **Tip**: You can edit the files in the submodule BUT don't commit and push it. After finishing editing, just `cd notion-x` and then `git checkout <file-path>` to discard all changes.

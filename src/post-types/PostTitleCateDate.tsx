@@ -8,6 +8,7 @@ import PostFeaturedImage from '../components/PostFeaturedImage'
 import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import IoBookOutline from '../icons/IoBookOutline'
 import { Post } from '../interface'
+import { usePostDateStatus } from '../lib/hooks'
 
 export type PostTitleCateDateOpts = {
   hideCategory?: boolean
@@ -16,6 +17,8 @@ export type PostTitleCateDateOpts = {
   defaultCategoryBgColor?: string
   defaultCategoryTextColor?: string
   imageProps?: Partial<ImageProps>
+  newLabel?: string
+  updatedLabel?: string
 }
 
 type PostTitleCateDateProps = {
@@ -29,6 +32,9 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
   const { title, featuredImage, date, categories, uri } = props.post
   const options = props.options
   const category = categories ? categories[0] : null
+
+  const status = usePostDateStatus(props.post.createdDate!, props.post.date!, 7)
+
   return (
     <div className="group">
       <Link className={cn(options?.fontClassName, 'text-center')} href={uri || '/'}>
@@ -38,6 +44,21 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
           })}
         >
           <div className={cn('relative w-full overflow-hidden', TCDFIHeightClass)}>
+            {(status === 'new' || status === 'updatedWithin') && (
+              <div
+                className={cn(
+                  'absolute bottom-4 left-0 z-10 text-[0.8rem] py-[1px] pl-2 pr-4',
+                  'rounded-r-md',
+                  {
+                    'bg-green-200 text-green-900': status === 'updatedWithin',
+                    'bg-amber-200 text-amber-900': status === 'new'
+                  }
+                )}
+              >
+                {status === 'new' && (props.options?.newLabel || 'new')}
+                {status === 'updatedWithin' && (props.options?.updatedLabel || 'updated')}
+              </div>
+            )}
             <PostFeaturedImage
               className="duration-300 group-hover:scale-110"
               featuredImage={featuredImage}

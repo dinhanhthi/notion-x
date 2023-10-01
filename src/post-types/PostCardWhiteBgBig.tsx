@@ -6,6 +6,7 @@ import React from 'react'
 import DateComponent from '../components/DateComponent'
 import Excerpt from '../components/Excerpt'
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import { Post } from '../interface'
 
 export type PostCardWhiteBgBigOpts = {
@@ -46,7 +47,7 @@ export default function PostCardWhiteBgBig(props: PostCardWhiteBgBigProps) {
             <div className="flex justify-center gap-2 p-2">
               {!options?.hideDate && date && (
                 <div className="text-sm opacity-80">
-                  <i className="icon-clock mr-1"></i>
+                  <AiOutlineClockCircle />
                   <DateComponent dateString={date} />
                 </div>
               )}

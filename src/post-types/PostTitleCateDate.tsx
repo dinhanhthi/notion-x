@@ -5,6 +5,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import IoBookOutline from '../icons/IoBookOutline'
 import { Post } from '../interface'
 
@@ -69,8 +70,8 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
           )}
         </div>
         {!options?.hideDate && (
-          <div className="text-sm opacity-80 flex items-center justify-center gap-1">
-            <i className="icon-clock mr-1"></i>
+          <div className="text-sm opacity-80 flex gap-1 items-center justify-center">
+            <AiOutlineClockCircle />
             {date && <DateComponent dateString={date} />}
           </div>
         )}

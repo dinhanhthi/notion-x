@@ -175,6 +175,7 @@ export const Block: React.FC<BlockProps> = props => {
                             tocs={tocs}
                             inPost={true}
                             labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}
+                            minNumHeadingsToShowToc={blockOptions?.minNumHeadingsToShowToc}
                           />
                           {children}
                         </article>

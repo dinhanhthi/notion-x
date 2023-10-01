@@ -16,6 +16,7 @@ export type BlockOptionsContextType = {
   blockCodeCopiedText?: string // used in BlockCode to customize copied text
   siteDomain?: string // used in hyperlinks
   labelTocTitle?: string // "In this page" or something like that
+  minNumHeadingsToShowToc?: number // minimum number of headings to show the TOC
 }
 
 export interface NotionContext {

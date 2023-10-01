@@ -4,7 +4,7 @@
  * This component is used for displaying featured image of a post IN A POST LIST ONLY.
  */
 import cn from 'classnames'
-import { StaticImageData } from 'next/image'
+import { ImageProps, StaticImageData } from 'next/image'
 import React from 'react'
 
 import { ImageType } from '../interface'
@@ -15,6 +15,7 @@ type PostFeaturedImageProps = {
   featuredImage?: ImageType
   className?: string
   defaultImage?: StaticImageData
+  imageProps?: Partial<ImageProps>
 }
 
 /**
@@ -31,7 +32,8 @@ export default function PostFeaturedImage(props: PostFeaturedImageProps) {
           alt={`Hình đại diện cho bài viết "${title}"`}
           className={cn('object-cover', props.className)}
           imageProps={{
-            fill: true
+            fill: true,
+            ...props.imageProps
           }}
         />
       </div>

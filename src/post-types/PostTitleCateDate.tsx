@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { ImageProps } from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -13,6 +14,7 @@ export type PostTitleCateDateOpts = {
   fontClassName?: string
   defaultCategoryBgColor?: string
   defaultCategoryTextColor?: string
+  imageProps?: Partial<ImageProps>
 }
 
 type PostTitleCateDateProps = {
@@ -39,6 +41,7 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
               className="duration-300 group-hover:scale-110"
               featuredImage={featuredImage}
               title={title}
+              imageProps={props.options?.imageProps}
             />
           </div>
           {!options?.hideCategory && category && (

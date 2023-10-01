@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { ImageProps } from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -12,16 +13,17 @@ export type PostCardWhiteBgBigOpts = {
   hideAuthor?: boolean
   hideExcerpt?: boolean
   fontClassName?: string
+  imageProps?: Partial<ImageProps>
 }
 
-type PostTitleCateDateProps = {
+type PostCardWhiteBgBigProps = {
   post: Post
   options?: PostCardWhiteBgBigOpts
 }
 
 export const CWBBHeightClass = 'h-36'
 
-export default function PostCardWhiteBgBig(props: PostTitleCateDateProps) {
+export default function PostCardWhiteBgBig(props: PostCardWhiteBgBigProps) {
   const { title, featuredImage, date, uri, excerpt, authors } = props.post
   const options = props.options
   return (
@@ -29,7 +31,11 @@ export default function PostCardWhiteBgBig(props: PostTitleCateDateProps) {
       <Link className={cn(options?.fontClassName, 'text-center')} href={uri || '/'}>
         <div className="flex flex-col justify-center">
           <div className={cn('relative w-full overflow-hidden', CWBBHeightClass)}>
-            <PostFeaturedImage featuredImage={featuredImage} title={title} />
+            <PostFeaturedImage
+              featuredImage={featuredImage}
+              title={title}
+              imageProps={props.options?.imageProps}
+            />
           </div>
         </div>
         <div className="p-4">

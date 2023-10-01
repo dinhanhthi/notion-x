@@ -1,4 +1,5 @@
 import cn from 'classnames'
+import { ImageProps } from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 
@@ -7,6 +8,7 @@ import { Post } from '../interface'
 
 export type PostImageBackgroundOpts = {
   fontClassName?: string
+  imageProps?: Partial<ImageProps>
 }
 
 type PostImageBackgroundProps = {
@@ -23,7 +25,11 @@ export default function PostImageBackground(props: PostImageBackgroundProps) {
       <Link className={cn(props.options?.fontClassName, 'text-center')} href={uri || '/'}>
         <div className="flex flex-col justify-center">
           <div className={cn('relative w-full overflow-hidden mix-blend-overlay', PIBHeightClass)}>
-            <PostFeaturedImage featuredImage={featuredImage} title={title} />
+            <PostFeaturedImage
+              featuredImage={featuredImage}
+              title={title}
+              imageProps={props.options?.imageProps}
+            />
             <div
               className={cn(
                 'absolute bottom-0 left-0 flex h-fit w-full flex-col justify-end',

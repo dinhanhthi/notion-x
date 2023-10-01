@@ -8,6 +8,7 @@ import { ImageProps, StaticImageData } from 'next/image'
 import React from 'react'
 
 import { ImageType } from '../interface'
+import { defaultBlurData } from '../lib/helpers'
 import ImageComponent from './ImageComponent'
 
 type PostFeaturedImageProps = {
@@ -31,7 +32,12 @@ export default function PostFeaturedImage(props: PostFeaturedImageProps) {
           image={featuredImage}
           alt={`Hình đại diện cho bài viết "${title}"`}
           className={cn('object-cover', props.className)}
-          imageProps={props.imageProps}
+          imageProps={{
+            blurDataURL: defaultBlurData.url,
+            width: defaultBlurData.width,
+            height: defaultBlurData.height,
+            ...props.imageProps
+          }}
         />
       </div>
     </>

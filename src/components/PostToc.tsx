@@ -10,7 +10,6 @@ import { generateAnchor } from '../lib/helpers'
 import { useHeadsObserver } from '../lib/hooks'
 
 type PostTocProps = {
-  showToc?: boolean // The property coming from the header of Notion page
   tocs: Array<TableOfContentsEntry>
   inPost?: boolean // This component is used in 2 places: post-body and [postSlug]
   minNumHeadingsToShowToc?: number
@@ -24,11 +23,8 @@ type PostTocProps = {
 
 export default function PostToc(props: PostTocProps) {
   const [showContent, setShowContent] = useState(true)
-  // const headingBlocks = props.contentBlocks.filter(
-  //   block => block.type === 'heading_2' || block.type === 'heading_3'
-  // )
 
-  const showToc = props.showToc && props.tocs.length >= (props.minNumHeadingsToShowToc || 4)
+  const showToc = props.tocs.length >= (props.minNumHeadingsToShowToc || 4)
 
   const { activeId } = useHeadsObserver()
 

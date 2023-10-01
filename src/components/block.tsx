@@ -172,7 +172,6 @@ export const Block: React.FC<BlockProps> = props => {
                       >
                         <article className="notion-page-content-inner">
                           <PostToc
-                            showToc={true}
                             tocs={tocs}
                             inPost={true}
                             labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}

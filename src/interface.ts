@@ -27,7 +27,6 @@ export type PostHeaderType = {
   authors?: Author[]
   selected?: boolean
   bookCover?: ImageType
-  showToc?: boolean
   contentCheck?: boolean // content of this post has been checked after v4?
   isBlog?: boolean // is this post a blog post?
   isDraft?: boolean // is this post a draft?

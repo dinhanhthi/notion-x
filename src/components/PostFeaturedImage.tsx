@@ -31,10 +31,7 @@ export default function PostFeaturedImage(props: PostFeaturedImageProps) {
           image={featuredImage}
           alt={`Hình đại diện cho bài viết "${title}"`}
           className={cn('object-cover', props.className)}
-          imageProps={{
-            fill: true,
-            ...props.imageProps
-          }}
+          imageProps={props.imageProps}
         />
       </div>
     </>

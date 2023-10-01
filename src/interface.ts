@@ -20,7 +20,7 @@ export type ImageType = {
 export type PostHeaderType = {
   title: string
   featuredImage?: ImageType
-  date?: string // as last modified date (or finalModified)
+  date?: string // the same as last modified date (or finalModified)
   createdDate?: string // used to display "updated" badge
   categories?: Category[]
   tags?: Tag[]

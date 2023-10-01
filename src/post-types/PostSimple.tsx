@@ -2,14 +2,13 @@
 
 import cn from 'classnames'
 import Link from 'next/link'
-import { useEffect, useState } from 'react'
 import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import FaPenNib from '../icons/FaPenNib'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
 import { Post } from '../interface'
-import { isDateAfter } from '../lib/helpers'
+import { usePostDateStatus } from '../lib/hooks'
 
 export type PostSimpleOpts = {
   hideDate?: boolean
@@ -29,30 +28,9 @@ type PostSimpleProps = {
   options?: PostSimpleOpts
 }
 
-const maxDays = 7
-
 export default function PostSimple(props: PostSimpleProps) {
-  const [isIn7Days, setIsIn7Days] = useState(false)
-  const [isNew, setIsNew] = useState(false)
   const { post, options } = props
-
-  useEffect(() => {
-    const lastModifiedDate = new Date(post.date!)
-    const today = new Date()
-    const diffTime = Math.abs(today.getTime() - lastModifiedDate.getTime())
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-    if (diffDays <= maxDays) {
-      setIsIn7Days(true)
-    }
-
-    const createdDate = new Date(post.createdDate!)
-    const diffTime2 = Math.abs(today.getTime() - createdDate.getTime())
-    const diffDays2 = Math.ceil(diffTime2 / (1000 * 60 * 60 * 24))
-    if (diffDays2 <= maxDays) {
-      setIsNew(true)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const status = usePostDateStatus(post.createdDate!, post.date!, 7)
 
   return (
     <div className="group hover:bg-slate-50">
@@ -87,29 +65,26 @@ export default function PostSimple(props: PostSimpleProps) {
         </h3>
         {(post.createdDate || post.date) && (
           <div className="gap-2 hidden md:flex items-center">
-            {post.date &&
-              !isNew &&
-              post.createdDate &&
-              isDateAfter(post.date, post.createdDate) && (
-                <div
-                  className={cn(
-                    'px-3 py-0.5 text-[0.8rem] items-start rounded-md whitespace-nowrap',
-                    {
-                      'bg-slate-200 text-slate-800': !isIn7Days,
-                      'bg-green-200 text-green-900': isIn7Days
-                    },
-                    'hidden lg:flex gap-1 items-center'
-                  )}
-                >
-                  <DateComponent
-                    dateString={post.date}
-                    format="MMM DD, YYYY"
-                    humanize={options?.humanizeDate}
-                    dateLabel={options?.updatedOnLabel || 'updated'}
-                  />
-                </div>
-              )}
-            {isNew && (
+            {['updated', 'updatedWithin'].includes(status) && post.date && (
+              <div
+                className={cn(
+                  'px-3 py-0.5 text-[0.8rem] items-start rounded-md whitespace-nowrap',
+                  {
+                    'bg-slate-200 text-slate-800': status === 'updated',
+                    'bg-green-200 text-green-900': status === 'updatedWithin'
+                  },
+                  'hidden lg:flex gap-1 items-center'
+                )}
+              >
+                <DateComponent
+                  dateString={post.date}
+                  format="MMM DD, YYYY"
+                  humanize={options?.humanizeDate}
+                  dateLabel={options?.updatedOnLabel || 'updated'}
+                />
+              </div>
+            )}
+            {status === 'new' && (
               <div
                 className={cn(
                   'px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap',

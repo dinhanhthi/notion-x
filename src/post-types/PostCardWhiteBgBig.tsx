@@ -1,3 +1,5 @@
+'use client'
+
 import cn from 'classnames'
 import { ImageProps } from 'next/image'
 import Link from 'next/link'
@@ -8,6 +10,7 @@ import Excerpt from '../components/Excerpt'
 import PostFeaturedImage from '../components/PostFeaturedImage'
 import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import { Post } from '../interface'
+import { usePostDateStatus } from '../lib/hooks'
 
 export type PostCardWhiteBgBigOpts = {
   hideDate?: boolean
@@ -15,6 +18,9 @@ export type PostCardWhiteBgBigOpts = {
   hideExcerpt?: boolean
   fontClassName?: string
   imageProps?: Partial<ImageProps>
+  newLabel?: string
+  updatedLabel?: string
+  maxDaysWinthin?: number // within how many days to show 'new' or 'updated' label
 }
 
 type PostCardWhiteBgBigProps = {
@@ -27,11 +33,33 @@ export const CWBBHeightClass = 'h-36'
 export default function PostCardWhiteBgBig(props: PostCardWhiteBgBigProps) {
   const { title, featuredImage, date, uri, excerpt, authors } = props.post
   const options = props.options
+
+  const status = usePostDateStatus(
+    props.post.createdDate!,
+    props.post.date!,
+    options?.maxDaysWinthin || 7
+  )
+
   return (
     <div className="group overflow-hidden rounded-md bg-white shadow-lg h-full">
       <Link className={cn(options?.fontClassName, 'text-center')} href={uri || '/'}>
         <div className="flex flex-col justify-center">
           <div className={cn('relative w-full overflow-hidden', CWBBHeightClass)}>
+            {(status === 'new' || status === 'updatedWithin') && (
+              <div
+                className={cn(
+                  'absolute bottom-4 left-0 z-10 text-[0.8rem] py-[1px] pl-2 pr-4',
+                  'rounded-r-md',
+                  {
+                    'bg-green-200 text-green-900': status === 'updatedWithin',
+                    'bg-amber-200 text-amber-900': status === 'new'
+                  }
+                )}
+              >
+                {status === 'new' && (props.options?.newLabel || 'new')}
+                {status === 'updatedWithin' && (props.options?.updatedLabel || 'updated')}
+              </div>
+            )}
             <PostFeaturedImage
               featuredImage={featuredImage}
               title={title}

@@ -19,6 +19,7 @@ export type PostTitleCateDateOpts = {
   imageProps?: Partial<ImageProps>
   newLabel?: string
   updatedLabel?: string
+  maxDaysWinthin?: number // within how many days to show 'new' or 'updated' label
 }
 
 type PostTitleCateDateProps = {
@@ -33,7 +34,11 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
   const options = props.options
   const category = categories ? categories[0] : null
 
-  const status = usePostDateStatus(props.post.createdDate!, props.post.date!, 7)
+  const status = usePostDateStatus(
+    props.post.createdDate!,
+    props.post.date!,
+    options?.maxDaysWinthin || 7
+  )
 
   return (
     <div className="group">

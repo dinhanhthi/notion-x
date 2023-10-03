@@ -86,7 +86,7 @@ export function mapColorClass(color?: string): string | null {
     case 'green_background':
       return 'bg-[#deffdb]'
     case 'blue_background':
-      return 'bg-blue-100'
+      return 'bg-sky-100'
     case 'purple_background':
       return 'bg-purple-100'
     case 'pink_background':
@@ -94,7 +94,7 @@ export function mapColorClass(color?: string): string | null {
     case 'red_background':
       return 'bg-red-100'
     case 'teal_background':
-      return 'bg-teal-100'
+      return 'notion-teal_background'
     default:
       return null
   }

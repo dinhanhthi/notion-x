@@ -1,6 +1,7 @@
 'use client'
 
 import cn from 'classnames'
+import * as types from 'notion-types'
 import { TableOfContentsEntry } from 'notion-utils'
 import { useState } from 'react'
 import React from 'react'
@@ -8,9 +9,11 @@ import React from 'react'
 import IoIosArrowDown from '../icons/IoIosArrowDown'
 import { generateAnchor } from '../lib/helpers'
 import { useHeadsObserver } from '../lib/hooks'
+import { Text } from './text'
 
 type PostTocProps = {
-  tocs: Array<TableOfContentsEntry>
+  recordMap: types.ExtendedRecordMap
+  tocs: TableOfContentsEntry[]
   inPost?: boolean // This component is used in 2 places: post-body and [postSlug]
   minNumHeadingsToShowToc?: number
   labelTocTitle?: string
@@ -70,6 +73,9 @@ export default function PostToc(props: PostTocProps) {
             const anchor = generateAnchor(toc.id, toc.text)
             const isH2 = toc.indentLevel === 0
             const isH3 = toc.indentLevel === 1
+
+            const block = props.recordMap?.block?.[toc.id]?.value
+
             return (
               <a
                 key={toc.id}
@@ -77,13 +83,18 @@ export default function PostToc(props: PostTocProps) {
                 className={cn('flex items-baseline gap-2 hover:m2it-link text-sm py-1', {
                   'pl-4 border-l': isH3,
                   '-ml-1': isH2,
-                  'm2it-link': activeId === anchor && !props.inPost,
-                  '!text-slate-700': activeId !== anchor || props.inPost
+                  'font-semibold hover:font-semibold': activeId === anchor && !props.inPost,
+                  'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
                 })}
               >
                 {isH2 && <span className="text-[0.7rem] text-slate-400">◆</span>}
                 {isH3 && <span className="text-[0.6rem] text-slate-400">○</span>}
-                <span className="block">{toc.text}</span>
+                {!block?.properties?.title && <span className="block">{toc.text}</span>}
+                {block?.properties?.title && (
+                  <span>
+                    <Text value={block.properties.title} block={block} />
+                  </span>
+                )}
               </a>
             )
           })}

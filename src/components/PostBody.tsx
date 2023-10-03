@@ -32,7 +32,7 @@ export default function PostBody(props: PostBodyProps) {
   )
 
   return (
-    <>
+    <div className={props.className}>
       <NotionRenderer
         recordMap={props.recordMap}
         fullPage={true}
@@ -44,6 +44,6 @@ export default function PostBody(props: PostBodyProps) {
         previewImages={true}
         blockOptions={props.blockOptions}
       />
-    </>
+    </div>
   )
 }

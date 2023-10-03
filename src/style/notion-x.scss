@@ -50,7 +50,7 @@
 }
 
 .notion-blue_background {
-  @apply bg-blue-100;
+  @apply bg-sky-100;
 }
 
 .notion-purple_background {
@@ -134,9 +134,14 @@ ul > ul {
   }
 }
 
+.katex-display {
+  margin: 0;
+}
+
 ol,
 ul {
-  & > *:not(li):not(ol):not(ul) {
+  & > *:not(li):not(ol):not(ul),
+  .block:not(li):not(ol):not(ul) {
     margin: 0.75rem 0 !important;
     padding-left: 0 !important;
   }
@@ -180,8 +185,14 @@ li::marker {
   display: none;
 }
 
+.notion-h-title {
+  .katex {
+    font-size: 105%;
+  }
+}
+
 .katex {
-  font-size: 1.2rem;
+  font-size: 115%;
 }
 
 // First used for tech badge tooltip in about page
@@ -221,9 +232,9 @@ li::marker {
     & > *:first-child {
       margin-top: 0;
     }
-    & > *:last-child {
-      margin-bottom: 0;
-    }
+    // & > *:last-child {
+    //   margin-bottom: 0;
+    // }
   }
 
   .m2it-link-hover {
@@ -235,7 +246,7 @@ li::marker {
   }
 
   .m2it-headings {
-    @apply my-0 font-semibold;
+    @apply my-0 font-semibold text-slate-800;
   }
 
   .m2it-prose-img {
@@ -263,8 +274,12 @@ li::marker {
   }
 
   .m2it-code {
-    @apply break-words rounded border-[1px_solid_#ddd] bg-[#ececec] p-[1px_4px_2px_4px]
-    font-mono text-[85%] font-normal text-[#067b26] before:content-[''] after:content-[''];
+    @apply break-words rounded-md bg-gray-100 p-[1px_4px_2px_4px]
+    font-mono text-[90%] font-normal before:content-[''] after:content-[''];
+  }
+
+  .m2it-strong {
+    @apply font-semibold text-gray-700;
   }
 
   .m2it-prose {
@@ -273,7 +288,7 @@ li::marker {
     @apply prose-headings:m2it-headings;
     @apply prose-img:m2it-prose-img;
     @apply prose-blockquote:m2it-blockquote;
-    @apply prose-h2:text-2xl;
+    @apply prose-h2:text-[1.45rem];
     @apply prose-h3:text-[1.35rem];
     @apply prose-li:m2it-li;
     @apply prose-ol:m2it-list;
@@ -281,6 +296,12 @@ li::marker {
     @apply prose-td:m2it-td;
     @apply prose-hr:my-6;
     @apply prose-code:m2it-code;
+    @apply prose-figure:my-4;
+    @apply prose-strong:m2it-strong;
+  }
+
+  .notion-inline-code {
+    @apply border border-gray-200;
   }
 
   .m2it-box-shadow {

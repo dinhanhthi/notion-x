@@ -172,6 +172,7 @@ export const Block: React.FC<BlockProps> = props => {
                       >
                         <article className="notion-page-content-inner">
                           <PostToc
+                            recordMap={recordMap}
                             tocs={tocs}
                             inPost={true}
                             labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}

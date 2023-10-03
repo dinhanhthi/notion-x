@@ -120,7 +120,7 @@ export const Text: React.FC<{
               return <code className="notion-inline-code">{element}</code>
 
             case 'b':
-              return <b className="font-semibold">{element}</b>
+              return <b className="m2it-strong">{element}</b>
 
             case 'i':
               return <em className="italic">{element}</em>

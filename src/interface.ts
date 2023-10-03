@@ -27,7 +27,6 @@ export type PostHeaderType = {
   authors?: Author[]
   selected?: boolean
   bookCover?: ImageType
-  isBlog?: boolean // is this post a blog post?
   isDraft?: boolean // is this post a draft?
   icon?: {
     emoji?: string

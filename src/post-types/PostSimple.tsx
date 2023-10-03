@@ -5,7 +5,6 @@ import Link from 'next/link'
 import React from 'react'
 
 import DateComponent from '../components/DateComponent'
-import FaPenNib from '../icons/FaPenNib'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
@@ -38,17 +37,9 @@ export default function PostSimple(props: PostSimpleProps) {
         className={cn(options?.fontClassName, 'flex items-start gap-3 p-4')}
         href={post.uri || '/'}
       >
-        <div
-          className={cn('mt-[3px] text-slate-600', {
-            'tooltip-auto': post.isBlog
-          })}
-          data-title={
-            post.isBlog ? props.options?.wellWrittenLabel || 'Well-written, like a blog' : null
-          }
-        >
+        <div className={cn('mt-[3px] text-slate-600')}>
           {!!options?.customIcon && options.customIcon}
-          {!options?.customIcon && !post.isBlog && <HiOutlineDocumentText className="text-xl" />}
-          {!options?.customIcon && post.isBlog && <FaPenNib className="text-lg" />}
+          {!options?.customIcon && <HiOutlineDocumentText className="text-xl" />}
         </div>
         <h3 className="flex-1">
           {post.title}{' '}

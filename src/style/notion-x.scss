@@ -33,6 +33,21 @@
   @apply bg-gray-100;
 }
 
+.notion-gray_background,
+.bg-gray-100 {
+  code {
+    background-color: #e5e5e5;
+  }
+}
+
+.m2it-prose {
+  h2,
+  h3 {
+    font-family: 'Recoleta', 'Arial', 'Helvetica', 'sans-serif' !important;
+    font-weight: normal !important;
+  }
+}
+
 .notion-brown_background {
   @apply bg-[#f4eeee];
 }

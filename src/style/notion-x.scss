@@ -7,6 +7,10 @@
 @import 'katex/dist/katex.min.css';
 @import 'prismjs/themes/prism-tomorrow.css';
 
+strong {
+  font-weight: 600;
+}
+
 // Table
 .notion-simple-table-row {
   td {

@@ -7,7 +7,7 @@ import {
 } from '@notionhq/client/build/src/api-endpoints'
 import got from 'got'
 import { get, set } from 'lodash'
-import { SearchParams } from 'notion-types'
+import { CollectionInstance, SearchParams } from 'notion-types'
 import ogs from 'open-graph-scraper'
 import pMemoize from 'p-memoize'
 
@@ -15,6 +15,67 @@ import { BookmarkPreview, NotionSorts } from '../interface'
 import { cleanText, defaultBlurData, idToUuid } from './helpers'
 
 export const notionMaxRequest = 100
+
+/**
+ * Unofficial API for getting all pages in a database
+ */
+export async function getUnofficialDatabaseImpl(): Promise<CollectionInstance> {
+  if (!process.env.SPACE_ID) throw new Error('process.env.SPACE_ID is not defined')
+  if (!process.env.SOURCE_ID) throw new Error('process.env.SOURCE_ID is not defined')
+  if (!process.env.COLLECTION_VIEW_ID)
+    throw new Error('process.env.COLLECTION_VIEW_ID is not defined')
+  if (!process.env.NOTION_TOKEN_V2) throw new Error('process.env.NOTION_TOKEN_V2 is not defined')
+  if (!process.env.NOTION_ACTIVE_USER)
+    throw new Error('process.env.NOTION_ACTIVE_USER is not defined')
+  if (!process.env.NOTION_API_WEB) throw new Error('process.env.NOTION_API_WEB is not defined')
+
+  const headers: any = {
+    'Content-Type': 'application/json',
+    cookie: `token_v2=${process.env.NOTION_TOKEN_V2}`,
+    'x-notion-active-user-header': process.env.NOTION_ACTIVE_USER
+  }
+
+  const body = {
+    collectionView: {
+      id: process.env.COLLECTION_VIEW_ID,
+      spaceId: process.env.SPACE_ID
+    },
+    source: {
+      type: 'collection',
+      id: process.env.SOURCE_ID,
+      spaceId: process.env.SPACE_ID
+    },
+    loader: {
+      type: 'reducer',
+      reducers: {
+        collection_group_results: {
+          type: 'results',
+          limit: 50
+        },
+        'table:uncategorized:title:count': {
+          type: 'aggregation',
+          aggregation: {
+            property: 'title',
+            aggregator: 'count'
+          }
+        }
+      },
+      sort: []
+    }
+  }
+
+  const url = `${process.env.NOTION_API_WEB}/queryCollection`
+
+  return await fetch(url, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(body)
+  }).then(res => res.json())
+}
+
+export const getUnofficialDatabase = pMemoize(getUnofficialDatabaseImpl, {
+  cacheKey: (...args) => JSON.stringify(args)
+})
 
 /**
  * https://developers.notion.com/reference/post-database-query
@@ -296,6 +357,10 @@ export async function searchNotion(
   activeUser: string,
   dbId: string
 ): Promise<any> {
+  if (!apiUrl) throw new Error('apiUrl is not defined')
+  if (!tokenV2) throw new Error('tokenV2 is not defined')
+  if (!activeUser) throw new Error('activeUser is not defined')
+
   const headers: any = {
     'Content-Type': 'application/json',
     cookie: `token_v2=${tokenV2}`,

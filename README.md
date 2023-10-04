@@ -30,8 +30,13 @@ You have to install the packages lised in `package.json` for both `"dependencies
 You have to have following environment variables (put them in `.env.local`),
 
 ```bash
-NOTION_TOKEN = 'secret_xxx'
-NOTION_VERSION = '2022-06-28'
+NOTION_TOKEN = "secret_xxx"
+NOTION_VERSION = "2022-06-28"
+# For Unofficial Posts DB
+NOTION_API_WEB = "https://www.notion.so/api/v3"
+SPACE_ID = "xxx"
+SOURCE_ID = "xxx"
+COLLECTION_VIEW_ID = "xxx"
 ```
 
 Put in your `tsconfig.json`,

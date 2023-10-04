@@ -18,7 +18,9 @@ export type ImageType = {
 } | null
 
 export type PostHeaderType = {
+  id?: string
   title: string
+  drawTitle?: any
   featuredImage?: ImageType
   date?: string // the same as last modified date (or finalModified)
   createdDate?: string // used to display "updated" badge
@@ -26,18 +28,22 @@ export type PostHeaderType = {
   tags?: Tag[]
   authors?: Author[]
   selected?: boolean
+  isPublished?: boolean
   bookCover?: ImageType
   isDraft?: boolean // is this post a draft?
+  isPage?: boolean // is this post a page?
   icon?: {
     emoji?: string
     img?: ImageType
   }
+  pageCover?: string
+  coverPosition?: number
 }
 
 export interface Post extends PostHeaderType {
   slug: string
-  id?: string
   uri: string
+  id?: string
   excerpt?: RichTextItemResponse[]
 }
 

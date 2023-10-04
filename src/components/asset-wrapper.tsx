@@ -32,7 +32,7 @@ export const AssetWrapper: React.FC<{
   const figure = (
     <figure
       className={cs(
-        'notion-asset-wrapper',
+        'notion-asset-wrapper flex justify-center',
         `notion-asset-wrapper-${block.type}`,
         value.format?.block_full_width && 'notion-asset-wrapper-full',
         blockId

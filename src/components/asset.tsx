@@ -60,6 +60,7 @@ export const Asset: React.FC<{
     if (block_full_width || block_page_width) {
       if (block_full_width) {
         style.width = '100vw'
+        style.height = '100%'
       } else {
         style.width = '100%'
       }
@@ -75,7 +76,8 @@ export const Asset: React.FC<{
       } else if (block_aspect_ratio && block.type !== 'image') {
         style.paddingBottom = `${block_aspect_ratio * 100}%`
       } else if (block_height) {
-        style.height = block_height
+        // style.height = block_height
+        style.height = '100%'
       } else if (block_preserve_scale) {
         if (block.type === 'image') {
           style.height = '100%'
@@ -110,7 +112,8 @@ export const Asset: React.FC<{
         style.minHeight = 100
       } else {
         if (block_height && block.type !== 'image') {
-          style.height = block_height
+          // style.height = block_height
+          style.height = '100%'
         }
       }
     }

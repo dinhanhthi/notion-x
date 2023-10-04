@@ -242,6 +242,11 @@ li::marker {
   }
 }
 
+// For headings next to each other
+.heading-container + .heading-container {
+  margin-top: 1.25rem;
+}
+
 @layer base {
   .m2it-inside-box {
     & > *:first-child {

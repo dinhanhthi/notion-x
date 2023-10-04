@@ -331,9 +331,11 @@ export const Block: React.FC<BlockProps> = props => {
       if (block.format?.toggleable) {
         return (
           <BlockHeadingToggle
-            className={cn(basicBlockGap, 'mt-6 group', {
+            className={cn('heading-container group', {
               'border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
-                isH2
+                isH2,
+              'mt-8': isH2 || isH1,
+              'mt-6': isH3
             })}
             headingElement={headerBlock}
           >
@@ -343,9 +345,11 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <div
-            className={cn('mt-6 mb-4 group', {
+            className={cn('heading-container mb-4 group', {
               'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
-                isH2
+                isH2,
+              'mt-8': isH2 || isH1,
+              'mt-6': isH3
             })}
           >
             {headerBlock}

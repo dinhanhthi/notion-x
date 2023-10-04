@@ -1,6 +1,7 @@
 'use client'
 
 import cn from 'classnames'
+import dynamic from 'next/dynamic'
 import * as types from 'notion-types'
 import { TableOfContentsEntry } from 'notion-utils'
 import { useState } from 'react'
@@ -20,12 +21,22 @@ type PostTocProps = {
   labelTocClassName?: string
 }
 
+const Equation = dynamic(() => import('./BlockEquation'))
+const Code = dynamic(() => import('./BlockCode'), { ssr: false })
+
 /**
  * IMPORTANT: Add class "scroll-mt-[70px]" to the heading elements!
  */
 
 export default function PostToc(props: PostTocProps) {
   const [showContent, setShowContent] = useState(true)
+  const components = React.useMemo(
+    () => ({
+      Code,
+      Equation
+    }),
+    []
+  )
 
   const showToc = props.tocs.length >= (props.minNumHeadingsToShowToc || 4)
 
@@ -49,7 +60,7 @@ export default function PostToc(props: PostTocProps) {
     >
       <button
         className={cn(
-          'flex items-center justify-between text-md font-semibold text-slate-700 pb-0'
+          'text-slate-700 flex items-center justify-between text-md font-semibold pb-0'
         )}
         onClick={() => setShowContent(!showContent)}
       >
@@ -65,9 +76,12 @@ export default function PostToc(props: PostTocProps) {
       </button>
       {showContent && (
         <div
-          className={cn('pt-3 pl-1 overflow-auto m2it-scrollbar m2it-scrollbar-small border-t', {
-            'columns-1 md:columns-2': props.inPost
-          })}
+          className={cn(
+            'not-prose pt-3 pl-1 overflow-auto m2it-scrollbar m2it-scrollbar-small border-t',
+            {
+              'columns-1 md:columns-2': props.inPost
+            }
+          )}
         >
           {props.tocs.map(toc => {
             const anchor = generateAnchor(toc.id, toc.text)
@@ -92,7 +106,7 @@ export default function PostToc(props: PostTocProps) {
                 {!block?.properties?.title && <span className="block">{toc.text}</span>}
                 {block?.properties?.title && (
                   <span>
-                    <Text value={block.properties.title} block={block} />
+                    <Text components={components} value={block.properties.title} block={block} />
                   </span>
                 )}
               </a>

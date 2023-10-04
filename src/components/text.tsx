@@ -5,6 +5,7 @@ import * as React from 'react'
 import { useNotionContext } from '../lib/context'
 import { mapNoteUri, removeBaseUrl } from '../lib/helpers'
 import { formatDate, getHashFragmentValue } from '../lib/utils'
+import { NotionComponents } from '../types'
 import { EOI } from './eoi'
 import { GracefulImage } from './graceful-image'
 import { PageTitle } from './page-title'
@@ -23,9 +24,23 @@ export const Text: React.FC<{
   linkProps?: any
   linkProtocol?: string
   inline?: boolean // TODO: currently unused
-}> = ({ value, block, linkProps, linkProtocol }) => {
-  const { components, recordMap, mapPageUrl, mapImageUrl, rootDomain, blockOptions } =
-    useNotionContext()
+  components?: Partial<NotionComponents>
+}> = ({ value, block, linkProps, linkProtocol, components: inputComponents }) => {
+  const {
+    components: ctxComponents,
+    recordMap,
+    mapPageUrl,
+    mapImageUrl,
+    rootDomain,
+    blockOptions
+  } = useNotionContext()
+
+  const components = React.useMemo(() => {
+    return {
+      ...ctxComponents,
+      ...inputComponents
+    }
+  }, [ctxComponents, inputComponents])
 
   return (
     <React.Fragment>
@@ -120,7 +135,7 @@ export const Text: React.FC<{
               return <code className="notion-inline-code">{element}</code>
 
             case 'b':
-              return <b className="m2it-strong">{element}</b>
+              return <strong>{element}</strong>
 
             case 'i':
               return <em className="italic">{element}</em>

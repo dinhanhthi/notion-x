@@ -16,8 +16,8 @@ export default function BlockCallout(props: {
         className={cn('flex rounded-md', mapColorClass(props.color) || 'border border-gray-200')}
       >
         {props.icon && <div className="text-2xl pl-4 py-3">{props.icon}</div>}
-        <div className="pt-4 pb-1 pl-2 pr-4 w-full">
-          {props.text}
+        <div className="pl-2 pr-4 w-full">
+          <div className="my-4">{props.text}</div>
           {!!props.children && <div className="m2it-inside-box">{props.children}</div>}
         </div>
       </div>

@@ -106,7 +106,12 @@ export default function PostToc(props: PostTocProps) {
                 {!block?.properties?.title && <span className="block">{toc.text}</span>}
                 {block?.properties?.title && (
                   <span>
-                    <Text components={components} value={block.properties.title} block={block} />
+                    <Text
+                      ignoreMarkup={['_', 'a', 'b', 'u']}
+                      components={components}
+                      value={block.properties.title}
+                      block={block}
+                    />
                   </span>
                 )}
               </a>

@@ -25,7 +25,8 @@ export const Text: React.FC<{
   linkProtocol?: string
   inline?: boolean // TODO: currently unused
   components?: Partial<NotionComponents>
-}> = ({ value, block, linkProps, linkProtocol, components: inputComponents }) => {
+  ignoreMarkup?: ('b' | '_' | 'a' | 'u')[]
+}> = ({ value, block, linkProps, linkProtocol, components: inputComponents, ignoreMarkup }) => {
   const {
     components: ctxComponents,
     recordMap,
@@ -134,8 +135,10 @@ export const Text: React.FC<{
             case 'c':
               return <code className="notion-inline-code">{element}</code>
 
-            case 'b':
+            case 'b': {
+              if (ignoreMarkup?.includes('b')) return element
               return <strong>{element}</strong>
+            }
 
             case 'i':
               return <em className="italic">{element}</em>
@@ -143,8 +146,10 @@ export const Text: React.FC<{
             case 's':
               return <s>{element}</s>
 
-            case '_':
+            case '_': {
+              if (ignoreMarkup?.includes('_')) return element
               return <span className="underline underline-offset-4">{element}</span>
+            }
 
             case 'e':
               return <components.Equation math={decorator[1]} inline />
@@ -154,6 +159,7 @@ export const Text: React.FC<{
               return element // still need to return the base element
 
             case 'a': {
+              if (ignoreMarkup?.includes('_')) return element
               const v = decorator[1]
               const pathname = v.substr(1)
               const id = parsePageId(pathname, { uuid: true })
@@ -219,6 +225,7 @@ export const Text: React.FC<{
             }
 
             case 'u': {
+              if (ignoreMarkup?.includes('_')) return element
               const userId = decorator[1]
               const user = recordMap.notion_user[userId]?.value
 

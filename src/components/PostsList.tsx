@@ -22,6 +22,15 @@ export type PostType =
 
 export type PostListStyle = 'default' | 'carousel'
 
+export type CommonPostTypeOpts = {
+  fontClassName?: string
+  newLabel?: string
+  updatedLabel?: string
+  maxDaysWinthin?: number // within how many days to show 'new' or 'updated' label
+  updatedOnLabel?: string
+  addedOnLabel?: string
+}
+
 export type PostTypeOpts =
   | PostTitleCateDateOpts
   | PostCardWhiteBgOpts

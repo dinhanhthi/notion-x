@@ -1,26 +1,26 @@
 import cn from 'classnames'
 import { ImageProps } from 'next/image'
 import Link from 'next/link'
+import { getTextContent } from 'notion-utils'
 import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import { CommonPostTypeOpts } from '../components/PostsList'
+import { LazyImage } from '../components/lazy-image'
 import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import IoBookOutline from '../icons/IoBookOutline'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
+import { defaultMapImageUrl } from '../lib/map-image-url'
 
 export type PostTitleCateDateOpts = {
   hideCategory?: boolean
   hideDate?: boolean
-  fontClassName?: string
   defaultCategoryBgColor?: string
   defaultCategoryTextColor?: string
   imageProps?: Partial<ImageProps>
-  newLabel?: string
-  updatedLabel?: string
-  maxDaysWinthin?: number // within how many days to show 'new' or 'updated' label
-}
+} & CommonPostTypeOpts
 
 type PostTitleCateDateProps = {
   post: Post
@@ -30,7 +30,7 @@ type PostTitleCateDateProps = {
 export const TCDFIHeightClass = 'h-28'
 
 export default function PostTitleCateDate(props: PostTitleCateDateProps) {
-  const { title, featuredImage, date, categories, uri } = props.post
+  const { block, title, drawTitle, featuredImage, pageCover, date, categories, uri } = props.post
   const options = props.options
   const category = categories ? categories[0] : null
 
@@ -64,12 +64,25 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
                 {status === 'updatedWithin' && (props.options?.updatedLabel || 'updated')}
               </div>
             )}
-            <PostFeaturedImage
-              className="duration-300 group-hover:scale-110"
-              featuredImage={featuredImage}
-              title={title}
-              imageProps={props.options?.imageProps}
-            />
+            {featuredImage && (
+              <PostFeaturedImage
+                className="duration-300 group-hover:scale-110"
+                featuredImage={featuredImage}
+                title={title}
+                imageProps={props.options?.imageProps}
+              />
+            )}
+            {pageCover && (
+              <div className="relative hidden flex-[1_1_100px] sm:block">
+                <LazyImage
+                  src={defaultMapImageUrl(pageCover, block!)!}
+                  alt={getTextContent(drawTitle)}
+                  style={{
+                    objectFit: 'cover'
+                  }}
+                />
+              </div>
+            )}
           </div>
           {!options?.hideCategory && category && (
             <div

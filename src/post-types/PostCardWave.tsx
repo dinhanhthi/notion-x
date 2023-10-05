@@ -2,12 +2,12 @@ import cn from 'classnames'
 import Link from 'next/link'
 import React from 'react'
 
+import { CommonPostTypeOpts } from '../components/PostsList'
 import { Post } from '../interface'
 
 export type PostCardWaveOpts = {
-  fontClassName?: string
   colorIndex?: number
-}
+} & CommonPostTypeOpts
 
 type PostCardWaveProps = {
   post: Post

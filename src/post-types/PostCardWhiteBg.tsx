@@ -5,13 +5,13 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import { CommonPostTypeOpts } from '../components/PostsList'
 import { Post } from '../interface'
 
 export type PostCardWhiteBgOpts = {
   hideDate?: boolean
-  fontClassName?: string
   imageProps?: Partial<ImageProps>
-}
+} & CommonPostTypeOpts
 
 type PostTitleCateDateProps = {
   post: Post

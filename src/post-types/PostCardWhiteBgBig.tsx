@@ -8,6 +8,7 @@ import React from 'react'
 import DateComponent from '../components/DateComponent'
 import Excerpt from '../components/Excerpt'
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import { CommonPostTypeOpts } from '../components/PostsList'
 import AiOutlineClockCircle from '../icons/AiOutlineClockCircle'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
@@ -16,12 +17,8 @@ export type PostCardWhiteBgBigOpts = {
   hideDate?: boolean
   hideAuthor?: boolean
   hideExcerpt?: boolean
-  fontClassName?: string
   imageProps?: Partial<ImageProps>
-  newLabel?: string
-  updatedLabel?: string
-  maxDaysWinthin?: number // within how many days to show 'new' or 'updated' label
-}
+} & CommonPostTypeOpts
 
 type PostCardWhiteBgBigProps = {
   post: Post

@@ -4,12 +4,12 @@ import Link from 'next/link'
 import React from 'react'
 
 import PostFeaturedImage from '../components/PostFeaturedImage'
+import { CommonPostTypeOpts } from '../components/PostsList'
 import { Post } from '../interface'
 
 export type PostImageBackgroundOpts = {
-  fontClassName?: string
   imageProps?: Partial<ImageProps>
-}
+} & CommonPostTypeOpts
 
 type PostImageBackgroundProps = {
   post: Post

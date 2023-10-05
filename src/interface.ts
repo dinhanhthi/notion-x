@@ -1,5 +1,6 @@
 import { RichTextItemResponse } from '@notionhq/client/build/src/api-endpoints'
 import { StaticImageData } from 'next/image'
+import { Block } from 'notion-types'
 
 export type OptionalCatchAllProps = { params: OptionalCatchAllParams }
 export type OptionalCatchAllParams = { slug: string[] }
@@ -45,6 +46,7 @@ export interface Post extends PostHeaderType {
   uri: string
   id?: string
   excerpt?: RichTextItemResponse[]
+  block?: Block
 }
 
 export type Page = {

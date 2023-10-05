@@ -5,22 +5,19 @@ import Link from 'next/link'
 import React from 'react'
 
 import DateComponent from '../components/DateComponent'
+import { CommonPostTypeOpts } from '../components/PostsList'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
 
 export type PostSimpleOpts = {
   hideDate?: boolean
-  fontClassName?: string
   customIcon?: React.ReactNode
-  updatedOnLabel?: string
-  addedOnLabel?: string
-  newLabel?: string
   draftLabel?: string
   tooltipDraftLabel?: string
   humanizeDate?: boolean
   wellWrittenLabel?: string
-}
+} & CommonPostTypeOpts
 
 type PostSimpleProps = {
   post: Post

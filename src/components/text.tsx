@@ -25,7 +25,7 @@ export const Text: React.FC<{
   linkProtocol?: string
   inline?: boolean // TODO: currently unused
   components?: Partial<NotionComponents>
-  ignoreMarkup?: ('b' | '_' | 'a' | 'u')[]
+  ignoreMarkup?: ('b' | '_' | 'a' | 'u' | 'h')[]
 }> = ({ value, block, linkProps, linkProtocol, components: inputComponents, ignoreMarkup }) => {
   const {
     components: ctxComponents,
@@ -130,6 +130,7 @@ export const Text: React.FC<{
             }
 
             case 'h':
+              if (ignoreMarkup?.includes('h')) return element
               return <span className={`notion-${decorator[1]}`}>{element}</span>
 
             case 'c':

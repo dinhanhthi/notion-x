@@ -108,7 +108,7 @@ export default function PostToc(props: PostTocProps) {
                 {block?.properties?.title && (
                   <span>
                     <Text
-                      ignoreMarkup={['_', 'a', 'b', 'u']}
+                      ignoreMarkup={['_', 'a', 'b', 'u', 'h']}
                       components={components}
                       value={block.properties.title}
                       block={block}

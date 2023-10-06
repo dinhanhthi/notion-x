@@ -306,6 +306,10 @@ li::marker {
     @apply font-semibold text-gray-700;
   }
 
+  .m2it-table {
+    @apply my-0;
+  }
+
   .m2it-prose {
     @apply prose max-w-none leading-normal;
     @apply prose-a:m2it-link;
@@ -322,6 +326,7 @@ li::marker {
     @apply prose-code:m2it-code;
     @apply prose-figure:my-4;
     @apply prose-strong:m2it-strong;
+    @apply prose-table:m2it-table;
   }
 
   .notion-inline-code {

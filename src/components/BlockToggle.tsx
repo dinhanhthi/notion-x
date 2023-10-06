@@ -27,8 +27,8 @@ export default function BlockToggle(props: {
           <>
             <Disclosure.Button
               className={cn('toggle-button flex gap-2 w-full items-start p-2 rounded-md', {
-                'bg-gray-100 hover:bg-gray-200 toggle-open': open && !props.color,
-                'bg-gray-50 hover:bg-gray-100': !open && !props.color,
+                '!bg-gray-100 hover:!bg-gray-200 toggle-open': open && !props.color,
+                '!bg-gray-50 hover:!bg-gray-100': !open && !props.color,
                 'bg-[#0000000a]': !!props.color
               })}
             >

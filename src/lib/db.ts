@@ -19,31 +19,38 @@ export const notionMaxRequest = 100
 /**
  * Unofficial API for getting all pages in a database
  */
-export async function getUnofficialDatabaseImpl(): Promise<CollectionInstance> {
-  if (!process.env.SPACE_ID) throw new Error('process.env.SPACE_ID is not defined')
-  if (!process.env.SOURCE_ID) throw new Error('process.env.SOURCE_ID is not defined')
-  if (!process.env.COLLECTION_VIEW_ID)
-    throw new Error('process.env.COLLECTION_VIEW_ID is not defined')
-  if (!process.env.NOTION_TOKEN_V2) throw new Error('process.env.NOTION_TOKEN_V2 is not defined')
-  if (!process.env.NOTION_ACTIVE_USER)
-    throw new Error('process.env.NOTION_ACTIVE_USER is not defined')
-  if (!process.env.NOTION_API_WEB) throw new Error('process.env.NOTION_API_WEB is not defined')
+export async function getUnofficialDatabaseImpl(opts: {
+  spaceId?: string
+  sourceId?: string
+  collectionViewId?: string
+  notionTokenV2?: string
+  notionActiveUser?: string
+  notionApiWeb?: string
+}): Promise<CollectionInstance> {
+  const { spaceId, sourceId, collectionViewId, notionTokenV2, notionActiveUser, notionApiWeb } =
+    opts
+  if (!spaceId) throw new Error('spaceId is not defined')
+  if (!sourceId) throw new Error('sourceId is not defined')
+  if (!collectionViewId) throw new Error('collectionViewId is not defined')
+  if (!notionTokenV2) throw new Error('notionTokenV2 is not defined')
+  if (!notionActiveUser) throw new Error('notionActiveUser is not defined')
+  if (!notionApiWeb) throw new Error('notionApiWeb is not defined')
 
   const headers: any = {
     'Content-Type': 'application/json',
-    cookie: `token_v2=${process.env.NOTION_TOKEN_V2}`,
-    'x-notion-active-user-header': process.env.NOTION_ACTIVE_USER
+    cookie: `token_v2=${notionTokenV2}`,
+    'x-notion-active-user-header': notionActiveUser
   }
 
   const body = {
     collectionView: {
-      id: process.env.COLLECTION_VIEW_ID,
-      spaceId: process.env.SPACE_ID
+      id: collectionViewId,
+      spaceId
     },
     source: {
       type: 'collection',
-      id: process.env.SOURCE_ID,
-      spaceId: process.env.SPACE_ID
+      id: sourceId,
+      spaceId
     },
     loader: {
       type: 'reducer',
@@ -64,7 +71,7 @@ export async function getUnofficialDatabaseImpl(): Promise<CollectionInstance> {
     }
   }
 
-  const url = `${process.env.NOTION_API_WEB}/queryCollection`
+  const url = `${notionApiWeb}/queryCollection`
 
   return await fetch(url, {
     method: 'POST',

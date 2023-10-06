@@ -45,7 +45,8 @@ export default function SearchModal(props: SearchModalProps) {
     fetcher(url, params)
   )
 
-  const data = fullData ? fullData.filter(rs => rs.isPublished) : fullData
+  const data =
+    fullData && process.env.ENV_MODE === 'prod' ? fullData.filter(rs => rs.isPublished) : fullData
 
   if (error) console.log('🐞 Error in search modal: ', error)
 

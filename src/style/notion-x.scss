@@ -42,6 +42,16 @@ strong {
   code {
     background-color: #e5e5e5;
   }
+
+  .toggle-container {
+    background-color: rgb(249 250 251); // bg-gray-50
+  }
+
+  .toggle-button {
+    &.toggle-open, &:hover {
+      background-color: rgb(229 231 235); // bg-gray-200
+    }
+  }
 }
 
 .notion-brown_background {
@@ -245,12 +255,10 @@ li::marker {
 
 @layer base {
   .m2it-inside-box {
-    & > *:first-child {
-      margin-top: 0;
+    & > * {
+      margin-top: 0.75rem !important;
+      margin-bottom: 0.75rem !important;
     }
-    // & > *:last-child {
-    //   margin-bottom: 0;
-    // }
   }
 
   .m2it-link-hover {
@@ -270,7 +278,7 @@ li::marker {
   }
 
   .m2it-blockquote {
-    @apply my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
+    @apply font-normal my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
   }
 
   .m2it-li {

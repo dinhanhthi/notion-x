@@ -37,6 +37,8 @@ NOTION_API_WEB = "https://www.notion.so/api/v3"
 SPACE_ID = "xxx"
 SOURCE_ID = "xxx"
 COLLECTION_VIEW_ID = "xxx"
+# "dev" or "prod"
+ENV_MODE = "dev"
 ```
 
 Put in your `tsconfig.json`,

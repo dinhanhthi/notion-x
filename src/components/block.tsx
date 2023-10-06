@@ -53,7 +53,7 @@ interface BlockProps {
   children?: React.ReactNode
 }
 
-export const basicBlockGap = cn('!my-4')
+export const basicBlockGap = cn('my-4')
 
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
@@ -284,7 +284,7 @@ export const Block: React.FC<BlockProps> = props => {
       const innerHeader = (
         <>
           <span className="notion-h-title">
-            <Text value={block.properties.title} block={block} />
+            <Text ignoreMarkup={['b']} value={block.properties.title} block={block} />
           </span>
           {!block.format?.toggleable && (
             <a

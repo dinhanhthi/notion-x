@@ -97,7 +97,8 @@ export default function PostToc(props: PostTocProps) {
                 className={cn('flex items-baseline gap-2 hover:m2it-link text-sm py-1', {
                   'pl-4 border-l': isH3,
                   '-ml-1': isH2,
-                  'font-semibold hover:font-semibold': activeId === anchor && !props.inPost,
+                  'font-semibold hover:font-semibold text-slate-700 hover:m2it-link-hover':
+                    activeId === anchor && !props.inPost,
                   'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
                 })}
               >

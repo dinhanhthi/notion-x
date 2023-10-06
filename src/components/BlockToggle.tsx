@@ -18,7 +18,7 @@ export default function BlockToggle(props: {
     <div
       className={cn(
         mapColorClass(props.color),
-        'rounded-md border-[0.5px] border-slate-200',
+        'toggle-container rounded-md border-[0.5px] border-slate-200',
         props.className
       )}
     >
@@ -26,8 +26,8 @@ export default function BlockToggle(props: {
         {({ open }) => (
           <>
             <Disclosure.Button
-              className={cn('flex gap-2 w-full items-start p-2 rounded-md', {
-                'bg-gray-100 hover:bg-gray-200': open && !props.color,
+              className={cn('toggle-button flex gap-2 w-full items-start p-2 rounded-md', {
+                'bg-gray-100 hover:bg-gray-200 toggle-open': open && !props.color,
                 'bg-gray-50 hover:bg-gray-100': !open && !props.color,
                 'bg-[#0000000a]': !!props.color
               })}

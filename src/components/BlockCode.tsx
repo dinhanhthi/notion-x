@@ -42,23 +42,39 @@ export default function BlockCode(props: BlockCodeProps) {
   const copiedLabel = blockOptions?.blockCodeCopiedText || 'Copied'
   const copyLabel = blockOptions?.blockCodeCopyText || 'Copy'
 
+  const copyBtn = (
+    <button>
+      {!copied && <RxCopy className="text-lg text-slate-400 hover:text-slate-700" />}
+      {copied && <FiCheck className="text-lg text-green-600" />}
+    </button>
+  ) as any
+
+  const copyBtnWrapper = (
+    <CopyToClipboard text={content} onCopy={onSuccess}>
+      {copyBtn}
+    </CopyToClipboard>
+  )
+
+  const syntaxWraper = (
+    <SyntaxHighlighter
+      language={formatCodeLang(language)}
+      style={prism}
+      className={cn(
+        '!my-0 syntax-highlighter-pre m2it-scrollbar m2it-scrollbar-small border !bg-slate-50',
+        'max-h-[400px]'
+      )}
+      showLineNumbers={true}
+    >
+      {content}
+    </SyntaxHighlighter>
+  )
+
   return (
     <div className={cn(className, 'group flex flex-col gap-2')}>
       <div
         className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[14px]`}
       >
-        {/* @ts-expect-error Client Component */}
-        <SyntaxHighlighter
-          language={formatCodeLang(language)}
-          style={prism}
-          className={cn(
-            '!my-0 syntax-highlighter-pre m2it-scrollbar m2it-scrollbar-small border !bg-slate-50',
-            'max-h-[400px]'
-          )}
-          showLineNumbers={true}
-        >
-          {content}
-        </SyntaxHighlighter>
+        {syntaxWraper}
         <div
           className={cn(
             'tooltip-auto !absolute right-2 top-2 duration-100 hover:cursor-pointer group-hover:opacity-100',
@@ -68,13 +84,7 @@ export default function BlockCode(props: BlockCodeProps) {
           )}
           data-title={copied ? copiedLabel : copyLabel}
         >
-          {/* @ts-expect-error Client Component */}
-          <CopyToClipboard text={content} onCopy={onSuccess}>
-            <button>
-              {!copied && <RxCopy className="text-lg text-slate-400 hover:text-slate-700" />}
-              {copied && <FiCheck className="text-lg text-green-600" />}
-            </button>
-          </CopyToClipboard>
+          {copyBtnWrapper}
         </div>
       </div>
 

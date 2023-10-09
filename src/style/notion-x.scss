@@ -253,6 +253,17 @@ li::marker {
   margin-top: 1.25rem;
 }
 
+.notion-link {
+  strong {
+    color: rgb(1 92 170) !important;
+  }
+  &:hover {
+    strong {
+      color: rgb(219 39 119) !important;
+    }
+  }
+}
+
 @layer base {
   .m2it-inside-box {
     & > * {

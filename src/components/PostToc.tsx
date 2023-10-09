@@ -94,13 +94,16 @@ export default function PostToc(props: PostTocProps) {
               <a
                 key={toc.id}
                 href={`#${anchor}`}
-                className={cn('flex items-baseline gap-2 hover:m2it-link text-sm py-1', {
-                  'pl-4 border-l': isH3,
-                  '-ml-1': isH2,
-                  'font-semibold hover:font-semibold text-slate-700 hover:m2it-link-hover':
-                    activeId === anchor && !props.inPost,
-                  'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
-                })}
+                className={cn(
+                  'flex items-baseline gap-2 hover:m2it-link text-sm py-1 break-inside-avoid',
+                  {
+                    'pl-4 border-l': isH3,
+                    '-ml-1': isH2,
+                    'font-semibold hover:font-semibold text-slate-700 hover:m2it-link-hover':
+                      activeId === anchor && !props.inPost,
+                    'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
+                  }
+                )}
               >
                 {isH2 && <span className="text-[0.7rem] text-slate-400">◆</span>}
                 {isH3 && <span className="text-[0.6rem] text-slate-400">○</span>}

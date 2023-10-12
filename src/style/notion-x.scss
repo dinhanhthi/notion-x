@@ -272,6 +272,10 @@ li::marker {
   }
 }
 
+pre > code::before {
+  margin-left: -5px !important;
+}
+
 @layer base {
   .m2it-inside-box {
     & > * {

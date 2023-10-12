@@ -245,9 +245,12 @@ export default function SearchModal(props: SearchModalProps) {
                                     )}
                                   >
                                     <div
-                                      className={cn({
-                                        'pr-4 pb-1 border-b border-dashed': item.textHighlighted
-                                      })}
+                                      className={cn(
+                                        {
+                                          'pr-4 pb-1 border-b border-dashed': item.textHighlighted
+                                        },
+                                        'text-black'
+                                      )}
                                     >
                                       {item.titleHighlighted && (
                                         <span
@@ -269,7 +272,7 @@ export default function SearchModal(props: SearchModalProps) {
                                   </div>
                                   {item.textHighlighted && (
                                     <div
-                                      className="text-sm opacity-80"
+                                      className="text-sm opacity-[0.75]"
                                       dangerouslySetInnerHTML={{ __html: item.textHighlighted }}
                                     ></div>
                                   )}

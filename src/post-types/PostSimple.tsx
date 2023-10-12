@@ -6,6 +6,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
+import HiMiniCheckBadge from '../icons/HiMiniCheckBadge'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
@@ -34,9 +35,19 @@ export default function PostSimple(props: PostSimpleProps) {
         className={cn(options?.fontClassName, 'flex items-start gap-3 p-4')}
         href={post.uri || '/'}
       >
-        <div className={cn('mt-[3px] text-slate-600')}>
+        <div
+          className={cn('mt-[3px] text-slate-600 relative', {
+            'tooltip-auto': post.wellWritten
+          })}
+          data-title={options?.wellWrittenLabel ?? 'Well written, verified by me.'}
+        >
           {!!options?.customIcon && options.customIcon}
           {!options?.customIcon && <HiOutlineDocumentText className="text-xl" />}
+          {post.wellWritten && (
+            <span className="bg-white absolute bottom-[-5px] right-[-5px]">
+              <HiMiniCheckBadge className={cn('text-gray-500 text-sm')} />
+            </span>
+          )}
         </div>
         <h3 className="flex-1">
           {post.title}{' '}

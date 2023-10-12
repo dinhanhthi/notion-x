@@ -189,8 +189,9 @@ li::marker {
 }
 
 .notion-page-icon-hero {
+  flex-shrink: 0;
   width: 38px;
-  font-size: 30px;
+  font-size: 38px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -242,9 +243,16 @@ li::marker {
     content: attr(data-title);
     font-size: 0.85rem;
     padding: 2px 8px;
-    bottom: -30px;
-    left: 0;
-    white-space: nowrap;
+    bottom: -40px;
+    left: 5px;
+    line-height: 1.5;
+    top: 40px;
+    height: fit-content;
+    white-space: break-spaces;
+    width: max-content;
+    max-width: 250px;
+    letter-spacing: 0.5px;
+    font-weight: normal;
   }
 }
 

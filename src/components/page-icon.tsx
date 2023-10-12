@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import { Block, CalloutBlock, PageBlock } from 'notion-types'
 import { getBlockIcon, getBlockTitle } from 'notion-utils'
 import * as React from 'react'
@@ -19,10 +20,18 @@ const isIconBlock = (value: Block): value is PageBlock | CalloutBlock => {
 export const PageIconImpl: React.FC<{
   block: Block
   className?: string
+  wrapperClassName?: string
   inline?: boolean
   hideDefaultIcon?: boolean
   defaultIcon?: string
-}> = ({ block, className, inline = true, hideDefaultIcon = false, defaultIcon }) => {
+}> = ({
+  block,
+  className,
+  wrapperClassName,
+  inline = true,
+  hideDefaultIcon = false,
+  defaultIcon
+}) => {
   const { mapImageUrl, recordMap, darkMode } = useNotionContext()
   let isImage = false
   let content: any = null
@@ -78,9 +87,14 @@ export const PageIconImpl: React.FC<{
 
   return (
     <div
-      className={cs(
-        inline ? 'notion-page-icon-inline' : 'notion-page-icon-hero',
-        isImage ? 'notion-page-icon-image' : 'notion-page-icon-span'
+      className={cn(
+        {
+          'notion-page-icon-inline': inline,
+          'notion-page-icon-hero': !inline,
+          'notion-page-icon-image': isImage,
+          'notion-page-icon-span': !isImage
+        },
+        wrapperClassName
       )}
     >
       {content}

@@ -237,7 +237,7 @@ li::marker {
     opacity: 0;
     pointer-events: none;
     position: absolute;
-    background: rgba(0, 0, 0, 0.75);
+    background: #000;
     border-radius: 5px;
     color: #fff;
     content: attr(data-title);
@@ -246,7 +246,7 @@ li::marker {
     bottom: -40px;
     left: 5px;
     line-height: 1.5;
-    top: 40px;
+    top: 30px;
     height: fit-content;
     white-space: break-spaces;
     width: max-content;

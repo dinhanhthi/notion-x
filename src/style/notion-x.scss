@@ -339,6 +339,7 @@ pre > code::before {
     @apply prose-headings:m2it-headings;
     @apply prose-img:m2it-prose-img;
     @apply prose-blockquote:m2it-blockquote;
+    @apply prose-h1:text-[1.55rem];
     @apply prose-h2:text-[1.45rem];
     @apply prose-h3:text-[1.35rem];
     @apply prose-li:m2it-li;

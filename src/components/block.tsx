@@ -306,7 +306,7 @@ export const Block: React.FC<BlockProps> = props => {
 
       if (isH1) {
         headerBlock = (
-          <h1 id={anchor} className={classNameStr} data-id={id}>
+          <h1 id={anchor} className={cn(classNameStr, headingCommonClasss)} data-id={id}>
             {innerHeader}
           </h1>
         )

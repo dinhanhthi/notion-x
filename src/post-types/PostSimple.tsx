@@ -45,7 +45,7 @@ export default function PostSimple(props: PostSimpleProps) {
           {!options?.customIcon && <HiOutlineDocumentText className="text-xl" />}
           {post.wellWritten && (
             <span className="bg-white absolute bottom-[-5px] right-[-5px]">
-              <HiMiniCheckBadge className={cn('text-gray-500 text-sm')} />
+              <HiMiniCheckBadge className={cn('text-gray-400 text-sm')} />
             </span>
           )}
         </div>

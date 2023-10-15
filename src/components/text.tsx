@@ -51,11 +51,15 @@ export const Text: React.FC<{
         //   return null
         // }
 
+        const newText = (
+          <span dangerouslySetInnerHTML={{ __html: text.split('\n').join('<br />') }}></span>
+        )
+
         if (!decorations) {
           if (text === ',') {
             return <span key={index} style={{ padding: '0.5em' }} />
           } else {
-            return <React.Fragment key={index}>{text}</React.Fragment>
+            return <React.Fragment key={index}>{newText}</React.Fragment>
           }
         }
 
@@ -261,7 +265,7 @@ export const Text: React.FC<{
 
               return element
           }
-        }, <>{text}</>)
+        }, <>{newText}</>)
 
         return <React.Fragment key={index}>{formatted}</React.Fragment>
       })}

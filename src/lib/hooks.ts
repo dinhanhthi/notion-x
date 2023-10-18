@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 /**
  * Used to determine which heading is currently in view
  */
-export function useHeadsObserver() {
+export function useHeadsObserver(headings?: string[]) {
   const observer = useRef<IntersectionObserver | null>(null)
   const [activeId, setActiveId] = useState('')
 
@@ -20,10 +20,10 @@ export function useHeadsObserver() {
       rootMargin: '-100px 0% -80% 0px'
     })
 
-    const elements = document.querySelectorAll('h2, h3')
+    const elements = document.querySelectorAll(headings?.join(',') || 'h2, h3')
     elements.forEach(elem => observer?.current?.observe(elem))
     return () => observer.current?.disconnect()
-  }, [])
+  }, [headings])
 
   return { activeId }
 }

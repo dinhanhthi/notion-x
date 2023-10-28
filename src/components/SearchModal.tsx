@@ -37,16 +37,10 @@ export default function SearchModal(props: SearchModalProps) {
   const [selected, setSelected] = useState(-1)
   const router = useRouter()
 
-  const {
-    data: fullData,
-    error,
-    isLoading
-  } = useSWR<SearchResult[]>([props.url, { query: queryToSearch }], ([url, params]: any) =>
-    fetcher(url, params)
+  const { data, error, isLoading } = useSWR<SearchResult[]>(
+    [props.url, { query: queryToSearch }],
+    ([url, params]: any) => fetcher(url, params)
   )
-
-  const data =
-    fullData && process.env.ENV_MODE === 'prod' ? fullData.filter(rs => rs.isPublished) : fullData
 
   if (error) console.log('🐞 Error in search modal: ', error)
 

@@ -1,4 +1,4 @@
-import { BaseContentBlock, Block } from 'notion-types'
+import { BaseContentBlock, Block, PreviewImage } from 'notion-types'
 import { parsePageId } from 'notion-utils'
 import * as React from 'react'
 
@@ -12,7 +12,8 @@ const urlStyle = { width: '100%' }
 export const AssetWrapper: React.FC<{
   blockId: string
   block: Block
-}> = ({ blockId, block }) => {
+  customPreviewImage?: PreviewImage
+}> = ({ blockId, block, customPreviewImage }) => {
   const value = block as BaseContentBlock
   const { components, mapPageUrl, rootDomain, zoom } = useNotionContext()
 
@@ -38,7 +39,7 @@ export const AssetWrapper: React.FC<{
         blockId
       )}
     >
-      <Asset block={value} zoomable={zoom && !isURL}>
+      <Asset block={value} zoomable={zoom && !isURL} customPreviewImage={customPreviewImage}>
         {value?.properties?.caption && !isURL && (
           <figcaption className="notion-asset-caption text-center">
             <Text value={value.properties.caption} block={block} />

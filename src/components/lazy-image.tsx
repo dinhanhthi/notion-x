@@ -1,6 +1,7 @@
 'use client'
 
 /* eslint-disable @next/next/no-img-element */
+import { PreviewImage } from 'notion-types'
 import { normalizeUrl } from 'notion-utils'
 import * as React from 'react'
 import { ImageState, LazyImageFull } from 'react-lazy-images'
@@ -19,11 +20,24 @@ export const LazyImage: React.FC<{
   height?: number
   zoomable?: boolean
   priority?: boolean
-}> = ({ src, alt, className, style, zoomable = false, priority = false, height, ...rest }) => {
+  customPreviewImage?: PreviewImage
+}> = ({
+  src,
+  alt,
+  className,
+  customPreviewImage,
+  style,
+  zoomable = false,
+  priority = false,
+  height,
+  ...rest
+}) => {
   const { recordMap, zoom, previewImages, forceCustomImages, components } = useNotionContext()
 
   const zoomRef = React.useRef(zoom ? zoom.clone() : null)
-  const previewImage = previewImages
+  const previewImage = customPreviewImage
+    ? customPreviewImage
+    : previewImages
     ? recordMap?.preview_images?.[src as any] ?? recordMap?.preview_images?.[normalizeUrl(src)]
     : null
 

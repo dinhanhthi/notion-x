@@ -2,7 +2,7 @@
 
 /* eslint-disable jsx-a11y/anchor-has-content */
 // import dynamic from 'next/dynamic'
-import { ExtendedRecordMap } from 'notion-types'
+import { ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
 import { AssetWrapper } from '../components/asset-wrapper'
@@ -32,6 +32,7 @@ export interface NotionContext {
   rootPageId?: string
   rootDomain?: string
   blockOptions?: BlockOptionsContextType
+  customPreviewImage?: PreviewImage
 
   fullPage: boolean
   darkMode: boolean
@@ -168,6 +169,7 @@ const defaultNotionContext: NotionContext = {
   showTableOfContents: false,
   minTableOfContentsItems: 3,
   blockOptions: null as any,
+  customPreviewImage: null as any,
 
   defaultPageIcon: null as any,
   defaultPageCover: null as any,

@@ -1,4 +1,4 @@
-import { BaseContentBlock, Block } from 'notion-types'
+import { BaseContentBlock, Block, PreviewImage } from 'notion-types'
 import { getTextContent } from 'notion-utils'
 import * as React from 'react'
 
@@ -27,7 +27,8 @@ export const Asset: React.FC<{
   block: BaseContentBlock
   children: any
   zoomable?: boolean
-}> = ({ block, zoomable = true, children }) => {
+  customPreviewImage?: PreviewImage
+}> = ({ block, zoomable = true, children, customPreviewImage }) => {
   const { recordMap, mapImageUrl, components } = useNotionContext()
 
   if (!block || !supportedAssetTypes.includes(block.type)) {
@@ -265,6 +266,7 @@ export const Asset: React.FC<{
         zoomable={zoomable}
         height={style.height as number}
         style={assetStyle}
+        customPreviewImage={customPreviewImage}
       />
     )
   }

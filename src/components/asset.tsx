@@ -211,8 +211,6 @@ export const Asset: React.FC<{
           }
 
           assetStyle.width = '100%'
-          style.paddingBottom = '50%'
-
           // TODO: GitHub gists do not resize their height properly
           content = (
             <iframe
@@ -273,7 +271,7 @@ export const Asset: React.FC<{
 
   return (
     <>
-      <div style={style}>
+      <div style={style} className="m2it-scrollbar">
         {content}
         {block.type === 'image' && children}
       </div>

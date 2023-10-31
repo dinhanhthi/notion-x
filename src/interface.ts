@@ -40,6 +40,7 @@ export type PostHeaderType = {
   pageCover?: string
   coverPosition?: number
   wellWritten?: boolean
+  pinned?: boolean
 }
 
 export interface Post extends PostHeaderType {

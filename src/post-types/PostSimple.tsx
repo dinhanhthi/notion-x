@@ -6,6 +6,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
+import BsPinAngleFill from '../icons/BsPinAngleFill'
 import HiMiniCheckBadge from '../icons/HiMiniCheckBadge'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
 import { Post } from '../interface'
@@ -18,6 +19,7 @@ export type PostSimpleOpts = {
   tooltipDraftLabel?: string
   humanizeDate?: boolean
   wellWrittenLabel?: string
+  showPinned?: boolean
 } & CommonPostTypeOpts
 
 type PostSimpleProps = {
@@ -41,10 +43,13 @@ export default function PostSimple(props: PostSimpleProps) {
           })}
           data-title={options?.wellWrittenLabel ?? 'Well written, verified by me.'}
         >
-          {!!options?.customIcon && options.customIcon}
-          {!options?.customIcon && <HiOutlineDocumentText className="text-xl" />}
+          {!!options?.customIcon && (!options.showPinned || !post.pinned) && options.customIcon}
+          {!options?.customIcon && (!options?.showPinned || !post.pinned) && (
+            <HiOutlineDocumentText className="text-xl" />
+          )}
+          {options?.showPinned && post.pinned && <BsPinAngleFill className="text-xl" />}
           {post.wellWritten && (
-            <span className="bg-white absolute bottom-[-5px] right-[-5px]">
+            <span className="bg-transparent absolute bottom-[-5px] right-[-5px]">
               <HiMiniCheckBadge className={cn('text-gray-400 text-sm')} />
             </span>
           )}

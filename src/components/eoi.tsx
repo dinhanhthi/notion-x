@@ -1,10 +1,10 @@
+import cn from 'classnames'
 import { Block } from 'notion-types'
 import * as React from 'react'
 
-import SvgTypeGitHub from '../icons/type-github'
-import { useNotionContext } from '../lib/context'
-import { cs, formatNotionDateTime } from '../lib/utils'
-import { MentionPreviewCard } from './mention-preview-card'
+import FaGithub from '../icons/FaGithub'
+import RxDotFilled from '../icons/RxDotFilled'
+import { formatNotionDateTime } from '../lib/utils'
 
 // External Object Instance
 export const EOI: React.FC<{
@@ -12,7 +12,6 @@ export const EOI: React.FC<{
   inline?: boolean
   className?: string
 }> = ({ block, inline, className }) => {
-  const { components } = useNotionContext()
   const { original_url, attributes, domain } = block?.format || {}
   if (!original_url || !attributes) {
     return null
@@ -23,11 +22,9 @@ export const EOI: React.FC<{
   const lastUpdatedAt = attributes.find((attr: { id: string }) => attr.id === 'updated_at')
     ?.values[0]
   const lastUpdated = lastUpdatedAt ? formatNotionDateTime(lastUpdatedAt) : null
-  let externalImage: React.ReactNode
 
   switch (domain) {
     case 'github.com':
-      externalImage = <SvgTypeGitHub />
       if (owner) {
         const parts = owner.split('/')
         owner = parts[parts.length - 1]
@@ -46,31 +43,52 @@ export const EOI: React.FC<{
   }
 
   return (
-    <components.Link
-      target="_blank"
-      rel="noopener noreferrer"
-      href={original_url}
-      className={cs(
-        'notion-external',
-        inline ? 'notion-external-mention' : 'notion-external-block notion-row',
-        className
+    <>
+      {!inline && (
+        <a
+          className={cn(
+            'not-prose p-3 border border-slate-200 overflow-hidden rounded-md',
+            'hover:cursor-pointer hover:border-sky-300 hover:shadow-sm',
+            'flex gap-3 flex-row items-center group'
+          )}
+          target="_blank"
+          href={original_url}
+          rel="noopener noreferrer"
+        >
+          <div>
+            <FaGithub className="text-4xl" />
+          </div>
+          <div className={cn('flex gap-0 flex-col')}>
+            <div className="text-base m2it-link group-hover:m2it-link-hover">{title}</div>
+            <div className="flex flex-row gap-1 items-center text-gray-500 text-sm">
+              <div>{owner}</div>
+              <RxDotFilled />
+              <div>{lastUpdated}</div>
+            </div>
+          </div>
+        </a>
       )}
-    >
-      {externalImage && <div className="notion-external-image">{externalImage}</div>}
-
-      <div className="notion-external-description">
-        <div className="notion-external-title">{title}</div>
-
-        {(owner || lastUpdated) && (
-          <MentionPreviewCard
-            title={title}
-            owner={owner}
-            lastUpdated={lastUpdated as any}
-            domain={domain}
-            externalImage={externalImage}
-          />
-        )}
-      </div>
-    </components.Link>
+      {inline && (
+        <a
+          className={cn(
+            'not-prose px-1',
+            'hover:cursor-pointer hover:border-sky-300 hover:shadow-sm',
+            'inline-flex gap-1 flex-row items-baseline group'
+          )}
+          target="_blank"
+          href={original_url}
+          rel="noopener noreferrer"
+        >
+          <FaGithub className="text-sm" />
+          <div
+            className={cn(
+              'text-base m2it-link group-hover:m2it-link-hover border-b border-slate-200 leading-[1.1]'
+            )}
+          >
+            {title}
+          </div>
+        </a>
+      )}
+    </>
   )
 }

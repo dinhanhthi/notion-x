@@ -764,8 +764,9 @@ export const Block: React.FC<BlockProps> = props => {
       )
     }
 
-    case 'external_object_instance':
+    case 'external_object_instance': {
       return <EOI block={block} className={blockId} />
+    }
 
     default:
       if (process.env.NODE_ENV !== 'production') {

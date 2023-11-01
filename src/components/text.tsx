@@ -180,9 +180,15 @@ export const Text: React.FC<{
                   </components.PageLink>
                 )
               } else {
+                let hostName = ''
+                try {
+                  hostName = new URL(decorator[1]).hostname
+                } catch (_) {
+                  hostName = ''
+                }
                 if (
-                  decorator[1]?.includes('localhost') ||
-                  decorator[1]?.includes(blockOptions?.siteDomain || 'cannotBeIncluded')
+                  hostName === 'localhost' ||
+                  hostName?.includes(blockOptions?.siteDomain || 'cannotBeIncluded')
                 ) {
                   return (
                     <components.PageLink className="notion-link" href={removeBaseUrl(decorator[1])}>

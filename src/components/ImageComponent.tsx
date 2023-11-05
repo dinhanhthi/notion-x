@@ -21,14 +21,14 @@ export default function ImageComponent(props: ImageComponentProps) {
   const image = () =>
     props.image?.staticImageData ? (
       <Image
-        alt={props.alt || 'Tên hình không xác định'}
+        alt={props.alt || 'Unnamed image'}
         src={props.image.staticImageData}
         className={props.className}
         {...props.imageProps}
       />
     ) : props.image?.sourceUrl && props.image?.blurDataURL ? (
       <Image
-        alt={props.alt || 'Tên hình không xác định'}
+        alt={props.alt || 'Unnamed image'}
         src={props.image.sourceUrl}
         className={props.className}
         placeholder="blur"
@@ -37,7 +37,7 @@ export default function ImageComponent(props: ImageComponentProps) {
       />
     ) : props.defaultImage ? (
       <Image
-        alt={props.alt || 'Tên hình không xác định'}
+        alt={props.alt || 'Unnamed image'}
         src={props.defaultImage}
         className={props.className}
         {...props.imageProps}

@@ -6,7 +6,7 @@ import cn from 'classnames'
 import * as types from 'notion-types'
 import slugify from 'slugify'
 
-import { AnnotationIgnoreField, Post, Tag } from '../interface'
+import { AnnotationIgnoreField, Tag } from '../interface'
 
 export function generateAnchor(blockId: string, text: string) {
   return `${makeSlugText(text)}-${blockId.slice(-5)}`
@@ -184,7 +184,7 @@ export function isDateAfter(date1?: string, date2?: string): boolean {
  */
 export function getStartCursorForCurrentPage(
   currentPage: number,
-  posts: Post[],
+  posts: any,
   postsPerPage: number
 ): string | undefined {
   if (posts?.length === 0) return undefined

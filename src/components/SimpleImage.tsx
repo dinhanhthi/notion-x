@@ -1,5 +1,6 @@
 'use client'
 
+import mediumZoom from '@fisch0920/medium-zoom'
 import cn from 'classnames'
 import React, { useEffect, useState } from 'react'
 
@@ -15,10 +16,12 @@ type SimpleImageProps = {
   className?: string
   style?: React.CSSProperties
   imagePlaceholder?: React.ReactNode
+  zoomable?: boolean
 }
 
 export default function SimpleImage(props: SimpleImageProps) {
   const [loaded, setLoaded] = useState(false)
+  const isZoomable = props.zoomable ?? false
 
   useEffect(() => {
     if (props.src) {
@@ -29,6 +32,33 @@ export default function SimpleImage(props: SimpleImageProps) {
       }
     }
   }, [props.src])
+
+  const zoom = React.useMemo(
+    () =>
+      typeof window !== 'undefined' &&
+      mediumZoom({
+        background: 'rgba(0, 0, 0, 0.8)',
+        minZoomScale: 2.0,
+        margin: getMediumZoomMargin()
+      }),
+    []
+  )
+
+  const zoomRef = React.useRef(zoom ? zoom.clone() : null)
+
+  const attachZoom = React.useCallback(
+    (image: any) => {
+      if (zoomRef.current && image) {
+        ;(zoomRef.current as any).attach(image)
+      }
+    },
+    [zoomRef]
+  )
+
+  const attachZoomRef = React.useMemo(
+    () => (isZoomable ? attachZoom : undefined),
+    [isZoomable, attachZoom]
+  )
 
   return (
     <>
@@ -61,10 +91,29 @@ export default function SimpleImage(props: SimpleImageProps) {
             width: props.width || props.style?.width,
             height: props.height || props.style?.height
           }}
+          ref={attachZoomRef}
           loading="lazy"
           decoding="async"
         />
       )}
     </>
   )
+}
+
+function getMediumZoomMargin() {
+  const width = window.innerWidth
+
+  if (width < 500) {
+    return 8
+  } else if (width < 800) {
+    return 20
+  } else if (width < 1280) {
+    return 30
+  } else if (width < 1600) {
+    return 40
+  } else if (width < 1920) {
+    return 48
+  } else {
+    return 72
+  }
 }

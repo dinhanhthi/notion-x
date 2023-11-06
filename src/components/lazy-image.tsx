@@ -1,13 +1,17 @@
 'use client'
 
 /* eslint-disable @next/next/no-img-element */
+import cn from 'classnames'
+import { isNumber } from 'lodash'
 import { PreviewImage } from 'notion-types'
 import { normalizeUrl } from 'notion-utils'
 import * as React from 'react'
 import { ImageState, LazyImageFull } from 'react-lazy-images'
 
+import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
 import { useNotionContext } from '../lib/context'
 import { cs } from '../lib/utils'
+import SimpleImage from './SimpleImage'
 
 /**
  * Progressive, lazy images modeled after Medium's LQIP technique.
@@ -172,16 +176,55 @@ export const LazyImage: React.FC<{
 
     // Default image element
     return (
-      <img
+      // <img
+      //   className={className}
+      //   style={style}
+      //   src={src}
+      //   alt={alt}
+      //   ref={attachZoomRef}
+      //   loading="lazy"
+      //   decoding="async"
+      //   {...rest}
+      // />
+      <SimpleImage
+        imagePlaceholder={ImagePlaceholder({ height, className, style })}
+        zoomable={true}
+        src={src!}
+        alt={alt}
         className={className}
         style={style}
-        src={src}
-        alt={alt}
-        ref={attachZoomRef}
-        loading="lazy"
-        decoding="async"
-        {...rest}
       />
     )
   }
+}
+
+const ImagePlaceholder = (props: {
+  width?: string | number
+  height?: string | number
+  className?: string
+  style?: React.CSSProperties
+}) => {
+  const { width, height } = props
+  const widthToUse = width || props.style?.width || '80%'
+  const heightToUse = isNumber(height)
+    ? height
+    : isNumber(props.style?.height)
+    ? props.style?.height
+    : widthToUse && isNumber(widthToUse)
+    ? (widthToUse * 2) / 3
+    : '200px'
+  return (
+    <div
+      style={{
+        width: widthToUse,
+        height: heightToUse
+      }}
+      className={cn(
+        'bg-gray-100 flex items-center justify-center animate-pulse rounded-lg mx-auto',
+        props.className
+      )}
+    >
+      <PiImageSquareDuotone className="text-[25px] text-slate-400" />
+    </div>
+  )
 }

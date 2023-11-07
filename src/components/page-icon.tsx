@@ -3,7 +3,7 @@ import { Block, CalloutBlock, PageBlock } from 'notion-types'
 import { getBlockIcon, getBlockTitle } from 'notion-utils'
 import * as React from 'react'
 
-import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
+import AiOutlineLoading3Quarters from '../icons/AiOutlineLoading3Quarters'
 import { DefaultPageIcon } from '../icons/default-page-icon'
 import { useNotionContext } from '../lib/context'
 import { cs, isUrl } from '../lib/utils'
@@ -41,11 +41,11 @@ export const PageIconImpl: React.FC<{
     return (
       <div
         className={cn(
-          'bg-gray-100 flex items-center justify-center animate-pulse rounded-full mx-auto',
-          'flex items-center justify-center h-full w-full'
+          'bg-gray-100 flex items-center justify-center rounded-full mx-auto',
+          'flex items-center justify-center h-full w-full animate-pulse'
         )}
       >
-        <PiImageSquareDuotone className="text-[25px] text-slate-400" />
+        <AiOutlineLoading3Quarters className={cn('animate-spin text-[20px] text-slate-400')} />
       </div>
     )
   }

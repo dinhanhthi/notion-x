@@ -8,7 +8,7 @@ import { normalizeUrl } from 'notion-utils'
 import * as React from 'react'
 import { ImageState, LazyImageFull } from 'react-lazy-images'
 
-import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
+import AiOutlineLoading3Quarters from '../icons/AiOutlineLoading3Quarters'
 import { useNotionContext } from '../lib/context'
 import { cs } from '../lib/utils'
 import SimpleImage, { SimpleImageProps } from './SimpleImage'
@@ -237,8 +237,7 @@ const ImagePlaceholder = (props: {
         props.className
       )}
     >
-      <PiImageSquareDuotone className="text-[25px] text-slate-400" />
-      <div className="text-slate-500 text-sm">Loading...</div>
+      <AiOutlineLoading3Quarters className="text-[30px] text-slate-400 animate-spin" />
     </div>
   )
 }

@@ -4,6 +4,7 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import { ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { SimpleImageProps } from '../components/SimpleImage'
 import { Block } from '../components/block'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from '../types'
 import { BlockOptionsContextType, NotionContextProvider, useNotionContext } from './context'
@@ -22,6 +23,8 @@ export const NotionRenderer: React.FC<{
   rootDomain?: string
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
 
   // set fullPage to false to render page content only
   // this will remove the header, cover image, and footer
@@ -69,6 +72,8 @@ export const NotionRenderer: React.FC<{
   rootDomain,
   blockOptions,
   customPreviewImage,
+  useSimpleImage,
+  simpleImageProps,
   darkMode,
   previewImages,
   forceCustomImages,
@@ -115,6 +120,8 @@ export const NotionRenderer: React.FC<{
       showTableOfContents={showTableOfContents}
       blockOptions={blockOptions}
       customPreviewImage={customPreviewImage}
+      useSimpleImage={useSimpleImage}
+      simpleImageProps={simpleImageProps}
       minTableOfContentsItems={minTableOfContentsItems}
       defaultPageIcon={defaultPageIcon}
       defaultPageCover={defaultPageCover}

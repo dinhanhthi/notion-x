@@ -8,8 +8,8 @@ import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
 
 /* eslint-disable @next/next/no-img-element */
 
-type SimpleImageProps = {
-  src: string
+export type SimpleImageProps = {
+  src?: string
   alt?: string
   width?: number
   height?: number
@@ -81,7 +81,7 @@ export default function SimpleImage(props: SimpleImageProps) {
           )}
         </>
       )}
-      {loaded && (
+      {loaded && props.src && (
         <img
           src={props.src}
           alt={props.alt || 'Undefined image name'}

@@ -11,7 +11,7 @@ import { ImageState, LazyImageFull } from 'react-lazy-images'
 import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
 import { useNotionContext } from '../lib/context'
 import { cs } from '../lib/utils'
-import SimpleImage from './SimpleImage'
+import SimpleImage, { SimpleImageProps } from './SimpleImage'
 
 /**
  * Progressive, lazy images modeled after Medium's LQIP technique.
@@ -25,6 +25,8 @@ export const LazyImage: React.FC<{
   zoomable?: boolean
   priority?: boolean
   customPreviewImage?: PreviewImage
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
 }> = ({
   src,
   alt,
@@ -34,6 +36,8 @@ export const LazyImage: React.FC<{
   zoomable = false,
   priority = false,
   height,
+  useSimpleImage = false,
+  simpleImageProps,
   ...rest
 }) => {
   const { recordMap, zoom, previewImages, forceCustomImages, components } = useNotionContext()
@@ -176,24 +180,32 @@ export const LazyImage: React.FC<{
 
     // Default image element
     return (
-      // <img
-      //   className={className}
-      //   style={style}
-      //   src={src}
-      //   alt={alt}
-      //   ref={attachZoomRef}
-      //   loading="lazy"
-      //   decoding="async"
-      //   {...rest}
-      // />
-      <SimpleImage
-        imagePlaceholder={ImagePlaceholder({ height, className, style })}
-        zoomable={true}
-        src={src!}
-        alt={alt}
-        className={className}
-        style={style}
-      />
+      <>
+        {!useSimpleImage && (
+          <img
+            className={className}
+            style={style}
+            src={src}
+            alt={alt}
+            ref={attachZoomRef}
+            loading="lazy"
+            decoding="async"
+            {...rest}
+          />
+        )}
+        {useSimpleImage && (
+          <SimpleImage
+            imagePlaceholder={
+              simpleImageProps?.imagePlaceholder || ImagePlaceholder({ height, className, style })
+            }
+            zoomable={simpleImageProps?.zoomable ?? zoomable}
+            src={src!}
+            alt={alt}
+            className={className}
+            style={simpleImageProps?.style ?? style}
+          />
+        )}
+      </>
     )
   }
 }
@@ -208,7 +220,7 @@ const ImagePlaceholder = (props: {
   const widthToUse = width || props.style?.width || '80%'
   const heightToUse = isNumber(height)
     ? height
-    : isNumber(props.style?.height)
+    : props.style?.height
     ? props.style?.height
     : widthToUse && isNumber(widthToUse)
     ? (widthToUse * 2) / 3
@@ -221,10 +233,12 @@ const ImagePlaceholder = (props: {
       }}
       className={cn(
         'bg-gray-100 flex items-center justify-center animate-pulse rounded-lg mx-auto',
+        'flex items-center flex-col gap-1',
         props.className
       )}
     >
       <PiImageSquareDuotone className="text-[25px] text-slate-400" />
+      <div className="text-slate-500 text-sm">Loading...</div>
     </div>
   )
 }

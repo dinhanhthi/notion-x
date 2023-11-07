@@ -8,12 +8,15 @@ import * as React from 'react'
 
 import { BlockOptionsContextType } from '../lib/context'
 import { NotionRenderer } from '../lib/renderer'
+import { SimpleImageProps } from './SimpleImage'
 
 type PostBodyProps = {
   recordMap: ExtendedRecordMap
   className?: string
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
 }
 
 const Equation = dynamic(() => import('./BlockEquation'))
@@ -45,6 +48,8 @@ export default function PostBody(props: PostBodyProps) {
         previewImages={true}
         blockOptions={props.blockOptions}
         customPreviewImage={props.customPreviewImage}
+        useSimpleImage={props.useSimpleImage}
+        simpleImageProps={props.simpleImageProps}
       />
     </div>
   )

@@ -5,6 +5,7 @@
 import { ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { SimpleImageProps } from '../components/SimpleImage'
 import { AssetWrapper } from '../components/asset-wrapper'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from '../types'
 import { wrapNextImage, wrapNextLink } from './next'
@@ -33,6 +34,8 @@ export interface NotionContext {
   rootDomain?: string
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
 
   fullPage: boolean
   darkMode: boolean
@@ -170,6 +173,8 @@ const defaultNotionContext: NotionContext = {
   minTableOfContentsItems: 3,
   blockOptions: null as any,
   customPreviewImage: null as any,
+  useSimpleImage: false as any,
+  simpleImageProps: null as any,
 
   defaultPageIcon: null as any,
   defaultPageCover: null as any,

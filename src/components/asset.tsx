@@ -3,6 +3,7 @@ import { getTextContent } from 'notion-utils'
 import * as React from 'react'
 
 import { useNotionContext } from '../lib/context'
+import { SimpleImageProps } from './SimpleImage'
 import { LazyImage } from './lazy-image'
 
 const isServer = typeof window === 'undefined'
@@ -28,7 +29,16 @@ export const Asset: React.FC<{
   children: any
   zoomable?: boolean
   customPreviewImage?: PreviewImage
-}> = ({ block, zoomable = true, children, customPreviewImage }) => {
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
+}> = ({
+  block,
+  zoomable = true,
+  children,
+  customPreviewImage,
+  useSimpleImage,
+  simpleImageProps
+}) => {
   const { recordMap, mapImageUrl, components } = useNotionContext()
 
   if (!block || !supportedAssetTypes.includes(block.type)) {
@@ -265,6 +275,8 @@ export const Asset: React.FC<{
         height={style.height as number}
         style={assetStyle}
         customPreviewImage={customPreviewImage}
+        useSimpleImage={useSimpleImage}
+        simpleImageProps={simpleImageProps}
       />
     )
   }

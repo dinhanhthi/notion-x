@@ -4,6 +4,7 @@ import * as React from 'react'
 
 import { useNotionContext } from '../lib/context'
 import { cs } from '../lib/utils'
+import { SimpleImageProps } from './SimpleImage'
 import { Asset } from './asset'
 import { Text } from './text'
 
@@ -13,7 +14,9 @@ export const AssetWrapper: React.FC<{
   blockId: string
   block: Block
   customPreviewImage?: PreviewImage
-}> = ({ blockId, block, customPreviewImage }) => {
+  useSimpleImage?: boolean
+  simpleImageProps?: SimpleImageProps
+}> = ({ blockId, block, customPreviewImage, useSimpleImage, simpleImageProps }) => {
   const value = block as BaseContentBlock
   const { components, mapPageUrl, rootDomain, zoom } = useNotionContext()
 
@@ -39,7 +42,13 @@ export const AssetWrapper: React.FC<{
         blockId
       )}
     >
-      <Asset block={value} zoomable={zoom && !isURL} customPreviewImage={customPreviewImage}>
+      <Asset
+        useSimpleImage={useSimpleImage}
+        simpleImageProps={simpleImageProps}
+        block={value}
+        zoomable={zoom && !isURL}
+        customPreviewImage={customPreviewImage}
+      >
         {value?.properties?.caption && !isURL && (
           <figcaption className="notion-asset-caption text-center">
             <Text value={value.properties.caption} block={block} />

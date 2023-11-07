@@ -76,7 +76,9 @@ export const Block: React.FC<BlockProps> = props => {
     defaultPageIcon,
     defaultPageCoverPosition,
     blockOptions,
-    customPreviewImage
+    customPreviewImage,
+    useSimpleImage,
+    simpleImageProps
   } = ctx
 
   const [activeSection, setActiveSection] = React.useState(null)
@@ -446,7 +448,13 @@ export const Block: React.FC<BlockProps> = props => {
     // fallthrough
     case 'gist':
       return (
-        <AssetWrapper blockId={blockId} block={block} customPreviewImage={customPreviewImage} />
+        <AssetWrapper
+          useSimpleImage={useSimpleImage}
+          simpleImageProps={simpleImageProps}
+          blockId={blockId}
+          block={block}
+          customPreviewImage={customPreviewImage}
+        />
       )
 
     case 'video':

@@ -3,6 +3,7 @@ import { Block, CalloutBlock, PageBlock } from 'notion-types'
 import { getBlockIcon, getBlockTitle } from 'notion-utils'
 import * as React from 'react'
 
+import PiImageSquareDuotone from '../icons/PiImageSquareDuotone'
 import { DefaultPageIcon } from '../icons/default-page-icon'
 import { useNotionContext } from '../lib/context'
 import { cs, isUrl } from '../lib/utils'
@@ -36,6 +37,19 @@ export const PageIconImpl: React.FC<{
   let isImage = false
   let content: any = null
 
+  const ImagePlaceholder = () => {
+    return (
+      <div
+        className={cn(
+          'bg-gray-100 flex items-center justify-center animate-pulse rounded-full mx-auto',
+          'flex items-center justify-center h-full w-full'
+        )}
+      >
+        <PiImageSquareDuotone className="text-[25px] text-slate-400" />
+      </div>
+    )
+  }
+
   if (isIconBlock(block)) {
     const icon = getBlockIcon(block, recordMap)?.trim() || defaultIcon
     const title = getBlockTitle(block, recordMap)
@@ -49,6 +63,8 @@ export const PageIconImpl: React.FC<{
           src={url}
           alt={title || 'page icon'}
           className={cs(className, 'notion-page-icon')}
+          useSimpleImage={true}
+          simpleImageProps={{ imagePlaceholder: ImagePlaceholder() }}
         />
       )
     } else if (icon && icon.startsWith('/icons/')) {
@@ -59,6 +75,8 @@ export const PageIconImpl: React.FC<{
           src={url}
           alt={title || 'page icon'}
           className={cs(className, 'notion-page-icon')}
+          useSimpleImage={true}
+          simpleImageProps={{ imagePlaceholder: ImagePlaceholder() }}
         />
       )
     } else if (!icon) {

@@ -39,9 +39,9 @@ export default function DateComponent(props: DateProps) {
     } else if (diffDays <= 7) {
       setHumanized(`${diffDays} ${props.humanizeOpts?.daysAgo || 'days ago'}`)
     } else if (diffDays <= 30) {
-      setHumanized(`${Math.ceil(diffDays / 7)} ${props.humanizeOpts?.weeksAgo || 'weeks ago'}`)
+      setHumanized(`${Math.floor(diffDays / 7)} ${props.humanizeOpts?.weeksAgo || 'weeks ago'}`)
     } else if (diffDays <= 365) {
-      setHumanized(`${Math.ceil(diffDays / 30)} ${props.humanizeOpts?.monthsAgo || 'months ago'}`)
+      setHumanized(`${Math.floor(diffDays / 30)} ${props.humanizeOpts?.monthsAgo || 'months ago'}`)
     } else {
       setHumanized(fullDate)
     }

@@ -20,6 +20,7 @@ export type PostSimpleOpts = {
   humanizeDate?: boolean
   wellWrittenLabel?: string
   showPinned?: boolean
+  maxDaysWinthin?: number
 } & CommonPostTypeOpts
 
 type PostSimpleProps = {
@@ -29,7 +30,7 @@ type PostSimpleProps = {
 
 export default function PostSimple(props: PostSimpleProps) {
   const { post, options } = props
-  const status = usePostDateStatus(post.createdDate!, post.date!, 7)
+  const status = usePostDateStatus(post.createdDate!, post.date!, options?.maxDaysWinthin || 7)
 
   return (
     <div className="group hover:bg-slate-50">

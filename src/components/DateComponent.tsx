@@ -38,8 +38,12 @@ export default function DateComponent(props: DateProps) {
       setHumanized(props.humanizeOpts?.yesterday || 'yesterday')
     } else if (diffDays <= 7) {
       setHumanized(`${diffDays} ${props.humanizeOpts?.daysAgo || 'days ago'}`)
+    } else if (diffDays <= 13) {
+      setHumanized(`${Math.floor(diffDays / 7)} ${props.humanizeOpts?.weeksAgo || 'week ago'}`)
     } else if (diffDays <= 30) {
       setHumanized(`${Math.floor(diffDays / 7)} ${props.humanizeOpts?.weeksAgo || 'weeks ago'}`)
+    } else if (diffDays <= 59) {
+      setHumanized(`${Math.floor(diffDays / 30)} ${props.humanizeOpts?.monthsAgo || 'month ago'}`)
     } else if (diffDays <= 365) {
       setHumanized(`${Math.floor(diffDays / 30)} ${props.humanizeOpts?.monthsAgo || 'months ago'}`)
     } else {

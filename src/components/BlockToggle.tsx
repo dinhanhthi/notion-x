@@ -34,7 +34,7 @@ export default function BlockToggle(props: {
             >
               <BsFillCaretRightFill
                 className={cn(
-                  'mt-[3px] text-lg transform ease-in-out transition-all duration-[400ms]',
+                  'mt-[3px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms]',
                   {
                     'rotate-90': open,
                     'rotate-0': !open

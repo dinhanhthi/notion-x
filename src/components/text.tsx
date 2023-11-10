@@ -51,8 +51,10 @@ export const Text: React.FC<{
         //   return null
         // }
 
-        const newText = (
+        const newText = text.includes('\n') ? (
           <span dangerouslySetInnerHTML={{ __html: text.split('\n').join('<br />') }}></span>
+        ) : (
+          text
         )
 
         if (!decorations) {

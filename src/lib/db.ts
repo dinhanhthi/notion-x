@@ -385,7 +385,7 @@ export async function searchNotion(
     sort: {
       field: 'relevance'
     },
-    limit: params.limit || 20,
+    limit: params.limit || 100,
     query: params.query,
     filters: {
       isDeletedOnly: false,

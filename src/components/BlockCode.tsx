@@ -61,7 +61,7 @@ export default function BlockCode(props: BlockCodeProps) {
       style={prism}
       className={cn(
         '!my-0 syntax-highlighter-pre m2it-scrollbar m2it-scrollbar-small border !bg-slate-50',
-        'max-h-[400px]'
+        'max-h-[300px]'
       )}
       showLineNumbers={true}
     >

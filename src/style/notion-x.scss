@@ -18,6 +18,12 @@ strong {
 //   }
 // }
 
+code {
+  .linenumber {
+    font-size: 0.7rem;
+  }
+}
+
 .table_block_column_header {
   tr:first-child {
     @apply bg-gray-100 font-semibold;

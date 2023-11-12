@@ -609,7 +609,12 @@ export const Block: React.FC<BlockProps> = props => {
               <div className="flex items-center gap-1">
                 {block.format?.bookmark_icon && (
                   <div className="relative h-4 w-4 shrink-0">
-                    <LazyImage src={mapImageUrl(block.format?.bookmark_icon, block)} alt={title} />
+                    <LazyImage
+                      useSimpleImage={true}
+                      simpleImageProps={{ style: { height: '100%', width: '100%' } }}
+                      src={mapImageUrl(block.format?.bookmark_icon, block)}
+                      alt={title}
+                    />
                   </div>
                 )}
                 <div className="text-sm font-normal text-slate-500 truncate">
@@ -620,6 +625,8 @@ export const Block: React.FC<BlockProps> = props => {
             {block.format?.bookmark_cover && (
               <div className="relative hidden flex-[1_1_100px] sm:block">
                 <LazyImage
+                  useSimpleImage={true}
+                  simpleImageProps={{ style: { height: 100 } }}
                   src={mapImageUrl(block.format?.bookmark_cover, block)}
                   alt={getTextContent(block.properties?.title)}
                   style={{

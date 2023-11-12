@@ -196,7 +196,8 @@ export const LazyImage: React.FC<{
         {useSimpleImage && (
           <SimpleImage
             imagePlaceholder={
-              simpleImageProps?.imagePlaceholder || ImagePlaceholder({ height, className, style })
+              simpleImageProps?.imagePlaceholder ||
+              ImagePlaceholder({ height, className, style: simpleImageProps?.style ?? style })
             }
             zoomable={simpleImageProps?.zoomable ?? zoomable}
             src={src!}

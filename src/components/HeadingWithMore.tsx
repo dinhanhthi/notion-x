@@ -2,18 +2,22 @@ import cn from 'classnames'
 import Link from 'next/link'
 import React from 'react'
 
+import { makeSlugText } from '../lib/helpers'
+
 type HeadingWithMoreProps = {
   title: string
   href?: string
   icon?: React.ReactNode
+  className?: string
 }
 
 export default function HeadingWithMore(props: HeadingWithMoreProps) {
-  const { title, href, icon } = props
+  const { title, href, icon, className } = props
   return (
     <h2
-      id="notes"
+      id={makeSlugText(title)}
       className={cn(
+        className,
         'font-heading text-[1.7rem] font-medium text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
       )}
     >

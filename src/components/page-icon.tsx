@@ -41,11 +41,11 @@ export const PageIconImpl: React.FC<{
     return (
       <div
         className={cn(
-          'bg-gray-100 flex items-center justify-center rounded-full mx-auto',
+          'bg-gradient-to-r from-sky-500 to-indigo-500 flex items-center justify-center rounded-full mx-auto',
           'flex items-center justify-center h-full w-full animate-pulse'
         )}
       >
-        <AiOutlineLoading3Quarters className={cn('animate-spin text-[20px] text-slate-400')} />
+        <AiOutlineLoading3Quarters className={cn('animate-spin text-[20px] text-white')} />
       </div>
     )
   }

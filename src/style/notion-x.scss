@@ -54,7 +54,8 @@ code {
   }
 
   .toggle-button {
-    &.toggle-open, &:hover {
+    &.toggle-open,
+    &:hover {
       background-color: rgb(229 231 235); // bg-gray-200
     }
   }
@@ -307,7 +308,7 @@ pre > code::before {
   }
 
   .m2it-blockquote {
-    @apply font-normal my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
+    @apply my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 font-normal not-italic;
   }
 
   .m2it-li {

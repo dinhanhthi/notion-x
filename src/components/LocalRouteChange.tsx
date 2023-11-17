@@ -2,8 +2,7 @@
 
 import cn from 'classnames'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import HiSwitchHorizontal from '../icons/HiSwitchHorizontal'
 

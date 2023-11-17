@@ -11,7 +11,7 @@ export const EOI: React.FC<{
   block: Block
   inline?: boolean
   className?: string
-}> = ({ block, inline, className }) => {
+}> = ({ block, inline }) => {
   const { original_url, attributes, domain } = block?.format || {}
   if (!original_url || !attributes) {
     return null

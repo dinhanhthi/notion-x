@@ -1,6 +1,6 @@
 {
   "name": "notion-x",
-  "version": "1.1.0",
+  "version": "1.2.2",
   "description": "My customization of NotionX's react-notion-x. For personal use only!",
   "main": "index.js",
   "repository": "git@github.com:dinhanhthi/notion-x.git",
@@ -72,6 +72,8 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.12.1",
+    "eslint-plugin-unicorn": "^49.0.0",
+    "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "8.4.24",
     "prettier": "^2.8.8",
     "prettier-plugin-tailwindcss": "^0.3.0",

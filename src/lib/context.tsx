@@ -18,6 +18,7 @@ export type BlockOptionsContextType = {
   siteDomain?: string // used in hyperlinks
   labelTocTitle?: string // "In this page" or something like that
   minNumHeadingsToShowToc?: number // minimum number of headings to show the TOC
+  notelabel?: string // /note/ or /blog/ or something like that
 }
 
 export interface NotionContext {

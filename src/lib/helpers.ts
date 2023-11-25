@@ -100,8 +100,8 @@ export function mapColorClass(color?: string): string | null {
   }
 }
 
-export function mapNoteUri(postSlug: string): string {
-  return `/note/${postSlug}/`
+export function mapNoteUri(postSlug: string, noteLabel?: string): string {
+  return `/${noteLabel ?? 'note'}/${postSlug}/`
 }
 
 export function removeBaseUrl(url: string) {

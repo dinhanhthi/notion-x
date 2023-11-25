@@ -82,7 +82,10 @@ export const Text: React.FC<{
                 linkedBlock?.properties?.[`${process.env.NEXT_PUBLIC_ID_SLUG}`]?.[0]?.[0]
 
               return (
-                <components.PageLink className="notion-link" href={mapNoteUri(postSlug)}>
+                <components.PageLink
+                  className="notion-link"
+                  href={mapNoteUri(postSlug, blockOptions?.notelabel)}
+                >
                   <PageTitle block={linkedBlock} hideIcon={true} />
                 </components.PageLink>
               )

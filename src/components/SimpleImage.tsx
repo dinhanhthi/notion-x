@@ -17,6 +17,7 @@ export type SimpleImageProps = {
   style?: React.CSSProperties
   imagePlaceholder?: React.ReactNode
   zoomable?: boolean
+  emoji?: string
 }
 
 export default function SimpleImage(props: SimpleImageProps) {
@@ -59,6 +60,20 @@ export default function SimpleImage(props: SimpleImageProps) {
     () => (isZoomable ? attachZoom : undefined),
     [isZoomable, attachZoom]
   )
+
+  if (props.emoji) {
+    return (
+      <span
+        className={cn('inline-flex items-center justify-center', props.className)}
+        style={{
+          width: props.width || props.style?.width || 'auto',
+          height: props.height || props.style?.height || 'auto'
+        }}
+      >
+        {props.emoji}
+      </span>
+    )
+  }
 
   return (
     <>

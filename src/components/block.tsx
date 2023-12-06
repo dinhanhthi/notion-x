@@ -15,6 +15,7 @@ import BsSquare from '../icons/BsSquare'
 import CiLink from '../icons/CiLink'
 import { useNotionContext } from '../lib/context'
 import { generateAnchor } from '../lib/helpers'
+import { usePostDateStatus } from '../lib/hooks'
 import { cs, getListNumber, isUrl } from '../lib/utils'
 import BlockCallout from './BlockCallout'
 import BlockToggle from './BlockToggle'
@@ -53,7 +54,7 @@ interface BlockProps {
   children?: React.ReactNode
 }
 
-export const basicBlockGap = cn('my-4')
+export const basicBlockGap = cn('my-4 relative group')
 
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
@@ -78,6 +79,7 @@ export const Block: React.FC<BlockProps> = props => {
     blockOptions,
     customPreviewImage,
     useSimpleImage,
+    showUpdatedIndicator,
     simpleImageProps
   } = ctx
 
@@ -100,6 +102,21 @@ export const Block: React.FC<BlockProps> = props => {
   if (!block) {
     return null
   }
+
+  const status = usePostDateStatus(
+    new Date(block.created_time).toISOString(),
+    new Date(block.last_edited_time).toISOString(),
+    blockOptions?.maxDaysWinthin || 7
+  )
+
+  const showUpdated = status === 'updatedWithin' || status === 'new'
+  const updatedBlock = (
+    <>
+      {level === 1 && showUpdated && showUpdatedIndicator && (
+        <div className="hidden md:block absolute -left-4 top-0 bg-green-400 h-full w-[0.25px] group-hover:w-1 hover:w-1 transition-all duration-100 !my-0"></div>
+      )}
+    </>
+  )
 
   // ugly hack to make viewing raw collection views work properly
   // e.g., 6d886ca87ab94c21a16e3b82b43a57fb
@@ -334,13 +351,14 @@ export const Block: React.FC<BlockProps> = props => {
       if (block.format?.toggleable) {
         return (
           <BlockHeadingToggle
-            className={cn('heading-container group', {
+            className={cn('heading-container relative group', {
               'border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2,
               'mt-8': isH2 || isH1,
               'mt-6': isH3
             })}
             headingElement={headerBlock}
+            updatedBlock={updatedBlock}
           >
             {children}
           </BlockHeadingToggle>
@@ -348,13 +366,14 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <div
-            className={cn('heading-container mb-4 group', {
+            className={cn('heading-container relative mb-4 group', {
               'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2,
               'mt-8': isH2 || isH1,
               'mt-6': isH3
             })}
           >
+            {updatedBlock}
             {headerBlock}
           </div>
         )
@@ -380,6 +399,7 @@ export const Block: React.FC<BlockProps> = props => {
             blockId
           )}
         >
+          {updatedBlock}
           {block.properties?.title && <Text value={block.properties.title} block={block} />}
 
           {children && <div className="notion-text-children">{children}</div>}
@@ -392,9 +412,14 @@ export const Block: React.FC<BlockProps> = props => {
     case 'numbered_list': {
       const wrapList = (content: React.ReactNode, start?: number) =>
         block.type === 'bulleted_list' ? (
-          <ul className={cs('notion-list', 'notion-list-disc', blockId)}>{content}</ul>
+          <ul className={cs('notion-list relative group', 'notion-list-disc', blockId)}>
+            {content}
+          </ul>
         ) : (
-          <ol start={start} className={cs('notion-list', 'notion-list-numbered', blockId)}>
+          <ol
+            start={start}
+            className={cs('notion-list relative group', 'notion-list-numbered', blockId)}
+          >
             {content}
           </ol>
         )
@@ -404,6 +429,7 @@ export const Block: React.FC<BlockProps> = props => {
       if (block.content) {
         output = (
           <>
+            {updatedBlock}
             {block.properties && (
               <li>
                 <Text value={block.properties.title} block={block} />
@@ -494,11 +520,20 @@ export const Block: React.FC<BlockProps> = props => {
       )
 
     case 'code':
-      return <components.Code block={block as types.CodeBlock} className={basicBlockGap} />
+      return (
+        <components.Code
+          block={block as types.CodeBlock}
+          updatedBlock={updatedBlock}
+          className={basicBlockGap}
+        />
+      )
 
     case 'column_list': {
       return (
-        <div className={cn('md:flex md:flex-nowrap md:gap-4 md:-my-2', blockId)}>{children}</div>
+        <div className={cn('md:flex md:flex-nowrap md:gap-4 md:-my-2 relative group', blockId)}>
+          {updatedBlock}
+          {children}
+        </div>
       )
     }
 
@@ -555,6 +590,7 @@ export const Block: React.FC<BlockProps> = props => {
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}
           >
+            {updatedBlock}
             {children}
           </BlockCallout>
         )
@@ -646,6 +682,7 @@ export const Block: React.FC<BlockProps> = props => {
           className={basicBlockGap}
           text={<Text value={block.properties?.title} block={block} />}
           color={get(block, 'format.block_color')}
+          updatedBlock={updatedBlock}
         >
           {children}
         </BlockToggle>

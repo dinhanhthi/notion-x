@@ -19,6 +19,7 @@ export type BlockOptionsContextType = {
   labelTocTitle?: string // "In this page" or something like that
   minNumHeadingsToShowToc?: number // minimum number of headings to show the TOC
   notelabel?: string // /note/ or /blog/ or something like that
+  maxDaysWinthin?: number // maximum number of days to show the "update" label
 }
 
 export interface NotionContext {
@@ -36,6 +37,7 @@ export interface NotionContext {
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
+  showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
   fullPage: boolean
@@ -175,6 +177,7 @@ const defaultNotionContext: NotionContext = {
   blockOptions: null as any,
   customPreviewImage: null as any,
   useSimpleImage: false as any,
+  showUpdatedIndicator: false as any,
   simpleImageProps: null as any,
 
   defaultPageIcon: null as any,

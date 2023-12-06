@@ -17,6 +17,7 @@ type PostBodyProps = {
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   simpleImageProps?: SimpleImageProps
+  showUpdatedIndicator?: boolean
 }
 
 const Equation = dynamic(() => import('./BlockEquation'))
@@ -49,6 +50,7 @@ export default function PostBody(props: PostBodyProps) {
         blockOptions={props.blockOptions}
         customPreviewImage={props.customPreviewImage}
         useSimpleImage={props.useSimpleImage}
+        showUpdatedIndicator={props.showUpdatedIndicator}
         simpleImageProps={props.simpleImageProps}
       />
     </div>

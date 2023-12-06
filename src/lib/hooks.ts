@@ -37,13 +37,13 @@ export const usePostDateStatus = (
 
   useEffect(() => {
     const currentDate = new Date()
-    const sevenDaysAgo = new Date()
-    sevenDaysAgo.setDate(currentDate.getDate() - (withinDay || 7))
+    const withinDaysAgo = new Date()
+    withinDaysAgo.setDate(currentDate.getDate() - (withinDay || 7))
 
     if (createdDate) {
       const createdDateObj = new Date(createdDate)
 
-      if (createdDateObj >= sevenDaysAgo) {
+      if (createdDateObj >= withinDaysAgo) {
         setStatus('new')
         return
       }
@@ -52,7 +52,7 @@ export const usePostDateStatus = (
     if (modifiedDate) {
       const modifiedDateObj = new Date(modifiedDate)
 
-      if (modifiedDateObj >= sevenDaysAgo) {
+      if (modifiedDateObj >= withinDaysAgo) {
         setStatus('updatedWithin')
         return
       }

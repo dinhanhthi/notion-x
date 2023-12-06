@@ -24,6 +24,7 @@ export const NotionRenderer: React.FC<{
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
+  showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
   // set fullPage to false to render page content only
@@ -73,6 +74,7 @@ export const NotionRenderer: React.FC<{
   blockOptions,
   customPreviewImage,
   useSimpleImage,
+  showUpdatedIndicator,
   simpleImageProps,
   darkMode,
   previewImages,
@@ -121,6 +123,7 @@ export const NotionRenderer: React.FC<{
       blockOptions={blockOptions}
       customPreviewImage={customPreviewImage}
       useSimpleImage={useSimpleImage}
+      showUpdatedIndicator={showUpdatedIndicator}
       simpleImageProps={simpleImageProps}
       minTableOfContentsItems={minTableOfContentsItems}
       defaultPageIcon={defaultPageIcon}

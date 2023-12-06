@@ -11,6 +11,7 @@ type BlockHeadingToggleProps = {
   headingElement: JSX.Element
   anchorRight?: JSX.Element
   children: React.ReactNode
+  updatedBlock?: React.JSX.Element
 }
 
 export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
@@ -19,6 +20,7 @@ export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
       {({ open }) => (
         <>
           <div className={cn('flex w-full items-center gap-1', props.className)}>
+            {props.updatedBlock}
             <Disclosure.Button className="rounded-md p-1 hover:bg-[#99989824]">
               <BsFillCaretRightFill
                 className={cn('text-lg transform ease-in-out transition-all duration-[400ms]', {

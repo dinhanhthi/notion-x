@@ -19,10 +19,11 @@ type BlockCodeProps = {
   block: CodeBlock
   className?: string
   defaultLanguage?: string
+  updatedBlock?: React.JSX.Element
 }
 
 export default function BlockCode(props: BlockCodeProps) {
-  const { block, className, defaultLanguage } = props
+  const { block, className, defaultLanguage, updatedBlock } = props
 
   const { recordMap, blockOptions } = useNotionContext()
   const content = getBlockTitle(block, recordMap)
@@ -74,6 +75,7 @@ export default function BlockCode(props: BlockCodeProps) {
       <div
         className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[14px]`}
       >
+        {!!updatedBlock && updatedBlock}
         {syntaxWraper}
         <div
           className={cn(

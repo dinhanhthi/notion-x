@@ -17,8 +17,9 @@ export default function BlockEquation(props: {
   inline?: boolean
   className?: string
   updatedBlock?: React.JSX.Element
+  blurBlockClassName?: string
 }) {
-  const { block, math, inline = false, className, ...rest } = props
+  const { block, math, inline = false, className } = props
   const { recordMap } = useNotionContext()
   const math2Use = math || getBlockTitle(block, recordMap)
   if (!math2Use) return null
@@ -31,11 +32,12 @@ export default function BlockEquation(props: {
         inline
           ? 'notion-equation-inline'
           : 'block text-center overflow-visible m2it-scrollbar m2it-scrollbar-small relative',
-        className
+        className,
+        props.blurBlockClassName
       )}
     >
       {!!props.updatedBlock && !inline && props.updatedBlock}
-      <Katex math={math2Use} settings={katexSettings} block={!inline} {...rest} />
+      <Katex math={math2Use} settings={katexSettings} block={!inline} className={className} />
     </span>
   )
 }

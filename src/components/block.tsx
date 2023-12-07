@@ -106,11 +106,14 @@ export const Block: React.FC<BlockProps> = props => {
     return null
   }
 
-  const status = usePostDateStatus(
-    new Date(block.created_time).toISOString(),
-    new Date(block.last_edited_time).toISOString(),
-    blockOptions?.maxDaysWinthin || 7
-  )
+  const status =
+    !!block.created_time && !!block.last_edited_time
+      ? usePostDateStatus(
+          new Date(block.created_time).toISOString(),
+          new Date(block.last_edited_time).toISOString(),
+          blockOptions?.maxDaysWinthin || 7
+        )
+      : null
 
   // Remark: there are some settings in styles.scss too
   const showUpdated = status === 'updatedWithin' || status === 'new'

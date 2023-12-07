@@ -86,20 +86,27 @@ export default function PostBody(props: PostBodyProps) {
           setShowOnlyUpdatedBlocks={setShowOnlyUpdatedBlocks}
         />
       </div>
-      {showUpdatedIndicator && (
+      {showUpdatedIndicator && status === 'updatedWithin' && (
         <button
           onClick={() => setShowOnlyUpdatedBlocks(!showOnlyUpdatedBlocks)}
           className={cn(
-            'fixed right-10 bottom-24 bg-[#c0c0c066] hover:bg-[#c0c0c099] w-12 h-12 rounded-full flex items-center justify-center z-50 hover:cursor-pointer',
-            props.showUpdateButtonClassName ??
-              'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
+            'fixed right-10 bottom-24 bg-[#c0c0c066] hover:bg-[#c0c0c099] w-12 h-12 rounded-full z-50 hover:cursor-pointer'
           )}
-          data-title={
-            !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'
-          }
         >
-          {!showOnlyUpdatedBlocks && <ToggleOffIcon className="w-7 h-7 text-green-700" />}
-          {showOnlyUpdatedBlocks && <ToggleOnIcon className="w-7 h-7 text-green-700" />}
+          <div
+            className={cn(
+              'h-full w-full flex items-center justify-center',
+              props.showUpdateButtonClassName
+                ? 'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
+                : ''
+            )}
+            data-title={
+              !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'
+            }
+          >
+            {!showOnlyUpdatedBlocks && <ToggleOffIcon className="w-7 h-7 text-green-700" />}
+            {showOnlyUpdatedBlocks && <ToggleOnIcon className="w-7 h-7 text-green-700" />}
+          </div>
         </button>
       )}
     </>

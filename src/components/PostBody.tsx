@@ -12,6 +12,7 @@ import { ToggleOnIcon } from '../icons/ToggleOnIcon'
 import { BlockOptionsContextType } from '../lib/context'
 import { usePostDateStatus } from '../lib/hooks'
 import { NotionRenderer } from '../lib/renderer'
+import ScrollToTop from './ScrollToTop'
 import { SimpleImageProps } from './SimpleImage'
 
 type PostBodyProps = {
@@ -25,6 +26,8 @@ type PostBodyProps = {
   lastModifiedIdKey?: string // used as NEXT_PUBLIC_ID_LAST_MODIFIED
   createdIdKey?: string // used as NEXT_PUBLIC_ID_CREATED_DATE
   showUpdateButtonClassName?: string
+  showUpdateButtonPositionClass?: string
+  showBackToTopButton?: boolean
 }
 
 const Equation = dynamic(() => import('./BlockEquation'))
@@ -90,15 +93,18 @@ export default function PostBody(props: PostBodyProps) {
         <button
           onClick={() => setShowOnlyUpdatedBlocks(!showOnlyUpdatedBlocks)}
           className={cn(
-            'fixed right-10 bottom-24 bg-[#c0c0c066] hover:bg-[#c0c0c099] w-12 h-12 rounded-full z-50 hover:cursor-pointer'
+            'fixed hidden md:block bg-slate-200 hover:bg-slate-300 w-12 h-12 rounded-full z-50 hover:cursor-pointer',
+            props.showUpdateButtonPositionClass
+              ? props.showUpdateButtonPositionClass
+              : 'right-10 bottom-24'
           )}
         >
           <div
             className={cn(
               'h-full w-full flex items-center justify-center',
               props.showUpdateButtonClassName
-                ? 'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
-                : ''
+                ? props.showUpdateButtonClassName
+                : 'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
             )}
             data-title={
               !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'
@@ -108,6 +114,15 @@ export default function PostBody(props: PostBodyProps) {
             {showOnlyUpdatedBlocks && <ToggleOnIcon className="w-7 h-7 text-green-700" />}
           </div>
         </button>
+      )}
+      {props.showBackToTopButton && (
+        <ScrollToTop
+          positionClassName={
+            showUpdatedIndicator && status === 'updatedWithin'
+              ? 'right-10 bottom-24'
+              : 'right-10 bottom-8'
+          }
+        />
       )}
     </>
   )

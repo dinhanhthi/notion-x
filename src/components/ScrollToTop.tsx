@@ -1,11 +1,12 @@
 'use client'
 
 import cn from 'classnames'
-import Image, { StaticImageData } from 'next/image'
 import React, { useEffect, useRef } from 'react'
+import { BackToTopIcon } from '../icons/BackToTopIcon'
 
 type ScrollToTopProps = {
-  image?: StaticImageData
+  className?: string
+  positionClassName?: string
 }
 
 export default function ScrollToTop(props: ScrollToTopProps) {
@@ -38,20 +39,11 @@ export default function ScrollToTop(props: ScrollToTopProps) {
       onClick={scrollToTop}
       ref={buttonRef}
       className={cn(
-        'fixed right-10 bottom-8 rounded-full p-2 opacity-0 transition-all duration-300',
-        'z-50 group bg-[#c0c0c066] hover:bg-[#c0c0c099] w-12 h-12'
+        'fixed rounded-full p-2 opacity-0 transition-all duration-300 z-50 group bg-slate-200 hover:bg-slate-300 w-12 h-12 flex items-center justify-center',
+        props.positionClassName ? props.positionClassName : 'right-10 bottom-8'
       )}
     >
-      {props.image && (
-        <Image
-          className="group-hover:animate-toTop"
-          src={props.image}
-          alt="To top"
-          width={32}
-          height={32}
-        />
-      )}
-      {!props.image && <span className="text-3xl group-hover:animate-toTop">☝</span>}
+      <BackToTopIcon className="w-6 h-6" />
     </button>
   )
 }

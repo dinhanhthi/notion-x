@@ -125,7 +125,7 @@ export const Block: React.FC<BlockProps> = props => {
           <button
             onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
             className={cn(
-              'hidden md:block absolute -left-4 top-0 h-full w-2 !my-0 tooltip-auto group button-indicator'
+              'hidden md:block absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 tooltip-auto group button-indicator'
             )}
             data-title={
               !props.showOnlyUpdatedBlocks

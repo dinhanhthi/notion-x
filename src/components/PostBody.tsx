@@ -1,11 +1,14 @@
 'use client'
 
+import cn from 'classnames'
 import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Block, ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { ToggleOffIcon } from '../icons/ToggleOffIcon'
+import { ToggleOnIcon } from '../icons/ToggleOnIcon'
 import { BlockOptionsContextType } from '../lib/context'
 import { usePostDateStatus } from '../lib/hooks'
 import { NotionRenderer } from '../lib/renderer'
@@ -21,6 +24,7 @@ type PostBodyProps = {
   showUpdatedIndicator?: boolean
   lastModifiedIdKey?: string // used as NEXT_PUBLIC_ID_LAST_MODIFIED
   createdIdKey?: string // used as NEXT_PUBLIC_ID_CREATED_DATE
+  showUpdateButtonClassName?: string
 }
 
 const Equation = dynamic(() => import('./BlockEquation'))
@@ -62,25 +66,43 @@ export default function PostBody(props: PostBodyProps) {
   const [showOnlyUpdatedBlocks, setShowOnlyUpdatedBlocks] = React.useState(false)
 
   return (
-    <div className={props.className}>
-      <NotionRenderer
-        recordMap={props.recordMap}
-        fullPage={true}
-        darkMode={false}
-        components={components}
-        showTableOfContents={false}
-        minTableOfContentsItems={3}
-        disableHeader={true}
-        previewImages={true}
-        blockOptions={props.blockOptions}
-        customPreviewImage={props.customPreviewImage}
-        useSimpleImage={props.useSimpleImage}
-        showUpdatedIndicator={showUpdatedIndicator}
-        simpleImageProps={props.simpleImageProps}
-        showOnlyUpdatedBlocks={showOnlyUpdatedBlocks}
-        setShowOnlyUpdatedBlocks={setShowOnlyUpdatedBlocks}
-      />
-    </div>
+    <>
+      <div className={props.className}>
+        <NotionRenderer
+          recordMap={props.recordMap}
+          fullPage={true}
+          darkMode={false}
+          components={components}
+          showTableOfContents={false}
+          minTableOfContentsItems={3}
+          disableHeader={true}
+          previewImages={true}
+          blockOptions={props.blockOptions}
+          customPreviewImage={props.customPreviewImage}
+          useSimpleImage={props.useSimpleImage}
+          showUpdatedIndicator={showUpdatedIndicator}
+          simpleImageProps={props.simpleImageProps}
+          showOnlyUpdatedBlocks={showOnlyUpdatedBlocks}
+          setShowOnlyUpdatedBlocks={setShowOnlyUpdatedBlocks}
+        />
+      </div>
+      {showUpdatedIndicator && (
+        <button
+          onClick={() => setShowOnlyUpdatedBlocks(!showOnlyUpdatedBlocks)}
+          className={cn(
+            'fixed right-10 bottom-24 bg-[#c0c0c066] hover:bg-[#c0c0c099] w-12 h-12 rounded-full flex items-center justify-center z-50 hover:cursor-pointer',
+            props.showUpdateButtonClassName ??
+              'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
+          )}
+          data-title={
+            !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'
+          }
+        >
+          {!showOnlyUpdatedBlocks && <ToggleOffIcon className="w-7 h-7 text-green-700" />}
+          {showOnlyUpdatedBlocks && <ToggleOnIcon className="w-7 h-7 text-green-700" />}
+        </button>
+      )}
+    </>
   )
 }
 

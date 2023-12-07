@@ -16,6 +16,7 @@ export default function BlockEquation(props: {
   math?: string
   inline?: boolean
   className?: string
+  updatedBlock?: React.JSX.Element
 }) {
   const { block, math, inline = false, className, ...rest } = props
   const { recordMap } = useNotionContext()
@@ -29,10 +30,11 @@ export default function BlockEquation(props: {
         'notion-equation',
         inline
           ? 'notion-equation-inline'
-          : 'block text-center overflow-x-auto overflow-y-hidden m2it-scrollbar m2it-scrollbar-small',
+          : 'block text-center overflow-visible m2it-scrollbar m2it-scrollbar-small relative',
         className
       )}
     >
+      {!!props.updatedBlock && !inline && props.updatedBlock}
       <Katex math={math2Use} settings={katexSettings} block={!inline} {...rest} />
     </span>
   )

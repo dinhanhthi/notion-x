@@ -59,6 +59,7 @@ export default function PostBody(props: PostBodyProps) {
   )
 
   showUpdatedIndicator = showUpdatedIndicator && status !== 'new'
+  const [showOnlyUpdatedBlocks, setShowOnlyUpdatedBlocks] = React.useState(false)
 
   return (
     <div className={props.className}>
@@ -76,6 +77,8 @@ export default function PostBody(props: PostBodyProps) {
         useSimpleImage={props.useSimpleImage}
         showUpdatedIndicator={showUpdatedIndicator}
         simpleImageProps={props.simpleImageProps}
+        showOnlyUpdatedBlocks={showOnlyUpdatedBlocks}
+        setShowOnlyUpdatedBlocks={setShowOnlyUpdatedBlocks}
       />
     </div>
   )

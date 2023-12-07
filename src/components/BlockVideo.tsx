@@ -10,6 +10,7 @@ type BlockVideoProps = {
   caption: React.ReactNode
   videoUrl: string
   className?: string
+  updatedBlock?: React.JSX.Element
 }
 
 export default function BlockVideo(props: BlockVideoProps) {
@@ -17,6 +18,7 @@ export default function BlockVideo(props: BlockVideoProps) {
   if (!videoId) return null
   return (
     <div className={cn(props.className, 'flex flex-col justify-center items-center gap-2')}>
+      {props.updatedBlock}
       <div className="w-full">
         <YoutubeEmbed id={videoId} title={'Youtube video'} className="aspect-video w-full" />
       </div>

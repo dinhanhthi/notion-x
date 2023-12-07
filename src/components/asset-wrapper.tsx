@@ -16,7 +16,17 @@ export const AssetWrapper: React.FC<{
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   simpleImageProps?: SimpleImageProps
-}> = ({ blockId, block, customPreviewImage, useSimpleImage, simpleImageProps }) => {
+  updatedBlock?: React.JSX.Element
+  className?: string
+}> = ({
+  blockId,
+  block,
+  customPreviewImage,
+  useSimpleImage,
+  simpleImageProps,
+  updatedBlock,
+  className
+}) => {
   const value = block as BaseContentBlock
   const { components, mapPageUrl, rootDomain, zoom } = useNotionContext()
 
@@ -36,12 +46,14 @@ export const AssetWrapper: React.FC<{
   const figure = (
     <figure
       className={cs(
+        className,
         'notion-asset-wrapper flex justify-center',
         `notion-asset-wrapper-${block.type}`,
         value.format?.block_full_width && 'notion-asset-wrapper-full',
         blockId
       )}
     >
+      {updatedBlock}
       <Asset
         useSimpleImage={useSimpleImage}
         simpleImageProps={simpleImageProps}

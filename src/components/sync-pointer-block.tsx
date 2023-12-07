@@ -6,7 +6,9 @@ import { NotionBlockRenderer } from '../lib/renderer'
 export const SyncPointerBlock: React.FC<{
   blockObj: BlockType
   levelObj: number
-}> = ({ blockObj, levelObj }) => {
+  showOnlyUpdatedBlocks: boolean
+  setShowOnlyUpdatedBlocks: React.Dispatch<React.SetStateAction<boolean>>
+}> = ({ blockObj, levelObj, showOnlyUpdatedBlocks, setShowOnlyUpdatedBlocks }) => {
   if (!blockObj) {
     if (process.env.NODE_ENV !== 'production') {
       console.warn('missing sync pointer block', (blockObj as any).id)
@@ -23,6 +25,12 @@ export const SyncPointerBlock: React.FC<{
   }
 
   return (
-    <NotionBlockRenderer key={referencePointerId} level={levelObj} blockId={referencePointerId} />
+    <NotionBlockRenderer
+      key={referencePointerId}
+      level={levelObj}
+      blockId={referencePointerId}
+      showOnlyUpdatedBlocks={showOnlyUpdatedBlocks}
+      setShowOnlyUpdatedBlocks={setShowOnlyUpdatedBlocks}
+    />
   )
 }

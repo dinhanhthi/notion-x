@@ -38,6 +38,9 @@ interface BlockProps {
   block: types.Block
   level: number
 
+  showOnlyUpdatedBlocks: boolean
+  setShowOnlyUpdatedBlocks: React.Dispatch<React.SetStateAction<boolean>>
+
   className?: string
   bodyClassName?: string
 
@@ -54,7 +57,7 @@ interface BlockProps {
   children?: React.ReactNode
 }
 
-export const basicBlockGap = cn('my-4 relative group')
+export const basicBlockGap = cn('my-4 relative')
 
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
@@ -109,14 +112,36 @@ export const Block: React.FC<BlockProps> = props => {
     blockOptions?.maxDaysWinthin || 7
   )
 
+  // Remark: there are some settings in styles.scss too
   const showUpdated = status === 'updatedWithin' || status === 'new'
   const updatedBlock = (
     <>
-      {level === 1 && showUpdated && showUpdatedIndicator && (
-        <div className="hidden md:block absolute -left-4 top-0 bg-green-400 h-full w-[0.25px] group-hover:w-1 hover:w-1 transition-all duration-100 !my-0"></div>
-      )}
+      {(level === 1 || block.type === 'transclusion_container') &&
+        showUpdated &&
+        showUpdatedIndicator && (
+          <button
+            onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
+            className={cn(
+              'hidden md:block absolute -left-4 top-0 h-full w-2 !my-0 tooltip-auto group button-indicator'
+            )}
+            data-title={
+              !props.showOnlyUpdatedBlocks
+                ? 'Highlight only updated blocks'
+                : 'Back to default display'
+            }
+          >
+            <div
+              className={cn(
+                'group-hover:w-full w-[0.25px] h-full transition-all duration-100 bg-green-400'
+              )}
+            ></div>
+          </button>
+        )}
     </>
   )
+  const blurBlockClassName = cn({
+    'blur-sm': props.showOnlyUpdatedBlocks && !showUpdated
+  })
 
   // ugly hack to make viewing raw collection views work properly
   // e.g., 6d886ca87ab94c21a16e3b82b43a57fb
@@ -351,7 +376,7 @@ export const Block: React.FC<BlockProps> = props => {
       if (block.format?.toggleable) {
         return (
           <BlockHeadingToggle
-            className={cn('heading-container relative group', {
+            className={cn('heading-container relative', blurBlockClassName, {
               'border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2,
               'mt-8': isH2 || isH1,
@@ -366,7 +391,7 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <div
-            className={cn('heading-container relative mb-4 group', {
+            className={cn('heading-container relative mb-4', blurBlockClassName, {
               'pl-2 border-l-[2px] rounded-l-sm py-1 border-sky-300 from-sky-50 to-white bg-gradient-to-r':
                 isH2,
               'mt-8': isH2 || isH1,
@@ -395,6 +420,7 @@ export const Block: React.FC<BlockProps> = props => {
           className={cs(
             'notion-text',
             basicBlockGap,
+            blurBlockClassName,
             blockColor && `notion-${blockColor}`,
             blockId
           )}
@@ -412,14 +438,16 @@ export const Block: React.FC<BlockProps> = props => {
     case 'numbered_list': {
       const wrapList = (content: React.ReactNode, start?: number) =>
         block.type === 'bulleted_list' ? (
-          <ul className={cs('notion-list relative group', 'notion-list-disc', blockId)}>
+          <ul className={cs('notion-list relative notion-list-disc', blurBlockClassName, blockId)}>
+            {updatedBlock}
             {content}
           </ul>
         ) : (
           <ol
             start={start}
-            className={cs('notion-list relative group', 'notion-list-numbered', blockId)}
+            className={cs('notion-list notion-list-numbered relative', blurBlockClassName, blockId)}
           >
+            {updatedBlock}
             {content}
           </ol>
         )
@@ -429,7 +457,6 @@ export const Block: React.FC<BlockProps> = props => {
       if (block.content) {
         output = (
           <>
-            {updatedBlock}
             {block.properties && (
               <li>
                 <Text value={block.properties.title} block={block} />
@@ -480,15 +507,18 @@ export const Block: React.FC<BlockProps> = props => {
           blockId={blockId}
           block={block}
           customPreviewImage={customPreviewImage}
+          updatedBlock={updatedBlock}
+          className={cn(blurBlockClassName, 'relative')}
         />
       )
 
     case 'video':
       return (
         <BlockVideo
-          className={cn(blockId, basicBlockGap)}
+          className={cn(blockId, basicBlockGap, blurBlockClassName, 'relative')}
           caption={<Text value={block.properties.caption!} block={block} />}
           videoUrl={block?.properties?.source?.[0]?.[0]}
+          updatedBlock={updatedBlock}
         />
       )
 
@@ -516,6 +546,8 @@ export const Block: React.FC<BlockProps> = props => {
           block={block as types.EquationBlock}
           inline={false}
           className={cn(blockId, basicBlockGap)}
+          updatedBlock={updatedBlock}
+          blurBlockClassName={blurBlockClassName}
         />
       )
 
@@ -524,13 +556,19 @@ export const Block: React.FC<BlockProps> = props => {
         <components.Code
           block={block as types.CodeBlock}
           updatedBlock={updatedBlock}
-          className={basicBlockGap}
+          className={cn(basicBlockGap, blurBlockClassName)}
         />
       )
 
     case 'column_list': {
       return (
-        <div className={cn('md:flex md:flex-nowrap md:gap-4 md:-my-2 relative group', blockId)}>
+        <div
+          className={cn(
+            'md:flex md:flex-nowrap md:gap-4 md:-my-2 relative',
+            blurBlockClassName,
+            blockId
+          )}
+        >
           {updatedBlock}
           {children}
         </div>
@@ -560,7 +598,8 @@ export const Block: React.FC<BlockProps> = props => {
       return (
         <blockquote
           className={cn(
-            'notion-quote',
+            'notion-quote relative',
+            blurBlockClassName,
             {
               [`notion-${blockColor}`]: blockColor,
               'text-[115%]': get(block, 'format.quote_size') === 'large'
@@ -568,6 +607,7 @@ export const Block: React.FC<BlockProps> = props => {
             blockId
           )}
         >
+          {updatedBlock}
           <div className={cn('quote-title')}>
             <Text value={block.properties.title} block={block} />
           </div>
@@ -585,7 +625,7 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <BlockCallout
-            className={basicBlockGap}
+            className={cn(basicBlockGap, blurBlockClassName)}
             icon={<PageIcon block={block} />}
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}
@@ -619,16 +659,17 @@ export const Block: React.FC<BlockProps> = props => {
       }
 
       return (
-        <div className={cn(basicBlockGap)}>
+        <div className={cn(basicBlockGap, blurBlockClassName)}>
           <a
             className={cn(
-              'flex gap-4 w-full overflow-hidden rounded-md border border-slate-200 p-3',
-              'hover:cursor-pointer hover:border-sky-300 hover:shadow-sm'
+              'flex gap-4 w-full rounded-md border border-slate-200 p-3 hover:cursor-pointer hover:border-sky-300 hover:shadow-sm',
+              blurBlockClassName
             )}
             href={link[0][0]}
             target="_blank"
             rel="noreferrer"
           >
+            {updatedBlock}
             <div className="flex flex-[4_1_180px] flex-col justify-between gap-4 overflow-hidden">
               <div className="flex flex-col gap-1.5">
                 {title && (
@@ -679,7 +720,7 @@ export const Block: React.FC<BlockProps> = props => {
     case 'toggle':
       return (
         <BlockToggle
-          className={basicBlockGap}
+          className={cn(basicBlockGap, blurBlockClassName)}
           text={<Text value={block.properties?.title} block={block} />}
           color={get(block, 'format.block_color')}
           updatedBlock={updatedBlock}
@@ -724,7 +765,8 @@ export const Block: React.FC<BlockProps> = props => {
       const isChecked = block.properties?.checked?.[0]?.[0] === 'Yes'
 
       return (
-        <div className={cs('notion-to-do', blockId)}>
+        <div className={cs('notion-to-do relative', blurBlockClassName, blockId)}>
+          {updatedBlock}
           <div className="flex items-baseline gap-2 my-2">
             <div className="w-4 h-4">
               {isChecked && <BsCheckSquare className="text-slate-500 mt-0.5" />}
@@ -739,7 +781,12 @@ export const Block: React.FC<BlockProps> = props => {
     }
 
     case 'transclusion_container':
-      return <div className={cs('notion-sync-block', blockId)}>{children}</div>
+      return (
+        <div className={cs('notion-sync-block relative', blurBlockClassName, blockId)}>
+          {updatedBlock}
+          {children}
+        </div>
+      )
 
     case 'transclusion_reference':
       return <SyncPointerBlock blockObj={block} levelObj={level + 1} {...props} />
@@ -764,7 +811,14 @@ export const Block: React.FC<BlockProps> = props => {
 
     case 'table':
       return (
-        <div className={cn(basicBlockGap, 'overflow-auto m2it-scrollbar')}>
+        <div
+          className={cn(
+            basicBlockGap,
+            blurBlockClassName,
+            'overflow-visible m2it-scrollbar relative'
+          )}
+        >
+          {updatedBlock}
           <table className={cs('notion-simple-table table-auto my-0', blockId)}>
             <tbody
               className={cn({
@@ -817,7 +871,13 @@ export const Block: React.FC<BlockProps> = props => {
     }
 
     case 'external_object_instance': {
-      return <EOI block={block} className={blockId} />
+      return (
+        <EOI
+          block={block}
+          className={cn(blockId, blurBlockClassName)}
+          updatedBlock={updatedBlock}
+        />
+      )
     }
 
     default:

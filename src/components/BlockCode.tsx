@@ -20,10 +20,11 @@ type BlockCodeProps = {
   className?: string
   defaultLanguage?: string
   updatedBlock?: React.JSX.Element
+  blurBlockClassName?: string
 }
 
 export default function BlockCode(props: BlockCodeProps) {
-  const { block, className, defaultLanguage, updatedBlock } = props
+  const { block, className, defaultLanguage, updatedBlock, blurBlockClassName } = props
 
   const { recordMap, blockOptions } = useNotionContext()
   const content = getBlockTitle(block, recordMap)
@@ -71,7 +72,7 @@ export default function BlockCode(props: BlockCodeProps) {
   )
 
   return (
-    <div className={cn(className, 'group flex flex-col gap-2')}>
+    <div className={cn(className, blurBlockClassName, 'flex flex-col gap-2')}>
       <div
         className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[14px]`}
       >
@@ -96,7 +97,9 @@ export default function BlockCode(props: BlockCodeProps) {
         </div>
       )}
 
-      {language === 'mermaid' && <Mermaid chart={content} />}
+      {language === 'mermaid' && (
+        <Mermaid chart={content} updatedBlock={updatedBlock} className={blurBlockClassName} />
+      )}
     </div>
   )
 }

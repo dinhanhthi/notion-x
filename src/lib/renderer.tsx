@@ -13,6 +13,9 @@ export const NotionRenderer: React.FC<{
   recordMap: ExtendedRecordMap
   components?: Partial<NotionComponents>
 
+  showOnlyUpdatedBlocks: boolean
+  setShowOnlyUpdatedBlocks: React.Dispatch<React.SetStateAction<boolean>>
+
   mapPageUrl?: MapPageUrlFn
   mapImageUrl?: MapImageUrlFn
   searchNotion?: SearchNotionFn
@@ -137,6 +140,8 @@ export const NotionRenderer: React.FC<{
 }
 
 export const NotionBlockRenderer: React.FC<{
+  showOnlyUpdatedBlocks: boolean
+  setShowOnlyUpdatedBlocks: React.Dispatch<React.SetStateAction<boolean>>
   className?: string
   bodyClassName?: string
   header?: React.ReactNode

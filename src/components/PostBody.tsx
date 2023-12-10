@@ -104,7 +104,7 @@ export default function PostBody(props: PostBodyProps) {
               'h-full w-full flex items-center justify-center',
               props.showUpdateButtonClassName
                 ? props.showUpdateButtonClassName
-                : 'tooltip-auto before:left-auto before:right-[55px] before:top-[15px] before:content-[attr(data-title)]'
+                : 'before:!right-[55px] before:!top-[15px] before:!content-[attr(data-title)] before:!left-auto tooltip-auto'
             )}
             data-title={
               !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'

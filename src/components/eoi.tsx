@@ -44,28 +44,30 @@ export const EOI: React.FC<{
   }
 
   return (
-    <>
+    <div className="relative">
       {!inline && (
-        <a
-          className={cn(
-            className,
-            'not-prose p-3 border border-slate-200 rounded-md hover:cursor-pointer hover:border-sky-300 hover:shadow-sm flex gap-3 flex-row items-center group relative'
-          )}
-          target="_blank"
-          href={original_url}
-          rel="noopener noreferrer"
-        >
+        <>
           {!!updatedBlock && updatedBlock}
-          <FaGithub className="text-4xl" />
-          <div className={cn('flex gap-0 flex-col')}>
-            <div className="text-base m2it-link group-hover:m2it-link-hover">{title}</div>
-            <div className="flex flex-row gap-1 items-center text-gray-500 text-sm">
-              <div>{owner}</div>
-              <RxDotFilled />
-              <div>{lastUpdated}</div>
+          <a
+            className={cn(
+              className,
+              'not-prose p-3 border border-slate-200 rounded-md hover:cursor-pointer hover:border-sky-300 hover:shadow-sm flex gap-3 flex-row items-center'
+            )}
+            target="_blank"
+            href={original_url}
+            rel="noopener noreferrer"
+          >
+            <FaGithub className="text-4xl" />
+            <div className={cn('flex gap-0 flex-col')}>
+              <div className="text-base m2it-link group-hover:m2it-link-hover">{title}</div>
+              <div className="flex flex-row gap-1 items-center text-gray-500 text-sm">
+                <div>{owner}</div>
+                <RxDotFilled />
+                <div>{lastUpdated}</div>
+              </div>
             </div>
-          </div>
-        </a>
+          </a>
+        </>
       )}
       {inline && (
         <a
@@ -80,6 +82,6 @@ export const EOI: React.FC<{
           </div>
         </a>
       )}
-    </>
+    </div>
   )
 }

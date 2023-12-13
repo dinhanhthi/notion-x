@@ -119,7 +119,7 @@ export default function PostBody(props: PostBodyProps) {
         <ScrollToTop
           positionClassName={
             showUpdatedIndicator && status === 'updatedWithin'
-              ? 'right-10 bottom-24'
+              ? 'right-10 md:bottom-24 bottom-8'
               : 'right-10 bottom-8'
           }
         />

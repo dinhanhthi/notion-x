@@ -21,7 +21,7 @@ export type ImageType = {
 export type PostHeaderType = {
   id?: string
   title: string
-  drawTitle?: any
+  rawTitle?: any
   featuredImage?: ImageType
   date?: string // the same as last modified date (or finalModified)
   createdDate?: string // used to display "updated" badge

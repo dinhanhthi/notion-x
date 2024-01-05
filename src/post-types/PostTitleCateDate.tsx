@@ -30,7 +30,7 @@ type PostTitleCateDateProps = {
 export const TCDFIHeightClass = 'h-28'
 
 export default function PostTitleCateDate(props: PostTitleCateDateProps) {
-  const { block, title, drawTitle, featuredImage, pageCover, date, categories, uri } = props.post
+  const { block, title, rawTitle, featuredImage, pageCover, date, categories, uri } = props.post
   const options = props.options
   const category = categories ? categories[0] : null
 
@@ -76,7 +76,7 @@ export default function PostTitleCateDate(props: PostTitleCateDateProps) {
               <div className="relative hidden flex-[1_1_100px] sm:block">
                 <LazyImage
                   src={defaultMapImageUrl(pageCover, block!)!}
-                  alt={getTextContent(drawTitle)}
+                  alt={getTextContent(rawTitle)}
                   style={{
                     objectFit: 'cover'
                   }}

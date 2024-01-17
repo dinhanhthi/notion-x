@@ -30,8 +30,12 @@ type PostBodyProps = {
   showBackToTopButton?: boolean
 }
 
-const Equation = dynamic(() => import('./BlockEquation'))
-const Code = dynamic(() => import('./BlockCode'))
+const Equation = dynamic(() => import('./BlockEquation'), {
+  loading: () => <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md" />
+})
+const Code = dynamic(() => import('./BlockCode'), {
+  loading: () => <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md" />
+})
 
 // In case we need more suppored components, check this out:
 // https://github.com/transitive-bullshit/nextjs-notion-starter-kit/blob/main/components/NotionPage.tsx

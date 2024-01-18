@@ -98,9 +98,10 @@ export default function PostToc(props: PostTocProps) {
                   {
                     'pl-4 border-l': isH3,
                     '-ml-1': isH2,
-                    'font-semibold hover:font-semibold text-slate-700 hover:m2it-link-hover':
+                    'font-semibold text-slate-700 hover:m2it-link-hover':
                       activeId === anchor && !props.inPost,
-                    'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
+                    'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost,
+                    'hover:font-semibold': activeId === anchor && !props.inPost
                   }
                 )}
               >

@@ -44,9 +44,9 @@ export const EOI: React.FC<{
   }
 
   return (
-    <div className="relative">
+    <>
       {!inline && (
-        <>
+        <div className="relative">
           {!!updatedBlock && updatedBlock}
           <a
             className={cn(
@@ -67,7 +67,7 @@ export const EOI: React.FC<{
               </div>
             </div>
           </a>
-        </>
+        </div>
       )}
       {inline && (
         <a
@@ -82,6 +82,6 @@ export const EOI: React.FC<{
           </div>
         </a>
       )}
-    </div>
+    </>
   )
 }

@@ -703,7 +703,7 @@ export const Block: React.FC<BlockProps> = props => {
               </div>
             </div>
             {block.format?.bookmark_cover && (
-              <div className="relative hidden flex-[1_1_100px] sm:block">
+              <div className="relative hidden flex-[1_1_50px] sm:block">
                 <LazyImage
                   useSimpleImage={true}
                   simpleImageProps={{ style: { height: 100 } }}

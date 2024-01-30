@@ -17,26 +17,18 @@ export default function BlockToggle(props: {
 }) {
   return (
     <div
-      className={cn(
-        mapColorClass(props.color),
-        'toggle-container rounded-md border-[0.5px] border-slate-200',
-        props.className
-      )}
+      className={cn(mapColorClass(props.color), 'toggle-container my-[0.375rem]', props.className)}
     >
       {props.updatedBlock}
       <Disclosure defaultOpen={false}>
         {({ open }) => (
           <>
             <Disclosure.Button
-              className={cn('toggle-button flex gap-2 w-full items-start p-2 rounded-md', {
-                '!bg-gray-100 hover:!bg-gray-200 toggle-open': open && !props.color,
-                '!bg-gray-50 hover:!bg-gray-100': !open && !props.color,
-                'bg-[#0000000a]': !!props.color
-              })}
+              className={cn('toggle-button flex gap-1.5 w-full items-start rounded-md')}
             >
               <BsFillCaretRightFill
                 className={cn(
-                  'mt-[3px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms]',
+                  'mt-[2.5px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms]',
                   {
                     'rotate-90': open,
                     'rotate-0': !open
@@ -54,7 +46,7 @@ export default function BlockToggle(props: {
                 leaveFrom="transform scale-y-100 opacity-100"
                 leaveTo="transform scale-y-95 opacity-0"
               >
-                <Disclosure.Panel className={'px-4 inside-toggle-container'}>
+                <Disclosure.Panel className={'pr-4 pl-6 inside-toggle-container'}>
                   <div className={cn(basicBlockGap)}></div>
                   {props.children}
                   <div className={cn(basicBlockGap)}></div>

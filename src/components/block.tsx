@@ -461,7 +461,7 @@ export const Block: React.FC<BlockProps> = props => {
         output = (
           <>
             {block.properties && (
-              <li>
+              <li className="pl-0">
                 <Text value={block.properties.title} block={block} />
               </li>
             )}
@@ -470,7 +470,7 @@ export const Block: React.FC<BlockProps> = props => {
         )
       } else {
         output = block.properties ? (
-          <li>
+          <li className="pl-0">
             <Text value={block.properties.title} block={block} />
           </li>
         ) : null
@@ -703,7 +703,7 @@ export const Block: React.FC<BlockProps> = props => {
               </div>
             </div>
             {block.format?.bookmark_cover && (
-              <div className="relative hidden flex-[1_1_50px] sm:block">
+              <div className="relative hidden flex-[1_1_100px] sm:block">
                 <LazyImage
                   useSimpleImage={true}
                   simpleImageProps={{ style: { height: 100 } }}
@@ -723,7 +723,7 @@ export const Block: React.FC<BlockProps> = props => {
     case 'toggle':
       return (
         <BlockToggle
-          className={cn(basicBlockGap, blurBlockClassName)}
+          className={cn('relative', blurBlockClassName)}
           text={<Text value={block.properties?.title} block={block} />}
           color={get(block, 'format.block_color')}
           updatedBlock={updatedBlock}

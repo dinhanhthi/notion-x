@@ -58,15 +58,15 @@ export default function PostToc(props: PostTocProps) {
       aria-label="Table of contents"
     >
       <button
-        className={cn(
-          'text-slate-700 flex items-center justify-between text-md font-semibold pb-0'
-        )}
+        className={cn('text-slate-700 flex items-center justify-between font-semibold pb-0')}
         onClick={() => setShowContent(!showContent)}
       >
-        <div className={props.labelTocClassName}>{props.labelTocTitle || 'In this post'}</div>
+        <div className={cn(props.labelTocClassName, 'text-[0.9rem]')}>
+          {props.labelTocTitle || 'In this post'}
+        </div>
         <div>
           <IoIosArrowDown
-            className={cn('text-2xl ease-in-out transition-all duration-[400ms]', {
+            className={cn('text-xl ease-in-out transition-all duration-[400ms]', {
               'rotate-0': showContent,
               'rotate-[-90deg]': !showContent
             })}
@@ -94,14 +94,13 @@ export default function PostToc(props: PostTocProps) {
                 key={toc.id}
                 href={`#${anchor}`}
                 className={cn(
-                  'flex items-baseline gap-2 hover:m2it-link text-sm py-1 break-inside-avoid',
+                  'flex items-baseline gap-2 hover:m2it-link text-[0.8rem] py-1 break-inside-avoid',
                   {
                     'pl-4 border-l': isH3,
                     '-ml-1': isH2,
-                    'font-semibold text-slate-700 hover:m2it-link-hover':
+                    'bg-slate-200 rounded-r-lg hover:m2it-link-hover':
                       activeId === anchor && !props.inPost,
-                    'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost,
-                    'hover:font-semibold': activeId === anchor && !props.inPost
+                    'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
                   }
                 )}
               >
@@ -109,7 +108,7 @@ export default function PostToc(props: PostTocProps) {
                 {isH3 && <span className="text-[0.6rem] text-slate-400">○</span>}
                 {!block?.properties?.title && <span className="block">{toc.text}</span>}
                 {block?.properties?.title && (
-                  <span>
+                  <span className="leading-snug">
                     <Text
                       ignoreMarkup={['_', 'a', 'b', 'u', 'h']}
                       components={components}

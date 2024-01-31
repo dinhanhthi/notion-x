@@ -7,6 +7,8 @@ import Link from 'next/link'
 import { Block, ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { CodeIcon } from '../icons/CodeIcon'
+import SigmaIcon from '../icons/SigmaIcon'
 import { ToggleOffIcon } from '../icons/ToggleOffIcon'
 import { ToggleOnIcon } from '../icons/ToggleOnIcon'
 import { BlockOptionsContextType } from '../lib/context'
@@ -31,10 +33,18 @@ type PostBodyProps = {
 }
 
 const Equation = dynamic(() => import('./BlockEquation'), {
-  loading: () => <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md" />
+  loading: () => (
+    <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md flex items-center justify-center">
+      <SigmaIcon className="w-7 h-7 text-slate-500" />
+    </div>
+  )
 })
 const Code = dynamic(() => import('./BlockCode'), {
-  loading: () => <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md" />
+  loading: () => (
+    <div className="w-full h-40 bg-slate-200 animate-pulse rounded-md flex items-center justify-center">
+      <CodeIcon className="w-7 h-7 text-slate-500" />
+    </div>
+  )
 })
 
 // In case we need more suppored components, check this out:

@@ -16,9 +16,7 @@ export default function BlockToggle(props: {
   updatedBlock?: React.JSX.Element
 }) {
   return (
-    <div
-      className={cn(mapColorClass(props.color), 'toggle-container my-[0.375rem]', props.className)}
-    >
+    <div className={cn(mapColorClass(props.color), 'toggle-container my-4', props.className)}>
       {props.updatedBlock}
       <Disclosure defaultOpen={false}>
         {({ open }) => (
@@ -28,7 +26,7 @@ export default function BlockToggle(props: {
             >
               <BsFillCaretRightFill
                 className={cn(
-                  'mt-[2.5px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms] group-hover:bg-slate-200 rounded-md',
+                  'mt-[2.5px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms] group-hover:bg-slate-200 rounded-md z-20',
                   {
                     'rotate-90': open,
                     'rotate-0': !open
@@ -47,13 +45,18 @@ export default function BlockToggle(props: {
                 leaveTo="transform scale-y-95 opacity-0"
                 className={'pl-2'}
               >
-                <Disclosure.Panel className={'px-4 pt-[0.1px] border-l inside-toggle-container'}>
+                <Disclosure.Panel className={'px-4 pt-[0.1px] inside-toggle-container'}>
                   <div className={cn(basicBlockGap)}></div>
                   {props.children}
                   <div className={cn(basicBlockGap)}></div>
                 </Disclosure.Panel>
               </Transition>
             )}
+            <div
+              className={cn('absolute h-full top-0 left-0 w-1 border-l ml-[8px] mt-[8px] z-10', {
+                hidden: !open
+              })}
+            ></div>
           </>
         )}
       </Disclosure>

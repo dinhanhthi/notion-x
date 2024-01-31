@@ -61,7 +61,7 @@ export default function PostToc(props: PostTocProps) {
         className={cn('text-slate-700 flex items-center justify-between font-semibold pb-0')}
         onClick={() => setShowContent(!showContent)}
       >
-        <div className={cn(props.labelTocClassName, 'text-[0.9rem]')}>
+        <div className={cn(props.labelTocClassName, 'text-[0.95rem]')}>
           {props.labelTocTitle || 'In this post'}
         </div>
         <div>
@@ -94,7 +94,7 @@ export default function PostToc(props: PostTocProps) {
                 key={toc.id}
                 href={`#${anchor}`}
                 className={cn(
-                  'flex items-baseline gap-2 hover:m2it-link text-[0.8rem] py-1 break-inside-avoid',
+                  'flex items-baseline gap-2 hover:m2it-link text-[0.88rem] py-1 break-inside-avoid',
                   {
                     'pl-4 border-l': isH3,
                     '-ml-1': isH2,

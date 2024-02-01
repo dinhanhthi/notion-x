@@ -46,7 +46,7 @@ export default function PostToc(props: PostTocProps) {
   return (
     <nav
       className={cn(
-        'h-fit w-full flex gap-2 flex-col px-4 py-3 bg-slate-50 rounded-xl m2it-box-shadow',
+        'h-fit w-full flex gap-2 flex-col px-2 py-3 bg-slate-50 rounded-xl m2it-box-shadow',
         {
           '2xl:hidden': props.inPost, // hide on large screens
           'max-h-full p-3': !props.inPost,
@@ -58,7 +58,7 @@ export default function PostToc(props: PostTocProps) {
       aria-label="Table of contents"
     >
       <button
-        className={cn('text-slate-700 flex items-center justify-between font-semibold pb-0')}
+        className={cn('text-slate-700 flex items-center justify-between font-semibold pb-0 px-2')}
         onClick={() => setShowContent(!showContent)}
       >
         <div className={cn(props.labelTocClassName, 'text-[0.95rem]')}>
@@ -94,12 +94,11 @@ export default function PostToc(props: PostTocProps) {
                 key={toc.id}
                 href={`#${anchor}`}
                 className={cn(
-                  'flex items-baseline gap-2 hover:m2it-link text-[0.88rem] py-1 break-inside-avoid',
+                  'flex items-baseline gap-2 hover:m2it-link text-[0.88rem] py-1 px-2 break-inside-avoid',
                   {
-                    'pl-4 border-l': isH3,
+                    'border-l pl-2 ml-2': isH3,
                     '-ml-1': isH2,
-                    'bg-slate-200 rounded-r-lg hover:m2it-link-hover':
-                      activeId === anchor && !props.inPost,
+                    'bg-slate-200 hover:m2it-link-hover': activeId === anchor && !props.inPost,
                     'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
                   }
                 )}

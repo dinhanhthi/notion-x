@@ -4,7 +4,7 @@ import { Disclosure, Transition } from '@headlessui/react'
 import cn from 'classnames'
 import React from 'react'
 
-import { basicBlockGap } from '../components/block'
+import { basicBlockGap, blockMargin } from '../components/block'
 import BsFillCaretRightFill from '../icons/BsFillCaretRightFill'
 import { mapColorClass } from '../lib/helpers'
 
@@ -16,7 +16,9 @@ export default function BlockToggle(props: {
   updatedBlock?: React.JSX.Element
 }) {
   return (
-    <div className={cn(mapColorClass(props.color), 'toggle-container my-4', props.className)}>
+    <div
+      className={cn(mapColorClass(props.color), 'toggle-container', blockMargin, props.className)}
+    >
       {props.updatedBlock}
       <Disclosure defaultOpen={false}>
         {({ open }) => (
@@ -53,9 +55,12 @@ export default function BlockToggle(props: {
               </Transition>
             )}
             <div
-              className={cn('absolute h-full top-0 left-0 w-1 border-l ml-[8px] mt-[8px] z-10', {
-                hidden: !open
-              })}
+              className={cn(
+                'absolute h-[calc(100%-8px)] top-0 left-0 w-1 border-l ml-[8px] mt-[8px] z-10',
+                {
+                  hidden: !open
+                }
+              )}
             ></div>
           </>
         )}

@@ -181,7 +181,19 @@ li::marker {
 // Quote
 .quote-children {
   & > * {
-    margin: 0.75rem 0 !important;
+    margin-top: 0.75rem !important;
+    &:not(:last-child) {
+      margin-bottom: 0.75rem !important;
+    }
+    &:last-child {
+      margin-bottom: 0 !important;
+      & > *:last-child {
+        margin-bottom: 0 !important;
+        & > *:last-child {
+          margin-bottom: 0 !important;
+        }
+      }
+    }
   }
 }
 
@@ -308,7 +320,7 @@ pre > code::before {
   }
 
   .m2it-blockquote {
-    @apply my-4 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 font-normal not-italic;
+    @apply my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 font-normal not-italic;
   }
 
   .m2it-li {
@@ -317,10 +329,6 @@ pre > code::before {
 
   .m2it-list {
     @apply my-0 pl-6;
-  }
-
-  .m2it-blockquote {
-    @apply my-4 py-3;
   }
 
   .m2it-td {
@@ -355,7 +363,7 @@ pre > code::before {
     @apply prose-td:m2it-td;
     @apply prose-hr:my-6;
     @apply prose-code:m2it-code;
-    @apply prose-figure:my-4;
+    @apply prose-figure:my-3;
     @apply prose-strong:m2it-strong;
     @apply prose-table:m2it-table;
   }

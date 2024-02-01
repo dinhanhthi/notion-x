@@ -225,7 +225,7 @@ export const Asset: React.FC<{
           content = (
             <iframe
               style={assetStyle}
-              className="notion-asset-object-fit"
+              className="notion-asset-object-fit mt-[-8px] ml-[-8px]"
               src={src}
               title="GitHub Gist"
               frameBorder="0"

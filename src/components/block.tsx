@@ -57,7 +57,9 @@ interface BlockProps {
   children?: React.ReactNode
 }
 
-export const basicBlockGap = cn('my-4 relative')
+export const blockMargin = 'my-3'
+
+export const basicBlockGap = cn(blockMargin, 'relative')
 
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
@@ -461,7 +463,7 @@ export const Block: React.FC<BlockProps> = props => {
         output = (
           <>
             {block.properties && (
-              <li className="pl-0">
+              <li className={cn('pl-0', blockMargin)}>
                 <Text value={block.properties.title} block={block} />
               </li>
             )}
@@ -470,7 +472,7 @@ export const Block: React.FC<BlockProps> = props => {
         )
       } else {
         output = block.properties ? (
-          <li className="pl-0">
+          <li className={cn('pl-0', blockMargin)}>
             <Text value={block.properties.title} block={block} />
           </li>
         ) : null

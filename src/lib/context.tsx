@@ -37,6 +37,7 @@ export interface NotionContext {
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
+  discreteStyle?: boolean
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
@@ -177,6 +178,7 @@ const defaultNotionContext: NotionContext = {
   blockOptions: null as any,
   customPreviewImage: null as any,
   useSimpleImage: false as any,
+  discreteStyle: false as any,
   showUpdatedIndicator: false as any,
   simpleImageProps: null as any,
 

@@ -27,6 +27,7 @@ export const NotionRenderer: React.FC<{
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
+  discreteStyle?: boolean
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
@@ -77,6 +78,7 @@ export const NotionRenderer: React.FC<{
   blockOptions,
   customPreviewImage,
   useSimpleImage,
+  discreteStyle,
   showUpdatedIndicator,
   simpleImageProps,
   darkMode,
@@ -126,6 +128,7 @@ export const NotionRenderer: React.FC<{
       blockOptions={blockOptions}
       customPreviewImage={customPreviewImage}
       useSimpleImage={useSimpleImage}
+      discreteStyle={discreteStyle}
       showUpdatedIndicator={showUpdatedIndicator}
       simpleImageProps={simpleImageProps}
       minTableOfContentsItems={minTableOfContentsItems}

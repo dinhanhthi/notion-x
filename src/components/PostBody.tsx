@@ -23,6 +23,7 @@ type PostBodyProps = {
   blockOptions?: BlockOptionsContextType
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
+  discreteStyle?: boolean // active the style of discrete notes (toggle has different styles)
   simpleImageProps?: SimpleImageProps
   showUpdatedIndicator?: boolean
   lastModifiedIdKey?: string // used as NEXT_PUBLIC_ID_LAST_MODIFIED
@@ -97,6 +98,7 @@ export default function PostBody(props: PostBodyProps) {
           blockOptions={props.blockOptions}
           customPreviewImage={props.customPreviewImage}
           useSimpleImage={props.useSimpleImage}
+          discreteStyle={props.discreteStyle}
           showUpdatedIndicator={showUpdatedIndicator}
           simpleImageProps={props.simpleImageProps}
           showOnlyUpdatedBlocks={showOnlyUpdatedBlocks}

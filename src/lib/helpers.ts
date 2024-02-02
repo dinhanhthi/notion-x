@@ -54,7 +54,7 @@ export function mapTaxonomy(taxName: string, taxPrefix: string): Taxonomy {
   }
 }
 
-export function mapColorClass(color?: string): string | null {
+export function mapColorClass(color?: string, defaultWhite?: boolean): string | null {
   switch (color) {
     case 'gray':
       return 'text-gray-500'
@@ -96,7 +96,7 @@ export function mapColorClass(color?: string): string | null {
     case 'teal_background':
       return 'notion-teal_background'
     default:
-      return null
+      return defaultWhite ? 'bg-white' : null
   }
 }
 

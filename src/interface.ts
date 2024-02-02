@@ -41,6 +41,7 @@ export type PostHeaderType = {
   coverPosition?: number
   wellWritten?: boolean
   pinned?: boolean
+  discrete?: boolean
 }
 
 export interface Post extends PostHeaderType {

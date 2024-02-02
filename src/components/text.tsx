@@ -72,7 +72,7 @@ export const Text: React.FC<{
               const blockId = decorator[1]
               const linkedBlock = recordMap.block[blockId]?.value
               if (!linkedBlock) {
-                console.log('"p" missing block', blockId)
+                if (process.env.ENV_MODE === 'dev') console.log('"p" missing block', blockId)
                 return null
               }
 

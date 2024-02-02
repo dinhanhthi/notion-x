@@ -19,6 +19,7 @@ import { usePostDateStatus } from '../lib/hooks'
 import { cs, getListNumber, isUrl } from '../lib/utils'
 import BlockCallout from './BlockCallout'
 import BlockToggle from './BlockToggle'
+import BlockToggleDiscrete from './BlockToggleDiscrete'
 import BlockVideo from './BlockVideo'
 import PostToc from './PostToc'
 import BlockHeadingToggle from './ToggleHeading'
@@ -84,6 +85,7 @@ export const Block: React.FC<BlockProps> = props => {
     blockOptions,
     customPreviewImage,
     useSimpleImage,
+    discreteStyle,
     showUpdatedIndicator,
     simpleImageProps
   } = ctx
@@ -220,7 +222,11 @@ export const Block: React.FC<BlockProps> = props => {
                           hasToc && 'notion-page-content-has-toc'
                         )}
                       >
-                        <article className="notion-page-content-inner">
+                        <article
+                          className={cn('notion-page-content-inner', {
+                            'flex flex-wrap gap-6': discreteStyle
+                          })}
+                        >
                           <PostToc
                             recordMap={recordMap}
                             tocs={tocs}
@@ -723,6 +729,23 @@ export const Block: React.FC<BlockProps> = props => {
     }
 
     case 'toggle':
+      if (discreteStyle && level === 1) {
+        return (
+          <BlockToggleDiscrete
+            className={cn('relative', blurBlockClassName)}
+            text={
+              block.properties?.title ? (
+                <Text value={block.properties?.title} block={block} />
+              ) : null
+            }
+            color={get(block, 'format.block_color')}
+            updatedBlock={updatedBlock}
+          >
+            {children}
+          </BlockToggleDiscrete>
+        )
+      }
+
       return (
         <BlockToggle
           className={cn('relative', blurBlockClassName)}

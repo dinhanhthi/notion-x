@@ -129,7 +129,7 @@ export const Block: React.FC<BlockProps> = props => {
           <button
             onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
             className={cn(
-              'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 tooltip-auto group button-indicator'
+              'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 tooltip-auto group button-indicator updated-block'
             )}
             data-title={
               !props.showOnlyUpdatedBlocks
@@ -224,20 +224,23 @@ export const Block: React.FC<BlockProps> = props => {
                       >
                         <article
                           className={cn('notion-page-content-inner', {
-                            'flex flex-wrap gap-6': discreteStyle
+                            'columns-1 lg:columns-2 2xl:columns-[450px] max-w-[1700px] gap-8 [&>*:not(:first-child)]:mt-8 page-discrete mx-auto':
+                              discreteStyle
                           })}
                         >
-                          <PostToc
-                            recordMap={recordMap}
-                            tocs={tocs}
-                            inPost={true}
-                            labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}
-                            minNumHeadingsToShowToc={blockOptions?.minNumHeadingsToShowToc}
-                          />
+                          {!discreteStyle && (
+                            <PostToc
+                              recordMap={recordMap}
+                              tocs={tocs}
+                              inPost={true}
+                              labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}
+                              minNumHeadingsToShowToc={blockOptions?.minNumHeadingsToShowToc}
+                            />
+                          )}
                           {children}
                         </article>
 
-                        {hasAside && (
+                        {hasAside && !discreteStyle && (
                           <PageAside
                             toc={tocs}
                             activeSection={activeSection}
@@ -739,7 +742,9 @@ export const Block: React.FC<BlockProps> = props => {
               ) : null
             }
             color={get(block, 'format.block_color')}
-            updatedBlock={updatedBlock}
+            updateStatus={
+              status === 'updatedWithin' ? 'updated' : status === 'new' ? 'new' : undefined
+            }
           >
             {children}
           </BlockToggleDiscrete>

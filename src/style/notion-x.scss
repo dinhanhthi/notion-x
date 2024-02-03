@@ -361,6 +361,30 @@ pre > code::before {
     @apply prose-table:m2it-table;
   }
 
+  .page-discrete {
+    .block-callout {
+      @apply rounded-lg border shadow-lg;
+    }
+    & > *:first-child {
+      @apply mt-0;
+    }
+    .updated-block {
+      display: none;
+    }
+  }
+
+  .discrete-header-container {
+    a {
+      @apply text-inherit underline underline-offset-4;
+      &:hover {
+        @apply text-pink-200;
+      }
+    }
+
+    .block-callout {
+    }
+  }
+
   .notion-inline-code {
     @apply border border-gray-200;
   }

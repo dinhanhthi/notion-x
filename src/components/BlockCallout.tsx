@@ -11,7 +11,7 @@ export default function BlockCallout(props: {
   children?: React.ReactNode
 }) {
   return (
-    <div className={cn(props.className)}>
+    <div className={cn(props.className, 'block-callout')}>
       <div
         className={cn('flex rounded-md', mapColorClass(props.color) || 'border border-gray-200')}
       >

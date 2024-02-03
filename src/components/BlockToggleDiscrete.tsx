@@ -7,21 +7,47 @@ export default function BlockToggleDiscrete(props: {
   color?: string
   children?: React.ReactNode
   className?: string
-  updatedBlock?: React.JSX.Element
+  updateStatus?: 'updated' | 'new'
 }) {
   return (
     <div
       className={cn(
         mapColorClass(props.color, true),
         props.className,
-        'text-[95%] w-full break-inside-avoid'
+        'text-[95%] w-full break-inside-avoid rounded-lg shadow-lg overflow-hidden discrete-container'
       )}
     >
-      <div className="w-full grid grid-cols-1 rounded-lg shadow-lg overflow-hidden">
-        {props.text && (
-          <div className="px-4 text-[105%] py-2.5 bg-slate-500 text-white">{props.text}</div>
+      {props.text && (
+        <div className="px-4 text-[105%] py-2.5 bg-slate-500 text-white relative discrete-header-container">
+          {props.text}
+          {props.updateStatus && (
+            <div
+              className={cn('absolute right-0 top-0 text-xs px-2 rounded-bl-md', {
+                'text-green-900 bg-green-200': props.updateStatus === 'updated',
+                'text-amber-900 bg-amber-200': props.updateStatus === 'new'
+              })}
+            >
+              {props.updateStatus}
+            </div>
+          )}
+        </div>
+      )}
+      <div
+        className={cn('discrete-content-container p-4', {
+          relative: !props.text
+        })}
+      >
+        {props.children}
+        {!props.text && props.updateStatus && (
+          <div
+            className={cn('absolute right-0 top-0 text-xs px-2 rounded-bl-md', {
+              'text-green-900 bg-green-200': props.updateStatus === 'updated',
+              'text-amber-900 bg-amber-200': props.updateStatus === 'new'
+            })}
+          >
+            {props.updateStatus}
+          </div>
         )}
-        <div className={'discrete-content-container p-4'}>{props.children}</div>
       </div>
     </div>
   )

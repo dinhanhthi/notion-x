@@ -74,7 +74,7 @@ export default function BlockCode(props: BlockCodeProps) {
   return (
     <div className={cn(className, blurBlockClassName, 'flex flex-col gap-2')}>
       <div
-        className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[14px]`}
+        className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[12.5px]`}
       >
         {!!updatedBlock && updatedBlock}
         {syntaxWraper}

@@ -342,7 +342,7 @@ export const Block: React.FC<BlockProps> = props => {
 
       const innerHeader = (
         <>
-          <span className="notion-h-title">
+          <span className="notion-h-title leading-tight">
             <Text ignoreMarkup={['b']} value={block.properties.title} block={block} />
           </span>
           {!block.format?.toggleable && (

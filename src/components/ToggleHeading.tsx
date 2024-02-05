@@ -19,7 +19,7 @@ export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
     <Disclosure defaultOpen={false}>
       {({ open }) => (
         <>
-          <div className={cn('flex w-full items-center gap-1', props.className)}>
+          <div className={cn('flex w-full items-start gap-1', props.className)}>
             {props.updatedBlock}
             <Disclosure.Button className="rounded-md p-1 hover:bg-[#99989824]">
               <BsFillCaretRightFill

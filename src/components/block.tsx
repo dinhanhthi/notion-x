@@ -223,7 +223,7 @@ export const Block: React.FC<BlockProps> = props => {
                         )}
                       >
                         <article
-                          className={cn('notion-page-content-inner', {
+                          className={cn('notion-page-content-inner overflow-hidden', {
                             'columns-1 lg:columns-2 2xl:columns-[450px] max-w-[1700px] gap-8 [&>*:not(:first-child)]:mt-8 page-discrete mx-auto':
                               discreteStyle
                           })}
@@ -598,7 +598,7 @@ export const Block: React.FC<BlockProps> = props => {
       else width = `${ratio * 100}%`
 
       return (
-        <div className={cn('!min-w-full md:!min-w-0')} style={{ width }}>
+        <div className={cn('!min-w-full !w-full md:!min-w-0')} style={{ width }}>
           {children}
         </div>
       )
@@ -847,11 +847,7 @@ export const Block: React.FC<BlockProps> = props => {
     case 'table':
       return (
         <div
-          className={cn(
-            basicBlockGap,
-            blurBlockClassName,
-            'overflow-visible m2it-scrollbar relative'
-          )}
+          className={cn(basicBlockGap, blurBlockClassName, 'overflow-auto m2it-scrollbar relative')}
         >
           {updatedBlock}
           <table className={cs('notion-simple-table table-auto my-0', blockId)}>

@@ -16,7 +16,7 @@ type PostTocProps = {
   tocs: TableOfContentsEntry[]
   inPost?: boolean // This component is used in 2 places: post-body and [postSlug]
   minNumHeadingsToShowToc?: number
-  expandTocOnMobile?: boolean
+  defaultOpenToc?: boolean
   labelTocTitle?: string
   labelTocClassName?: string
 }
@@ -29,7 +29,7 @@ const Code = dynamic(() => import('./BlockCode'), { ssr: false })
  */
 
 export default function PostToc(props: PostTocProps) {
-  const [showContent, setShowContent] = useState(props.expandTocOnMobile || false)
+  const [showContent, setShowContent] = useState(props.defaultOpenToc || false)
   const components = React.useMemo(
     () => ({
       Code,

@@ -6,6 +6,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
+import BlogIcon from '../icons/BlogIcon'
 import BsPinAngleFill from '../icons/BsPinAngleFill'
 import HiMiniCheckBadge from '../icons/HiMiniCheckBadge'
 import HiOutlineDocumentText from '../icons/HiOutlineDocumentText'
@@ -40,16 +41,19 @@ export default function PostSimple(props: PostSimpleProps) {
       >
         <div
           className={cn('mt-[3px] text-slate-600 relative', {
-            'tooltip-auto': post.wellWritten
+            'tooltip-auto': post.wellWritten && !post.blog
           })}
           data-title={options?.wellWrittenLabel ?? 'Well written, verified by me.'}
         >
           {!!options?.customIcon && (!options.showPinned || !post.pinned) && options.customIcon}
           {!options?.customIcon && (!options?.showPinned || !post.pinned) && (
-            <HiOutlineDocumentText className="text-xl" />
+            <>
+              {!post.blog && <HiOutlineDocumentText className="text-xl" />}
+              {post.blog && <BlogIcon className="text-xl text-slate-600" />}
+            </>
           )}
           {options?.showPinned && post.pinned && <BsPinAngleFill className="text-xl" />}
-          {post.wellWritten && (
+          {post.wellWritten && !post.blog && (
             <span className="bg-transparent absolute bottom-[-5px] right-[-5px]">
               <HiMiniCheckBadge className={cn('text-gray-400 text-sm')} />
             </span>

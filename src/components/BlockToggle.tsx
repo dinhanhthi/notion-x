@@ -17,7 +17,12 @@ export default function BlockToggle(props: {
 }) {
   return (
     <div
-      className={cn(mapColorClass(props.color), 'toggle-container', blockMargin, props.className)}
+      className={cn(
+        mapColorClass(props.color),
+        'toggle-container relative',
+        blockMargin,
+        props.className
+      )}
     >
       {props.updatedBlock}
       <Disclosure defaultOpen={false}>
@@ -56,7 +61,7 @@ export default function BlockToggle(props: {
             )}
             <div
               className={cn(
-                'absolute h-[calc(100%-8px)] top-0 left-0 w-1 border-l ml-[8px] mt-[8px] z-10',
+                'absolute h-[calc(100%-8px)] top-0 left-0 w-1 border-l ml-[7.5px] mt-[8px] z-10',
                 {
                   hidden: !open
                 }

@@ -2,6 +2,7 @@ import cn from 'classnames'
 import React from 'react'
 
 import { mapColorClass } from '../lib/helpers'
+import { blockMargin } from './block'
 
 export default function BlockCallout(props: {
   text: React.ReactNode
@@ -17,9 +18,9 @@ export default function BlockCallout(props: {
       >
         {props.icon && <div className="text-2xl pl-4 py-3">{props.icon}</div>}
         <div className="pl-2 pr-4 w-0 flex-1">
-          <div className="mt-4 mb-3">{props.text}</div>
+          <div className={blockMargin}>{props.text}</div>
           {!!props.children && <div className="m2it-inside-box">{props.children}</div>}
-          <div className="my-4"></div>
+          <div className={blockMargin}></div>
         </div>
       </div>
     </div>

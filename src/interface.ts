@@ -43,6 +43,7 @@ export type PostHeaderType = {
   pinned?: boolean
   discrete?: boolean
   blog?: boolean
+  hide?: boolean
 }
 
 export interface Post extends PostHeaderType {

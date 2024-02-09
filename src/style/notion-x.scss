@@ -373,18 +373,6 @@ pre > code::before {
     }
   }
 
-  .discrete-header-container {
-    a {
-      @apply text-inherit underline underline-offset-4;
-      &:hover {
-        @apply text-pink-200;
-      }
-    }
-
-    .block-callout {
-    }
-  }
-
   .notion-inline-code {
     @apply border border-gray-200;
   }

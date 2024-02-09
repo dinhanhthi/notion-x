@@ -21,8 +21,10 @@ export default function HeadingWithMore(props: HeadingWithMoreProps) {
         'font-heading text-[1.7rem] font-medium text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
       )}
     >
-      {!!icon && icon}
-      <span>{title}</span>
+      <div className="flex items-center gap-2.5">
+        {!!icon && icon}
+        <span>{title}</span>
+      </div>
       {href && (
         <Link
           className="text-[60%] italic text-slate-600 hover:m2it-link-hover font-normal"

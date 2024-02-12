@@ -645,8 +645,12 @@ export const Block: React.FC<BlockProps> = props => {
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}
           >
-            {updatedBlock}
-            {children}
+            {!!block.content && (
+              <>
+                {updatedBlock}
+                {children}
+              </>
+            )}
           </BlockCallout>
         )
       }

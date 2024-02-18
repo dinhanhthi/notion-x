@@ -2,6 +2,11 @@
 
 My customization of [NotionX's react-notion-x](https://github.com/NotionX/react-notion-x). Personal use only!
 
+See it in action?
+
+- [dinhanhthi.com](https://dinhanhthi.com/) ([source](https://github.com/dinhanhthi/dinhanhthi.com))
+- [math2it.com](https://math2it.com/)
+
 ## Install
 
 You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in your project.
@@ -56,9 +61,7 @@ Put below line in `tailwind.config.ts`,
 
 ```ts
 {
-  content: [
-    './notion-x/**/*.{js,ts,jsx,tsx,mdx,css,scss}'
-  ]
+  content: ['./notion-x/**/*.{js,ts,jsx,tsx,mdx,css,scss}']
 }
 ```
 

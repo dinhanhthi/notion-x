@@ -66,3 +66,7 @@ Put below line in `tailwind.config.ts`,
 ```
 
 > 💡 **Tip**: You can edit the files in the submodule BUT don't commit and push it. After finishing editing, just `cd notion-x` and then `git checkout <file-path>` to discard all changes.
+
+## Update something new (for me only)
+
+Read the steps in the repo [dinhanhthi.com](https://github.com/dinhanhthi/dinhanhthi.com).

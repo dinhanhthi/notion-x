@@ -579,7 +579,8 @@ export const Block: React.FC<BlockProps> = props => {
       return (
         <div
           className={cn(
-            'md:flex md:flex-nowrap md:gap-4 md:-my-2 relative',
+            'md:flex md:flex-nowrap md:gap-4 relative',
+            blockMargin,
             blurBlockClassName,
             blockId
           )}

@@ -523,3 +523,15 @@ pre > code::before {
     font-size: 1.2rem;
   }
 }
+
+.toggle-heading-content-container {
+  & > * {
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  li:last-of-type {
+    margin-bottom: 0;
+  }
+}

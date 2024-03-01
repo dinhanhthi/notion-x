@@ -33,7 +33,7 @@ export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
             {props.anchorRight}
           </div>
           <Disclosure.Panel>
-            <div className="pl-8">{props.children}</div>
+            <div className="pl-8 pt-2 toggle-heading-content-container">{props.children}</div>
           </Disclosure.Panel>
           <div
             className={cn(

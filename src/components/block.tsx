@@ -600,7 +600,7 @@ export const Block: React.FC<BlockProps> = props => {
       else width = `${ratio * 100}%`
 
       return (
-        <div className={cn('!min-w-full !w-full md:!min-w-0')} style={{ width }}>
+        <div className={cn('!min-w-full md:!min-w-0')} style={{ width }}>
           {children}
         </div>
       )

@@ -360,7 +360,7 @@ export const Block: React.FC<BlockProps> = props => {
       let headerBlock = <></>
 
       const headingCommonClasss = cn(
-        '!my-0 flex items-center gap-2',
+        '!my-0 flex items-center gap-2 group',
         blockOptions?.headingScrollMarginTopClass ?? 'scroll-mt-[70px]'
       )
 
@@ -378,11 +378,7 @@ export const Block: React.FC<BlockProps> = props => {
         )
       } else {
         headerBlock = (
-          <h3
-            id={anchor}
-            className={cn(classNameStr, headingCommonClasss, 'my-0 group')}
-            data-id={id}
-          >
+          <h3 id={anchor} className={cn(classNameStr, headingCommonClasss)} data-id={id}>
             {innerHeader}
           </h3>
         )

@@ -5,6 +5,7 @@
 import { ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { DiscreteColsType } from '../components/PostBody'
 import { SimpleImageProps } from '../components/SimpleImage'
 import { AssetWrapper } from '../components/asset-wrapper'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from '../types'
@@ -39,6 +40,7 @@ export interface NotionContext {
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
@@ -180,6 +182,7 @@ const defaultNotionContext: NotionContext = {
   customPreviewImage: null as any,
   useSimpleImage: false as any,
   discreteStyle: false as any,
+  discreteColsType: 'single',
   showUpdatedIndicator: false as any,
   simpleImageProps: null as any,
 

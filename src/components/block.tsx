@@ -86,6 +86,7 @@ export const Block: React.FC<BlockProps> = props => {
     customPreviewImage,
     useSimpleImage,
     discreteStyle,
+    discreteColsType,
     showUpdatedIndicator,
     simpleImageProps
   } = ctx
@@ -225,7 +226,8 @@ export const Block: React.FC<BlockProps> = props => {
                         <article
                           className={cn('notion-page-content-inner', {
                             'columns-1 lg:columns-2 2xl:columns-[450px] max-w-[1700px] gap-8 [&>*:not(:first-child)]:mt-8 page-discrete mx-auto':
-                              discreteStyle
+                              discreteStyle && discreteColsType === 'multiple',
+                            'flex flex-col gap-8': discreteStyle && discreteColsType === 'single'
                           })}
                         >
                           {!discreteStyle && (

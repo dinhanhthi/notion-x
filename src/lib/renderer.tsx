@@ -4,6 +4,7 @@ import mediumZoom from '@fisch0920/medium-zoom'
 import { ExtendedRecordMap, PreviewImage } from 'notion-types'
 import * as React from 'react'
 
+import { DiscreteColsType } from '../components/PostBody'
 import { SimpleImageProps } from '../components/SimpleImage'
 import { Block } from '../components/block'
 import { MapImageUrlFn, MapPageUrlFn, NotionComponents, SearchNotionFn } from '../types'
@@ -28,6 +29,7 @@ export const NotionRenderer: React.FC<{
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
 
@@ -79,6 +81,7 @@ export const NotionRenderer: React.FC<{
   customPreviewImage,
   useSimpleImage,
   discreteStyle,
+  discreteColsType,
   showUpdatedIndicator,
   simpleImageProps,
   darkMode,
@@ -129,6 +132,7 @@ export const NotionRenderer: React.FC<{
       customPreviewImage={customPreviewImage}
       useSimpleImage={useSimpleImage}
       discreteStyle={discreteStyle}
+      discreteColsType={discreteColsType}
       showUpdatedIndicator={showUpdatedIndicator}
       simpleImageProps={simpleImageProps}
       minTableOfContentsItems={minTableOfContentsItems}

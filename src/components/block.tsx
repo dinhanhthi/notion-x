@@ -397,6 +397,7 @@ export const Block: React.FC<BlockProps> = props => {
             })}
             headingElement={headerBlock}
             updatedBlock={updatedBlock}
+            headingType={isH3 ? 'h3' : isH1 ? 'h1' : 'h2'}
           >
             {children}
           </BlockHeadingToggle>

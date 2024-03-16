@@ -12,6 +12,7 @@ type BlockHeadingToggleProps = {
   anchorRight?: JSX.Element
   children: React.ReactNode
   updatedBlock?: React.JSX.Element
+  headingType?: 'h1' | 'h2' | 'h3'
 }
 
 export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
@@ -37,9 +38,12 @@ export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
           </Disclosure.Panel>
           <div
             className={cn(
-              'absolute h-[calc(100%-8px)] top-0 left-0 w-0 border-sky-100 border-l-2 ml-[12.5px] mt-[14px] z-10',
+              'absolute h-[calc(100%-8px)] top-0 left-0 w-0 border-sky-100 border-l-2 mt-[14px] z-10',
               {
-                hidden: !open
+                hidden: !open,
+                'ml-[12.5px]':
+                  !props.headingType || props.headingType === 'h2' || props.headingType === 'h1',
+                'ml-[10.8px]': props.headingType === 'h3'
               }
             )}
           ></div>

@@ -62,6 +62,8 @@ export const blockMargin = 'my-3'
 
 export const basicBlockGap = cn(blockMargin, 'relative')
 
+const basicBlockGapBigger = 'relative !my-4'
+
 // TODO: use react state instead of a global for this
 const tocIndentLevelCache: {
   [blockId: string]: number
@@ -522,14 +524,14 @@ export const Block: React.FC<BlockProps> = props => {
           block={block}
           customPreviewImage={customPreviewImage}
           updatedBlock={updatedBlock}
-          className={cn(blurBlockClassName, 'relative')}
+          className={cn(basicBlockGapBigger, blurBlockClassName, 'relative')}
         />
       )
 
     case 'video':
       return (
         <BlockVideo
-          className={cn(blockId, basicBlockGap, blurBlockClassName, 'relative')}
+          className={cn(blockId, basicBlockGapBigger, blurBlockClassName, 'relative')}
           caption={<Text value={block.properties.caption!} block={block} />}
           videoUrl={block?.properties?.source?.[0]?.[0]}
           updatedBlock={updatedBlock}
@@ -559,7 +561,7 @@ export const Block: React.FC<BlockProps> = props => {
         <components.Equation
           block={block as types.EquationBlock}
           inline={false}
-          className={cn(blockId, basicBlockGap)}
+          className={cn(blockId, basicBlockGapBigger)}
           updatedBlock={updatedBlock}
           blurBlockClassName={blurBlockClassName}
         />
@@ -570,7 +572,7 @@ export const Block: React.FC<BlockProps> = props => {
         <components.Code
           block={block as types.CodeBlock}
           updatedBlock={updatedBlock}
-          className={cn(basicBlockGap, blurBlockClassName)}
+          className={cn(basicBlockGapBigger, blurBlockClassName)}
         />
       )
 
@@ -636,11 +638,11 @@ export const Block: React.FC<BlockProps> = props => {
 
     case 'callout':
       if (components.Callout) {
-        return <components.Callout block={block} className={blockId} />
+        return <components.Callout block={block} className={cn(blockId, basicBlockGapBigger)} />
       } else {
         return (
           <BlockCallout
-            className={cn(basicBlockGap, blurBlockClassName)}
+            className={cn(basicBlockGapBigger, blurBlockClassName)}
             icon={<PageIcon block={block} />}
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}
@@ -678,7 +680,7 @@ export const Block: React.FC<BlockProps> = props => {
       }
 
       return (
-        <div className={cn(basicBlockGap, blurBlockClassName)}>
+        <div className={cn(basicBlockGapBigger, blurBlockClassName)}>
           <a
             className={cn(
               'flex gap-4 w-full rounded-md border border-slate-200 p-3 hover:cursor-pointer hover:border-sky-300 hover:shadow-sm',
@@ -852,7 +854,11 @@ export const Block: React.FC<BlockProps> = props => {
     case 'table':
       return (
         <div
-          className={cn(basicBlockGap, blurBlockClassName, 'overflow-auto m2it-scrollbar relative')}
+          className={cn(
+            basicBlockGapBigger,
+            blurBlockClassName,
+            'overflow-auto m2it-scrollbar relative'
+          )}
         >
           {updatedBlock}
           <table className={cs('notion-simple-table table-auto my-0', blockId)}>

@@ -31,15 +31,17 @@ export default function BlockToggle(props: {
             <Disclosure.Button
               className={cn('toggle-button flex gap-1.5 w-full items-start rounded-md group')}
             >
-              <BsFillCaretRightFill
-                className={cn(
-                  'mt-[2.5px] shrink-0 text-lg transform ease-in-out transition-all duration-[400ms] group-hover:bg-slate-200 rounded-md z-20',
-                  {
-                    'rotate-90': open,
-                    'rotate-0': !open
-                  }
-                )}
-              />
+              <div className="group-hover:bg-slate-200 rounded-md z-20 p-[2px]">
+                <BsFillCaretRightFill
+                  className={cn(
+                    ' shrink-0 text-base transform ease-in-out transition-all duration-[400ms]',
+                    {
+                      'rotate-90': open,
+                      'rotate-0': !open
+                    }
+                  )}
+                />
+              </div>
               <div className="text-start">{props.text}</div>
             </Disclosure.Button>
             {!!props.children && (
@@ -61,7 +63,7 @@ export default function BlockToggle(props: {
             )}
             <div
               className={cn(
-                'absolute h-[calc(100%-8px)] top-0 left-0 w-1 border-l ml-[7.5px] mt-[8px] z-10',
+                'absolute h-[calc(100%-8px)] top-0 left-0 w-1 border-l ml-[9px] mt-[8px] z-10',
                 {
                   hidden: !open
                 }

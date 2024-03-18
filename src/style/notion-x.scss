@@ -163,12 +163,19 @@ ol,
 ul {
   & > *:not(li):not(ol):not(ul),
   .block:not(li):not(ol):not(ul) {
-    margin: 0.75rem 0 !important;
+    margin: 0.5rem 0 !important;
   }
 }
 
 li::marker {
   color: #444 !important;
+}
+
+ul > li {
+  padding-left: 0 !important;
+  &::marker {
+    font-size: 1.25rem;
+  }
 }
 
 // Quote
@@ -321,7 +328,7 @@ pre > code::before {
   }
 
   .m2it-list {
-    @apply my-0 pl-6;
+    @apply my-0 pl-[1.8rem];
   }
 
   .m2it-td {

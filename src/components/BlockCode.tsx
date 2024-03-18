@@ -89,7 +89,7 @@ export default function BlockCode(props: BlockCodeProps) {
       </div>
 
       {caption && (
-        <div className="italic opacity-60 text-sm">
+        <div className="italic opacity-80 text-sm">
           <Text value={caption} block={block} />
         </div>
       )}

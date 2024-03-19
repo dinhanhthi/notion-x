@@ -82,6 +82,7 @@ export type Category = {
 
 export type Tag = {
   name: string
+  longName?: string
   id?: string
   slug?: string
   uri?: string

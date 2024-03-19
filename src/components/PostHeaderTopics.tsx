@@ -59,11 +59,13 @@ export default function PostHeaderTopics(props: PostHeaderTopicsProps) {
         usedTags.map(tag => (
           <Link
             className={cn(
+              { 'tooltip-auto': tag.longName },
               topTagClass,
               props.tagClass ?? 'boder-slate-300 border text-slate-600 bg-white'
             )}
             key={tag.uri}
             href={tag.uri || '/'}
+            data-title={tag.longName}
           >
             {tag.name}
           </Link>

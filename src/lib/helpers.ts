@@ -27,11 +27,12 @@ export const defaultBlurData = {
   height: 263
 }
 
-export function mapTag(tagName: string, tagPrefix: string): Tag {
+export function mapTag(tagName: string, tagPrefix: string, topics: Tag[] = []): Tag {
   if (!tagName) throw new Error('tagName is required')
   return {
     id: makeSlugText(tagName),
     name: tagName,
+    longName: topics.find(topic => topic.name === tagName)?.longName,
     slug: makeSlugText(tagName),
     uri: `/${tagPrefix}/${makeSlugText(tagName)}/`
   }

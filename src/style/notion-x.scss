@@ -295,22 +295,20 @@ pre > code::before {
   margin-left: -5px !important;
 }
 
-.font-medium a {
-  font-weight: 500;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
+.discrete-header-container {
+  .font-medium,
+  .font-semibold,
+  .font-bold {
+    a {
+      font-weight: inherit !important;
+      text-decoration: underline;
+      text-underline-offset: 4px;
+    }
+  }
 
-.font-semibold a {
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.font-bold a {
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  & > * {
+    color: inherit !important;
+  }
 }
 
 @layer base {

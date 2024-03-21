@@ -14,7 +14,7 @@ export default function BlockToggleDiscrete(props: {
       className={cn(
         mapColorClass(props.color, true),
         props.className,
-        'text-[95%] w-full break-inside-avoid rounded-lg shadow-lg overflow-hidden discrete-container'
+        'text-[95%] w-full break-inside-avoid rounded-lg shadow-lg discrete-block-container'
       )}
     >
       {props.text && (

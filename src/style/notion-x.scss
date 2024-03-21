@@ -296,9 +296,9 @@ pre > code::before {
 }
 
 .discrete-header-container {
-  .font-medium,
-  .font-semibold,
-  .font-bold {
+  &.font-medium,
+  &.font-semibold,
+  &.font-bold {
     a {
       font-weight: inherit !important;
       text-decoration: underline;
@@ -556,5 +556,23 @@ pre > code::before {
 
   li:last-of-type {
     margin-bottom: 0;
+  }
+}
+
+.discrete-container {
+  counter-reset: block-counter 0;
+
+  .discrete-block-container {
+    @media screen and (min-width: 888px) {
+      counter-increment: block-counter 1;
+      &::before {
+        content: counter(block-counter);
+        font-weight: 500;
+        font-size: 1.5rem;
+        opacity: 0.5;
+        position: absolute;
+        left: -2rem;
+      }
+    }
   }
 }

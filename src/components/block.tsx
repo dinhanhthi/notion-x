@@ -750,7 +750,7 @@ export const Block: React.FC<BlockProps> = props => {
       if (discreteStyle && level === 1) {
         return (
           <BlockToggleDiscrete
-            className={cn('relative', blurBlockClassName)}
+            className={cn('relative')}
             text={
               block.properties?.title ? (
                 <Text value={block.properties?.title} block={block} />

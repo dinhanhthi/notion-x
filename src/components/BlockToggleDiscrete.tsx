@@ -14,9 +14,12 @@ export default function BlockToggleDiscrete(props: {
       className={cn(
         mapColorClass(props.color, true),
         props.className,
-        'text-[95%] w-full break-inside-avoid rounded-lg shadow-lg discrete-block-container'
+        'text-[95%] w-full break-inside-avoid rounded-lg shadow-lg discrete-block-container relative'
       )}
     >
+      <div className="absolute left-0">
+        <div className="discrete-counter"></div>
+      </div>
       {props.text && (
         <div className="px-4 text-[105%] py-2.5 border-b border-[#86aecd] text-sky-800 font-medium relative discrete-header-container">
           {props.text}

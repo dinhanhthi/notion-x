@@ -31,7 +31,7 @@ export default function BlockEquation(props: {
         'notion-equation',
         inline
           ? 'notion-equation-inline'
-          : 'block text-center overflow-visible m2it-scrollbar m2it-scrollbar-small relative',
+          : 'block text-center overflow-x-auto m2it-scrollbar m2it-scrollbar-small relative',
         className,
         props.blurBlockClassName
       )}

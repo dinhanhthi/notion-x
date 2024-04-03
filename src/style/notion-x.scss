@@ -157,6 +157,11 @@ ul > ul {
 
 .katex-display {
   margin: 0;
+
+  .katex-html {
+    white-space: normal;
+    line-height: 3.5;
+  }
 }
 
 ol,

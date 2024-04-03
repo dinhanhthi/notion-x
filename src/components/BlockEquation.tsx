@@ -31,13 +31,13 @@ export default function BlockEquation(props: {
         'notion-equation',
         inline
           ? 'notion-equation-inline'
-          : 'block text-center overflow-x-auto m2it-scrollbar m2it-scrollbar-small relative',
+          : 'block text-center overflow-x-auto overflow-y-hidden m2it-scrollbar m2it-scrollbar-small relative',
         className,
         props.blurBlockClassName
       )}
     >
       {!!props.updatedBlock && !inline && props.updatedBlock}
-      <Katex math={math2Use} settings={katexSettings} block={!inline} className={className} />
+      <Katex math={math2Use} settings={katexSettings} block={!inline} />
     </span>
   )
 }

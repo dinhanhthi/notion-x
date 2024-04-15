@@ -164,6 +164,11 @@ ul > ul {
   }
 }
 
+// fix overflow auto numbering from \begin{equation}
+.katex .vlist-t2 {
+  margin-right: 0 !important;
+}
+
 ol,
 ul {
   & > *:not(li):not(ol):not(ul),

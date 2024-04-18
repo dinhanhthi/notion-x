@@ -57,7 +57,7 @@ export async function getUnofficialDatabaseImpl(opts: {
       reducers: {
         collection_group_results: {
           type: 'results',
-          limit: 50
+          limit: 1000
         },
         'table:uncategorized:title:count': {
           type: 'aggregation',

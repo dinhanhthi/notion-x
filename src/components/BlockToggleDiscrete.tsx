@@ -21,7 +21,7 @@ export default function BlockToggleDiscrete(props: {
         <div className="discrete-counter"></div>
       </div>
       {props.text && (
-        <div className="px-4 text-[105%] py-2.5 border-b border-[#86aecd] text-sky-800 font-medium relative discrete-header-container">
+        <div className="px-4 text-[105%] py-2.5 border-b border-[#86aecd] text-slate-700 font-medium relative discrete-header-container">
           {props.text}
           {props.updateStatus && (
             <div

@@ -311,14 +311,14 @@ pre > code::before {
   &.font-bold {
     a {
       font-weight: inherit !important;
-      text-decoration: underline;
-      text-underline-offset: 4px;
+      // text-decoration: underline;
+      // text-underline-offset: 4px;
     }
   }
 
-  & > * {
-    color: inherit !important;
-  }
+  // & > * {
+  //   color: inherit !important;
+  // }
 }
 
 @layer base {

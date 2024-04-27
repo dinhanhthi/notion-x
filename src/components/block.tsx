@@ -654,13 +654,9 @@ export const Block: React.FC<BlockProps> = props => {
             icon={<PageIcon block={block} />}
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}
+            updatedBlock={updatedBlock}
           >
-            {!!block.content && (
-              <>
-                {updatedBlock}
-                {children}
-              </>
-            )}
+            {!!block.content && <>{children}</>}
           </BlockCallout>
         )
       }

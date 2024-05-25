@@ -11,6 +11,8 @@ See it in action?
 
 You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in your project.
 
+🚨 You have to install **globally** [Nodejs >=18](https://nodejs.org/en) (recommend using [nvm](https://github.com/nvm-sh/nvm)) and [Yarn](https://yarnpkg.com/) first.
+
 Install this repo as a submodule in your project under the root folder.
 
 ```bash

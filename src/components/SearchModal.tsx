@@ -1,6 +1,6 @@
 'use client'
 
-import { Dialog, Transition } from '@headlessui/react'
+import { Dialog, DialogPanel, Transition, TransitionChild } from '@headlessui/react'
 import cn from 'classnames'
 import { debounce, get } from 'lodash'
 import Link from 'next/link'
@@ -124,7 +124,7 @@ export default function SearchModal(props: SearchModalProps) {
   return (
     <Transition appear={true} show={props.isOpen} as={Fragment}>
       <Dialog as="div" className={cn('relative z-50', props.className)} onClose={props.closeModal}>
-        <Transition.Child
+        <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
           enterFrom="opacity-0"
@@ -134,11 +134,11 @@ export default function SearchModal(props: SearchModalProps) {
           leaveTo="opacity-0"
         >
           <div className="bg-opacity/25 fixed inset-0 bg-black opacity-40" />
-        </Transition.Child>
+        </TransitionChild>
 
         <div className="fixed inset-0 overflow-y-auto">
           <div className="flex min-h-full items-start justify-center p-4 pt-20 text-center">
-            <Transition.Child
+            <TransitionChild
               as={Fragment}
               enter="ease-out duration-300"
               enterFrom="opacity-0 scale-95"
@@ -147,7 +147,7 @@ export default function SearchModal(props: SearchModalProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <Dialog.Panel
+              <DialogPanel
                 className={cn(
                   'flex flex-col gap-0 w-full transform rounded-md divide-y',
                   'md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[60vw] 2xl:max-w-[50vw] max-h-[80vh]',
@@ -285,8 +285,8 @@ export default function SearchModal(props: SearchModalProps) {
                     )}
                   </>
                 )}
-              </Dialog.Panel>
-            </Transition.Child>
+              </DialogPanel>
+            </TransitionChild>
           </div>
         </div>
       </Dialog>

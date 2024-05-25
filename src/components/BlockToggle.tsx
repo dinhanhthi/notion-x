@@ -1,6 +1,6 @@
 'use client'
 
-import { Disclosure, Transition } from '@headlessui/react'
+import { Disclosure, DisclosureButton, DisclosurePanel, Transition } from '@headlessui/react'
 import cn from 'classnames'
 import React from 'react'
 
@@ -28,7 +28,7 @@ export default function BlockToggle(props: {
       <Disclosure defaultOpen={false}>
         {({ open }) => (
           <>
-            <Disclosure.Button
+            <DisclosureButton
               className={cn('toggle-button flex gap-1.5 w-full items-start rounded-md group')}
             >
               <div className="group-hover:bg-slate-200 rounded-md z-20 p-[2px]">
@@ -43,9 +43,10 @@ export default function BlockToggle(props: {
                 />
               </div>
               <div className="text-start">{props.text}</div>
-            </Disclosure.Button>
+            </DisclosureButton>
             {!!props.children && (
               <Transition
+                as="div"
                 enter="transition duration-200 ease-in-out"
                 enterFrom="transform scale-y-95 opacity-0"
                 enterTo="transform scale-y-100 opacity-100"
@@ -54,11 +55,11 @@ export default function BlockToggle(props: {
                 leaveTo="transform scale-y-95 opacity-0"
                 className={'pl-2'}
               >
-                <Disclosure.Panel className={'px-4 pt-[0.1px] inside-toggle-container'}>
+                <DisclosurePanel className={'px-4 pt-[0.1px] inside-toggle-container'}>
                   <div className={cn(basicBlockGap)}></div>
                   {props.children}
                   <div className={cn(basicBlockGap)}></div>
-                </Disclosure.Panel>
+                </DisclosurePanel>
               </Transition>
             )}
             <div

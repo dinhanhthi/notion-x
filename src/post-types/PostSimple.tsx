@@ -59,61 +59,59 @@ export default function PostSimple(props: PostSimpleProps) {
             </span>
           )}
         </div>
-        <h3 className="flex-1">
-          {post.title}{' '}
-          {post.isDraft && (
-            <span
-              className={cn(
-                'bg-slate-100 text-slate-600 px-2 py-0 text-[0.8rem] rounded-md tooltip-auto'
-              )}
-              data-title={options?.tooltipDraftLabel || 'The content is not so good yet'}
-            >
-              {options?.draftLabel || 'draft'}
-            </span>
-          )}
-        </h3>
-        {(post.createdDate || post.date) && (
-          <div className="gap-2 hidden md:flex items-center">
-            {['updated', 'updatedWithin'].includes(status) && post.date && (
-              <div
+
+        <div className="flex flex-1 items-start justify-between gap-x-3 gap-y-1.5 flex-col md:flex-row">
+          <h3 className="flex-1">
+            {post.title}{' '}
+            {post.isDraft && (
+              <span
                 className={cn(
-                  'px-3 py-0.5 text-[0.8rem] items-start rounded-md whitespace-nowrap',
-                  {
-                    'bg-slate-200 text-slate-800': status === 'updated',
-                    'bg-green-200 text-green-900': status === 'updatedWithin'
-                  },
-                  'hidden lg:flex gap-1 items-center'
+                  'bg-slate-100 text-slate-600 px-2 py-0 text-[0.8rem] rounded-md tooltip-auto'
                 )}
+                data-title={options?.tooltipDraftLabel || 'The content is not so good yet'}
               >
+                {options?.draftLabel || 'draft'}
+              </span>
+            )}
+          </h3>
+          {(post.createdDate || post.date) && (
+            <div className="gap-2 items-center flex">
+              {['updated', 'updatedWithin'].includes(status) && post.date && (
+                <div
+                  className={cn(
+                    'px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap gap-1 items-center',
+                    {
+                      'bg-slate-200 text-slate-800': status === 'updated',
+                      'bg-green-200 text-green-900': status === 'updatedWithin',
+                      'hidden md:flex': status !== 'updatedWithin'
+                    }
+                  )}
+                >
+                  <DateComponent
+                    dateString={post.date}
+                    format="MMM DD, YYYY"
+                    humanize={options?.humanizeDate}
+                    dateLabel={options?.updatedOnLabel || 'updated'}
+                  />
+                </div>
+              )}
+              {status === 'new' && (
+                <div className="px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap bg-amber-200 text-amber-900">
+                  {options?.newLabel || 'new'}
+                </div>
+              )}
+              {post.createdDate && (
                 <DateComponent
-                  dateString={post.date}
+                  className="text-[0.8rem] text-slate-500 group-hover:text-slate-700 hidden md:flex"
+                  dateString={post.createdDate}
                   format="MMM DD, YYYY"
                   humanize={options?.humanizeDate}
-                  dateLabel={options?.updatedOnLabel || 'updated'}
+                  dateLabel={options?.addedOnLabel || 'added'}
                 />
-              </div>
-            )}
-            {status === 'new' && (
-              <div
-                className={cn(
-                  'px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap',
-                  'bg-amber-200 text-amber-900'
-                )}
-              >
-                {options?.newLabel || 'new'}
-              </div>
-            )}
-            {post.createdDate && (
-              <DateComponent
-                className="text-[0.8rem] text-slate-500 group-hover:text-slate-700"
-                dateString={post.createdDate}
-                format="MMM DD, YYYY"
-                humanize={options?.humanizeDate}
-                dateLabel={options?.addedOnLabel || 'added'}
-              />
-            )}
-          </div>
-        )}
+              )}
+            </div>
+          )}
+        </div>
       </Link>
     </div>
   )

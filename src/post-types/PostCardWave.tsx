@@ -34,16 +34,16 @@ export default function PostCardWave(props: PostCardWaveProps) {
           {props.post.title}
         </span>
         {(post.createdDate || post.date) && (
-          <div className="gap-2 hidden md:flex items-center">
+          <div className="gap-2 items-center">
             {['updated', 'updatedWithin'].includes(status) && post.date && (
               <div
                 className={cn(
-                  'px-3 py-0.5 text-[0.7rem] items-start rounded-md whitespace-nowrap',
+                  'px-3 py-0.5 text-[0.7rem] rounded-md whitespace-nowrap gap-1 items-center',
                   {
                     'bg-slate-200 text-slate-800': status === 'updated',
-                    'bg-green-200 text-green-900': status === 'updatedWithin'
-                  },
-                  'hidden lg:flex gap-1 items-center'
+                    'bg-green-200 text-green-900': status === 'updatedWithin',
+                    'hidden md:flex': status !== 'updatedWithin'
+                  }
                 )}
               >
                 <DateComponent
@@ -55,12 +55,7 @@ export default function PostCardWave(props: PostCardWaveProps) {
               </div>
             )}
             {status === 'new' && (
-              <div
-                className={cn(
-                  'px-3 py-0.5 text-[0.7rem] rounded-md whitespace-nowrap',
-                  'bg-amber-200 text-amber-900'
-                )}
-              >
+              <div className="px-3 py-0.5 text-[0.7rem] rounded-md whitespace-nowrap bg-amber-200 text-amber-900">
                 {options?.newLabel || 'new'}
               </div>
             )}

@@ -5,7 +5,15 @@ import cn from 'classnames'
 import { debounce, get } from 'lodash'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React, { ChangeEvent, Fragment, useCallback, useLayoutEffect, useRef, useState } from 'react'
+import React, {
+  ChangeEvent,
+  Fragment,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import useSWR from 'swr'
 
 import AiOutlineLoading3Quarters from '../icons/AiOutlineLoading3Quarters'
@@ -40,6 +48,12 @@ export default function SearchModal(props: SearchModalProps) {
     [props.url, { query: queryToSearch }],
     ([url, params]: any) => fetcher(url, params)
   )
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   if (error) console.log('🐞 Error in search modal: ', error)
 
@@ -147,14 +161,7 @@ export default function SearchModal(props: SearchModalProps) {
               leaveFrom="opacity-100 scale-100"
               leaveTo="opacity-0 scale-95"
             >
-              <DialogPanel
-                className={cn(
-                  'flex flex-col gap-0 w-full transform rounded-md divide-y',
-                  'md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[60vw] 2xl:max-w-[50vw] max-h-[80vh]',
-                  'bg-white text-left shadow-lg',
-                  'align-middle shadow-xl transition-all text-slate-800'
-                )}
-              >
+              <DialogPanel className="flex flex-col gap-0 w-full transform rounded-md divide-y md:max-w-[80vw] lg:max-w-[70vw] xl:max-w-[60vw] 2xl:max-w-[50vw] max-h-[80vh] bg-white text-left align-middle shadow-xl transition-all text-slate-800">
                 {/* Search bar */}
                 <div className={cn('flex items-center gap-3 p-4')}>
                   <div className={cn('grid place-items-center text-slate-500')}>
@@ -169,10 +176,7 @@ export default function SearchModal(props: SearchModalProps) {
                   </div>
                   <input
                     ref={inputRef}
-                    className={cn(
-                      'peer h-full w-full text-ellipsis bg-transparent pr-2 outline-none',
-                      'm2it-hide-wscb'
-                    )}
+                    className="peer h-full w-full text-ellipsis bg-transparent pr-2 outline-none m2it-hide-wscb"
                     id="search"
                     type="search"
                     placeholder={props.placeholder || 'Search...'}

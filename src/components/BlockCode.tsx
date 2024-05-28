@@ -62,8 +62,7 @@ export default function BlockCode(props: BlockCodeProps) {
       language={formatCodeLang(language)}
       style={prism}
       className={cn(
-        '!my-0 syntax-highlighter-pre m2it-scrollbar m2it-scrollbar-small border !bg-slate-50',
-        'max-h-[300px]'
+        '!my-0 syntax-highlighter-pre m2it-scrollbar m2it-scrollbar-small border !bg-slate-50 max-h-[300px]'
       )}
       showLineNumbers={true}
     >
@@ -72,11 +71,13 @@ export default function BlockCode(props: BlockCodeProps) {
   )
 
   return (
-    <div className={cn(className, blurBlockClassName, 'flex flex-col gap-2 overflow-hidden')}>
+    <div className={cn(className, blurBlockClassName, 'relative flex flex-col gap-2')}>
+      {!!updatedBlock && updatedBlock}
       <div
-        className={`language-${formatCodeLang(language)} syntax-highlighter relative text-[12.5px]`}
+        className={`language-${formatCodeLang(
+          language
+        )} syntax-highlighter text-[12.5px] relative overflow-hidden`}
       >
-        {!!updatedBlock && updatedBlock}
         <div className="w-full overflow-hidden">{syntaxWraper}</div>
         <div
           className={cn(

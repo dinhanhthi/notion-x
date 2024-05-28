@@ -62,7 +62,23 @@ export default function PostSimple(props: PostSimpleProps) {
 
         <div className="flex flex-1 items-start justify-between gap-x-3 gap-y-1.5 flex-col md:flex-row">
           <h3 className="flex-1">
-            {post.title}{' '}
+            {/* date status on mobile size */}
+            {post.date && (status === 'updatedWithin' || status === 'new') && (
+              <span
+                className={cn(
+                  'inline-flex md:hidden mr-1.5 px-2 py-0.5 text-[0.7rem] rounded-md whitespace-nowrap gap-1 items-center',
+                  {
+                    'bg-green-200 text-green-900': status === 'updatedWithin',
+                    'bg-amber-200 text-amber-900': status === 'new'
+                  }
+                )}
+              >
+                {status === 'updatedWithin' && <>updated</>}
+                {status === 'new' && <>new</>}
+              </span>
+            )}
+            {/* title */}
+            {post.title} {/* draft */}
             {post.isDraft && (
               <span
                 className={cn(
@@ -74,16 +90,16 @@ export default function PostSimple(props: PostSimpleProps) {
               </span>
             )}
           </h3>
+          {/* date status on big screen */}
           {(post.createdDate || post.date) && (
-            <div className="gap-2 items-center flex">
+            <div className="gap-2 items-center hidden md:flex">
               {['updated', 'updatedWithin'].includes(status) && post.date && (
                 <div
                   className={cn(
                     'px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap gap-1 items-center',
                     {
                       'bg-slate-200 text-slate-800': status === 'updated',
-                      'bg-green-200 text-green-900': status === 'updatedWithin',
-                      'hidden md:flex': status !== 'updatedWithin'
+                      'bg-green-200 text-green-900': status === 'updatedWithin'
                     }
                   )}
                 >

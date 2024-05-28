@@ -11,6 +11,7 @@ type DateProps = {
   format?: string
   className?: string
   humanize?: boolean
+  onlyLabel?: boolean
   humanizeOpts?: {
     today?: string
     yesterday?: string
@@ -58,7 +59,7 @@ export default function DateComponent(props: DateProps) {
   return (
     <span className={props.className}>
       {props.dateLabel ? props.dateLabel + ' ' : ''}
-      {props.humanize ? humanized : fullDate}
+      {!props.onlyLabel && <>{props.humanize ? humanized : fullDate}</>}
     </span>
   )
 }

@@ -273,7 +273,6 @@ ul > li {
     content: attr(data-title);
     font-size: 0.85rem;
     padding: 2px 8px;
-    left: 5px;
     line-height: 1.5;
     top: 120%;
     height: fit-content;
@@ -282,6 +281,17 @@ ul > li {
     max-width: 250px;
     letter-spacing: 0.5px;
     font-weight: normal;
+  }
+
+  &:not(._from-right):before {
+    left: 5px;
+  }
+
+  &._from-right {
+    &:before {
+      left: auto;
+      right: 5px;
+    }
   }
 }
 

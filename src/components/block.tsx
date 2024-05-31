@@ -111,18 +111,15 @@ export const Block: React.FC<BlockProps> = props => {
     disableHeader
   } = props
 
+  const status = usePostDateStatus(
+    block.created_time ? new Date(block.created_time).toISOString() : undefined,
+    block.last_edited_time ? new Date(block.last_edited_time).toISOString() : undefined,
+    blockOptions?.maxDaysWinthin || 7
+  )
+
   if (!block) {
     return null
   }
-
-  const status =
-    !!block.created_time && !!block.last_edited_time
-      ? usePostDateStatus(
-          new Date(block.created_time).toISOString(),
-          new Date(block.last_edited_time).toISOString(),
-          blockOptions?.maxDaysWinthin || 7
-        )
-      : null
 
   // Remark: there are some settings in styles.scss too
   const showUpdated = status === 'updatedWithin' || status === 'new'

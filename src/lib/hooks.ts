@@ -29,8 +29,8 @@ export function useHeadsObserver(headings?: string[]) {
 }
 
 export const usePostDateStatus = (
-  createdDate: string,
-  modifiedDate: string,
+  createdDate?: string,
+  modifiedDate?: string,
   withinDay?: number
 ) => {
   const [status, setStatus] = useState<'new' | 'updated' | 'updatedWithin' | 'normal'>('normal')

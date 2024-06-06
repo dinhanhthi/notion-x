@@ -20,6 +20,7 @@ export type PostSimpleOpts = {
   tooltipDraftLabel?: string
   humanizeDate?: boolean
   wellWrittenLabel?: string
+  blogLabel?: string
   showPinned?: boolean
   maxDaysWinthin?: number
 } & CommonPostTypeOpts
@@ -41,9 +42,15 @@ export default function PostSimple(props: PostSimpleProps) {
       >
         <div
           className={cn('mt-[3px] text-slate-600 relative', {
-            'tooltip-auto': post.wellWritten && !post.blog
+            'tooltip-auto': post.wellWritten || post.blog
           })}
-          data-title={options?.wellWrittenLabel ?? 'Well written, verified by me.'}
+          data-title={
+            post.blog
+              ? options?.blogLabel ?? 'A blog post' // Must come before wellWritten
+              : post.wellWritten
+              ? options?.wellWrittenLabel ?? 'Well written, verified by the author'
+              : undefined
+          }
         >
           {!!options?.customIcon && (!options.showPinned || !post.pinned) && options.customIcon}
           {!options?.customIcon && (!options?.showPinned || !post.pinned) && (

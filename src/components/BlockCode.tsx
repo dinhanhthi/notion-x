@@ -74,19 +74,19 @@ export default function BlockCode(props: BlockCodeProps) {
     <div className={cn(className, blurBlockClassName, 'relative flex flex-col gap-2')}>
       {!!updatedBlock && updatedBlock}
       <div
+        className={cn(
+          'tooltip-auto !z-10 _from-right !absolute right-2 top-2 duration-100 hover:cursor-pointer group-hover:opacity-100'
+        )}
+        data-title={copied ? copiedLabel : copyLabel}
+      >
+        {copyBtnWrapper}
+      </div>
+      <div
         className={`language-${formatCodeLang(
           language
         )} syntax-highlighter text-[12.5px] relative overflow-hidden`}
       >
         <div className="w-full overflow-hidden">{syntaxWraper}</div>
-        <div
-          className={cn(
-            'tooltip-auto !absolute right-2 top-2 duration-100 hover:cursor-pointer group-hover:opacity-100'
-          )}
-          data-title={copied ? copiedLabel : copyLabel}
-        >
-          {copyBtnWrapper}
-        </div>
       </div>
 
       {caption && (

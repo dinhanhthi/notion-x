@@ -638,16 +638,11 @@ export const Block: React.FC<BlockProps> = props => {
 
     case 'callout':
       if (components.Callout) {
-        return (
-          <components.Callout
-            block={block}
-            className={cn(blockId, !discreteStyle ? basicBlockGapBigger : '')}
-          />
-        )
+        return <components.Callout block={block} className={cn(blockId, blockMargin)} />
       } else {
         return (
           <BlockCallout
-            className={cn(!discreteStyle ? basicBlockGapBigger : '', blurBlockClassName)}
+            className={cn(blockMargin, blurBlockClassName)}
             icon={<PageIcon block={block} />}
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}

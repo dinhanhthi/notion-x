@@ -94,7 +94,7 @@ export async function queryDatabaseImpl(opts: {
   pageSize?: number
   sorts?: NotionSorts[]
 }): Promise<QueryDatabaseResponse> {
-  const { dbId, filter, startCursor, pageSize, sorts } = opts
+  const { dbId, filter, startCursor, pageSize = notionMaxRequest, sorts } = opts
   try {
     const url = `https://api.notion.com/v1/databases/${dbId}/query`
     const requestBody = {

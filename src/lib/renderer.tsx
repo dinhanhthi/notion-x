@@ -29,6 +29,7 @@ export const NotionRenderer: React.FC<{
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  fontClass?: string
   discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
@@ -81,6 +82,7 @@ export const NotionRenderer: React.FC<{
   customPreviewImage,
   useSimpleImage,
   discreteStyle,
+  fontClass,
   discreteColsType,
   showUpdatedIndicator,
   simpleImageProps,
@@ -132,6 +134,7 @@ export const NotionRenderer: React.FC<{
       customPreviewImage={customPreviewImage}
       useSimpleImage={useSimpleImage}
       discreteStyle={discreteStyle}
+      fontClass={fontClass}
       discreteColsType={discreteColsType}
       showUpdatedIndicator={showUpdatedIndicator}
       simpleImageProps={simpleImageProps}

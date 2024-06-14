@@ -26,6 +26,7 @@ type PostBodyProps = {
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean // active the style of discrete notes (toggle has different styles)
+  fontClass?: string // used for a custom font in the post, it's a class name
   discreteColsType?: DiscreteColsType // Display the discrete notes in 1 column or 2-3 columns?
   simpleImageProps?: SimpleImageProps
   showUpdatedIndicator?: boolean
@@ -102,6 +103,7 @@ export default function PostBody(props: PostBodyProps) {
           customPreviewImage={props.customPreviewImage}
           useSimpleImage={props.useSimpleImage}
           discreteStyle={props.discreteStyle}
+          fontClass={props.fontClass}
           discreteColsType={props.discreteColsType}
           showUpdatedIndicator={showUpdatedIndicator}
           simpleImageProps={props.simpleImageProps}

@@ -40,6 +40,7 @@ export interface NotionContext {
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  fontClass?: string
   discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
   simpleImageProps?: SimpleImageProps
@@ -182,6 +183,7 @@ const defaultNotionContext: NotionContext = {
   customPreviewImage: null as any,
   useSimpleImage: false as any,
   discreteStyle: false as any,
+  fontClass: null as any,
   discreteColsType: 'single',
   showUpdatedIndicator: false as any,
   simpleImageProps: null as any,

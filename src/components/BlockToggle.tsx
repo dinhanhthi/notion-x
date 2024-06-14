@@ -31,7 +31,7 @@ export default function BlockToggle(props: {
             <DisclosureButton
               className={cn('toggle-button flex gap-1.5 w-full items-start rounded-md group')}
             >
-              <div className="group-hover:bg-slate-200 rounded-md z-20 p-[2px]">
+              <div className="group-hover:bg-slate-200 rounded-md z-20 p-[2px] mt-[2px]">
                 <BsFillCaretRightFill
                   className={cn(
                     ' shrink-0 text-base transform ease-in-out transition-all duration-[400ms]',

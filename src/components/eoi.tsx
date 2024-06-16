@@ -60,7 +60,7 @@ export const EOI: React.FC<{
             <FaGithub className="text-4xl" />
             <div className={cn('flex gap-0 flex-col')}>
               <div className="text-base m2it-link group-hover:m2it-link-hover">{title}</div>
-              <div className="flex flex-row gap-1 items-center text-gray-500 text-sm">
+              <div className="flex flex-row gap-1 items-center text-gray-500 text-[0.9em]">
                 <div>{owner}</div>
                 <RxDotFilled />
                 <div>{lastUpdated}</div>
@@ -76,8 +76,8 @@ export const EOI: React.FC<{
           href={original_url}
           rel="noopener noreferrer"
         >
-          <FaGithub className="text-sm" />
-          <div className="text-base m2it-link group-hover:m2it-link-hover border-b border-slate-200 leading-[1.1]">
+          <FaGithub className="text-[0.9em]" />
+          <div className="text-[1em] m2it-link group-hover:m2it-link-hover border-b border-slate-200 leading-[1.1]">
             {title}
           </div>
         </a>

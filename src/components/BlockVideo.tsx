@@ -22,7 +22,7 @@ export default function BlockVideo(props: BlockVideoProps) {
       <div className="w-full">
         <YoutubeEmbed id={videoId} title={'Youtube video'} className="aspect-video w-full" />
       </div>
-      {props.caption && <div className="text-sm italic opacity-90">{props.caption}</div>}
+      {props.caption && <div className="text-[0.9em] italic opacity-90">{props.caption}</div>}
     </div>
   )
 }

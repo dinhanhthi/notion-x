@@ -696,7 +696,7 @@ export const Block: React.FC<BlockProps> = props => {
                   </div>
                 )}
                 {block.properties?.description && (
-                  <div className="truncate text-sm font-normal text-slate-600">
+                  <div className="truncate text-[0.9em] font-normal text-slate-600">
                     <Text value={block.properties?.description} block={block} />
                   </div>
                 )}
@@ -712,7 +712,7 @@ export const Block: React.FC<BlockProps> = props => {
                     />
                   </div>
                 )}
-                <div className="text-sm font-normal text-slate-500 truncate">
+                <div className="text-[0.9em] font-normal text-slate-500 truncate">
                   <Text value={link} block={block} />
                 </div>
               </div>

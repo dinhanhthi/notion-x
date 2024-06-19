@@ -52,7 +52,7 @@ export default function PostToc(props: PostTocProps) {
           '2xl:hidden': props.inPost, // hide on large screens
           'max-h-full p-3': !props.inPost,
           'border-[0.5px]': !props.inPost,
-          'max-h-[350px] mt-8 mb-10': props.inPost,
+          'max-h-[350px] mb-10': props.inPost,
           border: props.inPost
         }
       )}
@@ -95,7 +95,7 @@ export default function PostToc(props: PostTocProps) {
                 key={toc.id}
                 href={`#${anchor}`}
                 className={cn(
-                  'flex items-baseline gap-2 hover:m2it-link text-[0.88rem] py-1 px-2 break-inside-avoid',
+                  'flex items-baseline gap-2 hover:m2it-link text-[0.88em] py-1 px-2 break-inside-avoid',
                   {
                     'border-l pl-2 ml-2': isH3,
                     '-ml-1': isH2,
@@ -104,8 +104,8 @@ export default function PostToc(props: PostTocProps) {
                   }
                 )}
               >
-                {isH2 && <span className="text-[0.7rem] text-slate-400">◆</span>}
-                {isH3 && <span className="text-[0.6rem] text-slate-400">○</span>}
+                {isH2 && <span className="text-[0.7em] text-slate-400">◆</span>}
+                {isH3 && <span className="text-[0.6em] text-slate-400">○</span>}
                 {!block?.properties?.title && <span className="block">{toc.text}</span>}
                 {block?.properties?.title && (
                   <span className="leading-snug">

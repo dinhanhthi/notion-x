@@ -643,7 +643,9 @@ export const Block: React.FC<BlockProps> = props => {
       } else {
         return (
           <BlockCallout
-            className={cn(blockMargin, blurBlockClassName)}
+            className={cn(blockMargin, blurBlockClassName, {
+              'shadow-lg': discreteStyle
+            })}
             icon={<PageIcon block={block} />}
             text={<Text value={block.properties?.title} block={block} />}
             color={block.format?.block_color}

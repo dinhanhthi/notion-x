@@ -71,13 +71,13 @@ export default function PostCardWhiteBgBig(props: PostCardWhiteBgBigProps) {
           {(!options?.hideDate || !options?.hideAuthor) && (
             <div className="flex justify-center gap-2 p-2">
               {!options?.hideDate && date && (
-                <div className="text-sm opacity-80">
+                <div className="text-[0.8rem] opacity-80 flex flex-row items-center gap-2 justify-center">
                   <AiOutlineClockCircle />
                   <DateComponent dateString={date} />
                 </div>
               )}
               {!options?.hideAuthor && authors?.length && (
-                <div className="flex gap-1 text-sm opacity-80">
+                <div className="flex gap-1 text-sm opacity-80 text-emerald-800">
                   {authors?.length > 1 && (
                     <>
                       <i className="icon-users-outline"></i>

@@ -348,7 +348,7 @@ pre > code::before {
   }
 
   .m2it-headings {
-    @apply my-0 font-semibold text-slate-800;
+    @apply my-0 font-semibold text-inherit;
   }
 
   .m2it-prose-img {
@@ -377,7 +377,7 @@ pre > code::before {
   }
 
   .m2it-strong {
-    @apply font-medium text-gray-800;
+    @apply font-medium text-inherit;
   }
 
   .m2it-table {

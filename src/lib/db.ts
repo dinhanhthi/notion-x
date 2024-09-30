@@ -5,7 +5,6 @@ import {
   QueryDatabaseResponse,
   RichTextItemResponse
 } from '@notionhq/client/build/src/api-endpoints'
-import got from 'got'
 import { get, set } from 'lodash'
 import { CollectionInstance, SearchParams } from 'notion-types'
 import ogs from 'open-graph-scraper'
@@ -403,10 +402,9 @@ export async function searchNotion(
 
   const url = `${apiUrl}/search`
 
-  return got
-    .post(url, {
-      body: JSON.stringify(body),
-      headers
-    })
-    .json()
+  return fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(body)
+  }).then(response => response.json())
 }

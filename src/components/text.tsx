@@ -2,6 +2,7 @@ import { Block, Decoration, ExternalObjectInstance } from 'notion-types'
 import { parsePageId } from 'notion-utils'
 import * as React from 'react'
 
+import FaGithub from '../icons/FaGithub'
 import { useNotionContext } from '../lib/context'
 import { mapNoteUri, removeBaseUrl } from '../lib/helpers'
 import { formatDate, getHashFragmentValue } from '../lib/utils'
@@ -261,12 +262,32 @@ export const Text: React.FC<{
               )
             }
 
+            // Github mention
             case 'eoi': {
               const blockId = decorator[1]
               const externalObjectInstance = recordMap.block[blockId]
                 ?.value as ExternalObjectInstance
 
               return <EOI block={externalObjectInstance} inline={true} />
+            }
+
+            // Github new format
+            case 'lm' as any: {
+              const href = (decorator[1] as any)?.href
+              const title = (decorator[1] as any)?.title
+              return (
+                <a
+                  className="not-prose px-1 hover:cursor-pointer hover:border-sky-300 hover:shadow-sm inline-flex gap-1 flex-row items-baseline group"
+                  target="_blank"
+                  href={href}
+                  rel="noopener noreferrer"
+                >
+                  <FaGithub className="text-[0.9em]" />
+                  <div className="text-[1em] m2it-link group-hover:m2it-link-hover border-b border-slate-200 leading-[1.1]">
+                    {title}
+                  </div>
+                </a>
+              )
             }
 
             default:

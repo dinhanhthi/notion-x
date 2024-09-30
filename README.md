@@ -69,6 +69,8 @@ Put below line in `tailwind.config.ts`,
 
 > 💡 **Tip**: You can edit the files in the submodule BUT don't commit and push it. After finishing editing, just `cd notion-x` and then `git checkout <file-path>` to discard all changes.
 
+For Code Editor to work with Yarn's PnP ([Plug'n'Play](https://yarnpkg.com/features/pnp)), follow [this official guide](https://yarnpkg.com/getting-started/editor-sdks#vscode).
+
 ## Update something new (for me only)
 
 Read the steps in the repo [dinhanhthi.com](https://github.com/dinhanhthi/dinhanhthi.com).

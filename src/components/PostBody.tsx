@@ -16,6 +16,7 @@ import { usePostDateStatus } from '../lib/hooks'
 import { NotionRenderer } from '../lib/renderer'
 import ScrollToTop from './ScrollToTop'
 import { SimpleImageProps } from './SimpleImage'
+import TooltipX from './tooltip-x'
 
 export type DiscreteColsType = 'single' | 'multiple'
 
@@ -122,19 +123,20 @@ export default function PostBody(props: PostBodyProps) {
           )}
         >
           <div
+            id="updated-blocks-toggle"
             className={cn(
               'h-full w-full flex items-center justify-center',
               props.showUpdateButtonClassName
                 ? props.showUpdateButtonClassName
-                : 'before:!right-[55px] before:!top-[15px] before:!content-[attr(data-title)] before:!left-auto tooltip-auto'
+                : 'before:!right-[55px] before:!top-[15px] before:!left-auto'
             )}
-            data-title={
-              !showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'
-            }
           >
             {!showOnlyUpdatedBlocks && <ToggleOffIcon className="w-7 h-7 text-green-700" />}
             {showOnlyUpdatedBlocks && <ToggleOnIcon className="w-7 h-7 text-green-700" />}
           </div>
+          <TooltipX id={'#updated-blocks-toggle'}>
+            {!showOnlyUpdatedBlocks ? 'Highlight only updated blocks' : 'Back to default display'}
+          </TooltipX>
         </button>
       )}
       {props.showBackToTopButton && (

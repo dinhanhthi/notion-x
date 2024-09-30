@@ -5,6 +5,7 @@ import React from 'react'
 
 import { ImageType } from '../interface'
 import ImageComponent from './ImageComponent'
+import TooltipX from './tooltip-x'
 
 export type TechItem = {
   id: string
@@ -25,10 +26,7 @@ export default function BadgeTech(props: BadgeTechProps) {
   const containerClass = cn(
     `flex h-6 w-fit items-center justify-center rounded-md border bg-slate-100 px-1
   align-baseline text-base text-[#1e293b] shadow-sm transition
-  duration-200 ease-in-out hover:-translate-y-0.5`,
-    {
-      'tooltip-auto': !props.hideTooltip
-    }
+  duration-200 ease-in-out hover:-translate-y-0.5`
   )
 
   const children = () => (
@@ -48,15 +46,21 @@ export default function BadgeTech(props: BadgeTechProps) {
   return (
     <>
       {props.useLink && (
-        <a className={containerClass} href={props.tech.url} data-title={props.tech.name}>
+        <a
+          id={`tech-${props.tech.id}`}
+          className={containerClass}
+          href={props.tech.url}
+          data-title={props.tech.name}
+        >
           {children()}
         </a>
       )}
       {!props.useLink && (
-        <div className={containerClass} data-title={props.tech.name}>
+        <div id={`tech-${props.tech.id}`} className={containerClass} data-title={props.tech.name}>
           {children()}
         </div>
       )}
+      <TooltipX id={`#tech-${props.tech.id}`}>{props.tech.name}</TooltipX>
     </>
   )
 }

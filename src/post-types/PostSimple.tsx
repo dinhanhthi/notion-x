@@ -6,6 +6,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
+import TooltipX from '../components/tooltip-x'
 import BlogIcon from '../icons/BlogIcon'
 import BsPinAngleFill from '../icons/BsPinAngleFill'
 import HiMiniCheckBadge from '../icons/HiMiniCheckBadge'
@@ -40,18 +41,7 @@ export default function PostSimple(props: PostSimpleProps) {
         className={cn(options?.fontClassName, 'flex items-start gap-3 p-4')}
         href={post.uri || '/'}
       >
-        <div
-          className={cn('mt-[3px] text-slate-600 relative', {
-            'tooltip-auto': post.wellWritten || post.blog
-          })}
-          data-title={
-            post.blog
-              ? options?.blogLabel ?? 'A blog post' // Must come before wellWritten
-              : post.wellWritten
-              ? options?.wellWrittenLabel ?? 'Well written, verified by the author'
-              : undefined
-          }
-        >
+        <div className={cn('mt-[3px] text-slate-600 relative')} id={`well-blog-${post.id}`}>
           {!!options?.customIcon && (!options.showPinned || !post.pinned) && options.customIcon}
           {!options?.customIcon && (!options?.showPinned || !post.pinned) && (
             <>
@@ -66,6 +56,15 @@ export default function PostSimple(props: PostSimpleProps) {
             </span>
           )}
         </div>
+        {(post.wellWritten || post.blog) && (
+          <TooltipX id={`#well-blog-${post.id}`}>
+            {post.blog
+              ? options?.blogLabel ?? 'A blog post' // Must come before wellWritten
+              : post.wellWritten
+              ? options?.wellWrittenLabel ?? 'Well written, verified by the author'
+              : undefined}
+          </TooltipX>
+        )}
 
         <div className="flex flex-1 items-start justify-between gap-x-3 gap-y-1.5 flex-col md:flex-row">
           <h3 className="flex-1">
@@ -87,14 +86,17 @@ export default function PostSimple(props: PostSimpleProps) {
             {/* title */}
             {post.title} {/* draft */}
             {post.isDraft && (
-              <span
-                className={cn(
-                  'bg-slate-100 text-slate-600 px-2 py-0 text-[0.8rem] rounded-md tooltip-auto'
-                )}
-                data-title={options?.tooltipDraftLabel || 'The content is not so good yet'}
-              >
-                {options?.draftLabel || 'draft'}
-              </span>
+              <>
+                <span
+                  id={`draft-${post.id}`}
+                  className={cn('bg-slate-100 text-slate-600 px-2 py-0 text-[0.8rem] rounded-md')}
+                >
+                  {options?.draftLabel || 'draft'}
+                </span>
+                <TooltipX id={`#draft-${post.id}`}>
+                  {options?.tooltipDraftLabel || 'The content is not so good yet'}
+                </TooltipX>
+              </>
             )}
           </h3>
           {/* date status on big screen */}

@@ -3,20 +3,21 @@ import { Tooltip } from 'react-tooltip'
 
 type TooltipXProps = {
   className?: string
-  content: string
   id: string
+  children: React.ReactNode
+  defaultIsOpen?: boolean
 }
 
 export default function TooltipX(props: TooltipXProps) {
   return (
     <Tooltip
-      anchorSelect={`#draft-${props.id}`}
+      anchorSelect={props.id}
       place="bottom"
-      className="!text-sm !px-2 !py-0.5 !rounded-md"
+      className="!text-sm !px-2 !py-0.5 !rounded-md !z-[9999]"
       noArrow={true}
-      defaultIsOpen={true}
+      defaultIsOpen={props.defaultIsOpen}
     >
-      {props.content}
+      {props.children}
     </Tooltip>
   )
 }

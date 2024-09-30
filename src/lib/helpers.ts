@@ -32,6 +32,7 @@ export function mapTag(tagName: string, tagPrefix: string, topics: Tag[] = []): 
   return {
     id: makeSlugText(tagName),
     name: tagName,
+    description: topics.find(topic => topic.name === tagName)?.description,
     longName: topics.find(topic => topic.name === tagName)?.longName,
     slug: makeSlugText(tagName),
     uri: `/${tagPrefix}/${makeSlugText(tagName)}/`

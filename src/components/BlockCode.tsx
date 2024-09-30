@@ -14,6 +14,7 @@ import RxCopy from '../icons/RxCopy'
 import { useNotionContext } from '../lib/context'
 import Mermaid from './Mermaid'
 import { Text } from './text'
+import TooltipX from './tooltip-x'
 
 type BlockCodeProps = {
   block: CodeBlock
@@ -74,13 +75,14 @@ export default function BlockCode(props: BlockCodeProps) {
     <div className={cn(className, blurBlockClassName, 'relative flex flex-col gap-2')}>
       {!!updatedBlock && updatedBlock}
       <div
+        id={`copy-${block.id}`}
         className={cn(
-          'tooltip-auto !z-10 _from-right !absolute right-2 top-2 duration-100 hover:cursor-pointer group-hover:opacity-100'
+          '!z-10 _from-right !absolute right-2 top-2 duration-100 hover:cursor-pointer group-hover:opacity-100'
         )}
-        data-title={copied ? copiedLabel : copyLabel}
       >
         {copyBtnWrapper}
       </div>
+      <TooltipX id={`#copy-${block.id}`}>{copied ? copiedLabel : copyLabel}</TooltipX>
       <div
         className={`language-${formatCodeLang(
           language

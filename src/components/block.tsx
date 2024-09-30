@@ -34,6 +34,7 @@ import { PageIcon } from './page-icon'
 import { PageTitle } from './page-title'
 import { SyncPointerBlock } from './sync-pointer-block'
 import { Text } from './text'
+import TooltipX from './tooltip-x'
 
 interface BlockProps {
   block: types.Block
@@ -129,23 +130,26 @@ export const Block: React.FC<BlockProps> = props => {
       {(level === 1 || block.type === 'transclusion_container') &&
         showUpdated &&
         showUpdatedIndicator && (
-          <button
-            onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
-            className={cn(
-              'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 tooltip-auto group button-indicator updated-block'
-            )}
-            data-title={
-              !props.showOnlyUpdatedBlocks
-                ? 'Highlight only updated blocks'
-                : 'Back to default display'
-            }
-          >
-            <div
+          <>
+            <button
+              id={`updated-block-${block.id}`}
+              onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
               className={cn(
-                'group-hover:w-full w-[0.25px] h-full transition-all duration-100 bg-green-400'
+                'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 group button-indicator updated-block'
               )}
-            ></div>
-          </button>
+            >
+              <div
+                className={cn(
+                  'group-hover:w-full w-[0.25px] h-full transition-all duration-100 bg-green-400'
+                )}
+              ></div>
+            </button>
+            <TooltipX id={`#updated-block-${block.id}`}>
+              {!props.showOnlyUpdatedBlocks
+                ? 'Highlight only updated blocks'
+                : 'Back to default display'}
+            </TooltipX>
+          </>
         )}
     </>
   )

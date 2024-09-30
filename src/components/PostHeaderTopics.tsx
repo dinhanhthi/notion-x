@@ -4,6 +4,7 @@ import React from 'react'
 
 import TiTag from '../icons/TiTag'
 import { Category, Tag } from '../interface'
+import TooltipX from './tooltip-x'
 
 type PostHeaderTopicsProps = {
   className?: string
@@ -57,18 +58,22 @@ export default function PostHeaderTopics(props: PostHeaderTopicsProps) {
       {usedTags.length > 0 && <TiTag className={props.TiTagClass ?? 'text-gray-600 text-lg'} />}
       {usedTags.length > 0 &&
         usedTags.map(tag => (
-          <Link
-            className={cn(
-              { 'tooltip-auto': tag.longName },
-              topTagClass,
-              props.tagClass ?? 'boder-slate-300 border text-slate-600 bg-white'
+          <>
+            <Link
+              id={`tag-${tag.id}`}
+              className={cn(
+                topTagClass,
+                props.tagClass ?? 'boder-slate-300 border text-slate-600 bg-white'
+              )}
+              key={tag.uri}
+              href={tag.uri || '/'}
+            >
+              {tag.name}
+            </Link>
+            {!!(tag.longName || tag.description) && (
+              <TooltipX id={`#tag-${tag.id}`}>{tag.description || tag.longName}</TooltipX>
             )}
-            key={tag.uri}
-            href={tag.uri || '/'}
-            data-title={tag.longName}
-          >
-            {tag.name}
-          </Link>
+          </>
         ))}
     </div>
   )

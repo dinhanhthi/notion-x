@@ -5,6 +5,7 @@ import React from 'react'
 
 import { ImageType } from '../interface'
 import ImageComponent from './ImageComponent'
+import TooltipX from './tooltip-x'
 
 export type BadgeSocialProps = {
   id?: string
@@ -20,12 +21,12 @@ export default function BadgeSocial(props: BadgeSocialProps) {
       <a
         className={`
         group block h-12 w-12 rounded-2xl bg-gray-700 p-2
-        shadow-none md:h-10 md:w-10 md:p-1.5 tooltip-auto
+        shadow-none md:h-10 md:w-10 md:p-1.5
       `}
         href={props.url}
         target="_blank"
         rel="noopener noreferrer"
-        data-title={props.title}
+        id={`social-${props.id}`}
       >
         <ImageComponent
           image={props.icon}
@@ -37,6 +38,7 @@ export default function BadgeSocial(props: BadgeSocialProps) {
           imageProps={{ width: 64, height: 64 }}
         />
       </a>
+      <TooltipX id={`#social-${props.id}`}>{props.title}</TooltipX>
     </>
   )
 }

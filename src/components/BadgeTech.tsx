@@ -46,12 +46,7 @@ export default function BadgeTech(props: BadgeTechProps) {
   return (
     <>
       {props.useLink && (
-        <a
-          id={`tech-${props.tech.id}`}
-          className={containerClass}
-          href={props.tech.url}
-          data-title={props.tech.name}
-        >
+        <a id={`tech-${props.tech.id}`} className={containerClass} href={props.tech.url}>
           {children()}
         </a>
       )}
@@ -60,7 +55,7 @@ export default function BadgeTech(props: BadgeTechProps) {
           {children()}
         </div>
       )}
-      <TooltipX id={`#tech-${props.tech.id}`}>{props.tech.name}</TooltipX>
+      {!props.hideTooltip && <TooltipX id={`#tech-${props.tech.id}`}>{props.tech.name}</TooltipX>}
     </>
   )
 }

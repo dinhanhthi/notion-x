@@ -344,7 +344,7 @@ pre > code::before {
   }
 
   .m2it-link {
-    @apply hover:m2it-link-hover font-normal text-[#015caa] no-underline;
+    @apply hover:m2it-link-hover text-[#015caa] no-underline;
   }
 
   .m2it-headings {
@@ -356,7 +356,7 @@ pre > code::before {
   }
 
   .m2it-blockquote {
-    @apply my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 font-normal not-italic;
+    @apply my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
   }
 
   .m2it-li {
@@ -373,7 +373,7 @@ pre > code::before {
 
   .m2it-code {
     @apply break-words rounded-md bg-gray-100 p-[1px_4px_2px_4px]
-    font-mono text-[90%] font-normal before:content-[''] after:content-[''];
+    font-mono text-[90%] before:content-[''] after:content-[''];
   }
 
   .m2it-strong {

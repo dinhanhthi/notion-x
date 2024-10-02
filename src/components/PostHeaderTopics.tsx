@@ -58,7 +58,7 @@ export default function PostHeaderTopics(props: PostHeaderTopicsProps) {
       {usedTags.length > 0 && <TiTag className={props.TiTagClass ?? 'text-gray-600 text-lg'} />}
       {usedTags.length > 0 &&
         usedTags.map(tag => (
-          <>
+          <React.Fragment key={tag.id}>
             <Link
               id={`tag-${tag.id}`}
               className={cn(
@@ -73,7 +73,7 @@ export default function PostHeaderTopics(props: PostHeaderTopicsProps) {
             {!!(tag.longName || tag.description) && (
               <TooltipX id={`#tag-${tag.id}`}>{tag.description || tag.longName}</TooltipX>
             )}
-          </>
+          </React.Fragment>
         ))}
     </div>
   )

@@ -373,7 +373,7 @@ pre > code::before {
 
   .m2it-code {
     @apply break-words rounded-md bg-gray-100 p-[1px_4px_2px_4px]
-    font-mono text-[90%] before:content-[''] after:content-[''];
+    font-mono text-[90%] font-normal before:content-[''] after:content-[''];
   }
 
   .m2it-strong {

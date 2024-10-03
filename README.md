@@ -63,7 +63,14 @@ Put below line in `tailwind.config.ts`,
 
 ```ts
 {
-  content: ['./notion-x/**/*.{js,ts,jsx,tsx,mdx,css,scss}']
+  content: ['./notion-x/**/*.{js,ts,jsx,tsx,mdx,css,scss}'],
+  theme: {
+    extend: {
+      fontWeight: {
+        inherit: "inherit",
+      },
+    },
+  }
 }
 ```
 

@@ -344,7 +344,7 @@ pre > code::before {
   }
 
   .m2it-link {
-    @apply hover:m2it-link-hover text-[#015caa] no-underline;
+    @apply hover:m2it-link-hover font-inherit text-[#015caa] no-underline;
   }
 
   .m2it-headings {

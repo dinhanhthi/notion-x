@@ -810,9 +810,9 @@ export const Block: React.FC<BlockProps> = props => {
       return (
         <div className={cs('notion-to-do relative', blurBlockClassName, blockId)}>
           {updatedBlock}
-          <div className={cn('flex items-baseline gap-2', blockMargin)}>
+          <div className={cn('flex items-start gap-2', blockMargin)}>
             <div className="w-4 h-4">
-              {isChecked && <BsCheckSquare className="text-slate-500 mt-0.5" />}
+              {isChecked && <BsCheckSquare className="text-slate-500 mt-1" />}
               {!isChecked && <BsSquare className="mt-0.5" />}
             </div>
             <div>

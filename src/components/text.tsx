@@ -278,7 +278,7 @@ export const Text: React.FC<{
               const iconUrl = (decorator[1] as any)?.icon_url
               return (
                 <a
-                  className="not-prose px-1 hover:cursor-pointer hover:border-sky-300 hover:shadow-sm inline-flex gap-1 flex-row items-baseline group"
+                  className="not-prose px-1 hover:cursor-pointer hover:border-sky-300 hover:shadow-sm inline-flex gap-1.5 flex-row items-start group"
                   target="_blank"
                   href={href}
                   rel="noopener noreferrer"

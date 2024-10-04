@@ -585,7 +585,7 @@ export const Block: React.FC<BlockProps> = props => {
       return (
         <div
           className={cn(
-            'md:flex md:flex-nowrap md:gap-4 relative',
+            'md:flex md:flex-nowrap md:gap-4 relative block-column-list',
             blockMargin,
             blurBlockClassName,
             blockId
@@ -707,7 +707,7 @@ export const Block: React.FC<BlockProps> = props => {
                   </div>
                 )}
               </div>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center gap-2">
                 {block.format?.bookmark_icon && (
                   <div className="relative h-4 w-4 shrink-0">
                     <LazyImage

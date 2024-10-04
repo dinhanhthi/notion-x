@@ -356,7 +356,7 @@ pre > code::before {
   }
 
   .m2it-blockquote {
-    @apply my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
+    @apply font-inherit my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
   }
 
   .m2it-li {
@@ -595,4 +595,14 @@ pre > code::before {
       }
     }
   }
+}
+
+.inside-toggle-container {
+  .block-column-list {
+    margin: -0.75rem 0 !important;
+  }
+}
+
+.eqn-num {
+  font-size: 1.1rem;
 }

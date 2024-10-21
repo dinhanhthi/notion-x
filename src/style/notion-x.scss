@@ -123,6 +123,20 @@ code {
   @apply text-red-500;
 }
 
+.notion-gray,
+.notion-brown,
+.notion-orange,
+.notion-yellow,
+.notion-teal,
+.notion-blue,
+.notion-purple,
+.notion-pink,
+.notion-red {
+  strong {
+    color: inherit;
+  }
+}
+
 // List
 ul > ul > li,
 ol > ul > li {
@@ -348,7 +362,7 @@ pre > code::before {
   }
 
   .m2it-headings {
-    @apply my-0 font-semibold text-inherit;
+    @apply my-0 font-semibold text-[#111];
   }
 
   .m2it-prose-img {
@@ -377,7 +391,7 @@ pre > code::before {
   }
 
   .m2it-strong {
-    @apply font-medium text-inherit;
+    @apply font-medium text-[#111];
   }
 
   .m2it-table {

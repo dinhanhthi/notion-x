@@ -85,11 +85,27 @@ export default function PostSimple(props: PostSimpleProps) {
             )}
             {/* title */}
             {post.title} {/* draft */}
+            {post.language && post.language !== 'en' && (
+              <>
+                <span
+                  id={`lang-${post.id}`}
+                  className="border text-sm rounded-md px-1.5 border-slate-300 ml-1.5 text-slate-600"
+                >
+                  {post.language}
+                </span>
+                <TooltipX id={`#lang-${post.id}`}>
+                  {post.language === 'vi' && 'Written in Vietnamese'}
+                  {post.language === 'fr' && 'Written in French'}
+                </TooltipX>
+              </>
+            )}
             {post.isDraft && (
               <>
                 <span
                   id={`draft-${post.id}`}
-                  className={cn('bg-slate-100 text-slate-600 px-2 py-0 text-[0.8rem] rounded-md')}
+                  className={cn(
+                    'bg-slate-100 text-slate-500 px-2 py-0 text-[0.8rem] rounded-md ml-1.5'
+                  )}
                 >
                   {options?.draftLabel || 'draft'}
                 </span>

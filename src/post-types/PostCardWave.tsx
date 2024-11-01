@@ -4,6 +4,7 @@ import React from 'react'
 
 import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
+import TooltipX from '../components/tooltip-x'
 import { Post } from '../interface'
 import { usePostDateStatus } from '../lib/hooks'
 
@@ -24,15 +25,29 @@ export default function PostCardWave(props: PostCardWaveProps) {
   return (
     <Link href={props.post.uri || '/'}>
       <div className="post-card-wave group gap-2">
-        <span
+        <div
           className={cn(
             options?.fontClassName,
             'card-title group-hover:m2it-link-hover text-slate-800',
             'leading-[1.35] text-[0.95rem]'
           )}
         >
-          {props.post.title}
-        </span>
+          <span>{props.post.title}</span>
+          {props.post.language && props.post.language !== 'en' && (
+            <>
+              <span
+                id={`lang-${post.id}`}
+                className="border text-sm rounded-md px-1.5 border-slate-300 ml-1.5 text-slate-600"
+              >
+                {props.post.language}
+              </span>
+              <TooltipX id={`#lang-${post.id}`}>
+                {post.language === 'vi' && 'Written in Vietnamese'}
+                {post.language === 'fr' && 'Written in French'}
+              </TooltipX>
+            </>
+          )}
+        </div>
         {(post.createdDate || post.date) && (
           <div className="gap-2 items-center">
             {['updated', 'updatedWithin'].includes(status) && post.date && (

@@ -41,7 +41,7 @@ export default function PostSimple(props: PostSimpleProps) {
         className={cn(options?.fontClassName, 'flex items-start gap-3 p-4')}
         href={post.uri || '/'}
       >
-        <div className={cn('mt-[3px] text-slate-600 relative')} id={`well-blog-${post.id}`}>
+        <div className={cn('text-slate-600 relative')} id={`well-blog-${post.id}`}>
           {!!options?.customIcon && (!options.showPinned || !post.pinned) && options.customIcon}
           {!options?.customIcon && (!options?.showPinned || !post.pinned) && (
             <>

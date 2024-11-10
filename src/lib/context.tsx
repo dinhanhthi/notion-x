@@ -18,6 +18,7 @@ export type BlockOptionsContextType = {
   blockCodeCopiedText?: string // used in BlockCode to customize copied text
   siteDomain?: string // used in hyperlinks
   labelTocTitle?: string // "In this page" or something like that
+  postTocClassName?: string // class name for post TOC
   minNumHeadingsToShowToc?: number // minimum number of headings to show the TOC
   expandTocOnMobile?: boolean // show TOC on mobile
   notelabel?: string // /note/ or /blog/ or something like that
@@ -100,7 +101,6 @@ const DefaultPageLinkMemo = React.memo(DefaultPageLink)
 
 const DefaultEmbed = (props: any) => <AssetWrapper {...props} />
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const dummyLink = ({ href, rel, target, title, ...rest }: any) => <span {...rest} />
 
 const dummyComponent = (name: string) => () => {

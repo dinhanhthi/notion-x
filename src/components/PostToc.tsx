@@ -18,7 +18,7 @@ type PostTocProps = {
   minNumHeadingsToShowToc?: number
   defaultOpenToc?: boolean
   labelTocTitle?: string
-  labelTocClassName?: string
+  postTocClassName?: string
 }
 
 const Equation = dynamic(() => import('./BlockEquation'))
@@ -54,7 +54,8 @@ export default function PostToc(props: PostTocProps) {
           'border-[0.5px]': !props.inPost,
           'max-h-[350px] mb-10': props.inPost,
           border: props.inPost
-        }
+        },
+        props.postTocClassName
       )}
       aria-label="Table of contents"
     >
@@ -62,9 +63,7 @@ export default function PostToc(props: PostTocProps) {
         className={cn('text-slate-700 flex items-center justify-between font-semibold pb-0 px-2')}
         onClick={() => setShowContent(!showContent)}
       >
-        <div className={cn(props.labelTocClassName, 'text-[0.95rem]')}>
-          {props.labelTocTitle || 'In this post'}
-        </div>
+        <div className={cn('text-[0.95em]')}>{props.labelTocTitle || 'In this post'}</div>
         <div>
           <IoIosArrowDown
             className={cn('text-xl ease-in-out transition-all duration-[400ms]', {

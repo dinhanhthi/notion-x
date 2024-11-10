@@ -243,6 +243,7 @@ export const Block: React.FC<BlockProps> = props => {
                               tocs={tocs}
                               inPost={true}
                               labelTocTitle={blockOptions?.labelTocTitle ?? 'In this note'}
+                              postTocClassName={blockOptions?.postTocClassName}
                               minNumHeadingsToShowToc={blockOptions?.minNumHeadingsToShowToc}
                               defaultOpenToc={blockOptions?.expandTocOnMobile}
                             />

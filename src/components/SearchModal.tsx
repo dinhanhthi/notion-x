@@ -246,7 +246,7 @@ export default function SearchModal(props: SearchModalProps) {
                                         {
                                           'pr-4 pb-1 border-b border-dashed': item.textHighlighted
                                         },
-                                        'text-black'
+                                        'text-black font-medium'
                                       )}
                                     >
                                       {item.titleHighlighted && (
@@ -269,7 +269,7 @@ export default function SearchModal(props: SearchModalProps) {
                                   </div>
                                   {item.textHighlighted && (
                                     <div
-                                      className="text-sm opacity-[0.75]"
+                                      className="text-sm opacity-90"
                                       dangerouslySetInnerHTML={{ __html: item.textHighlighted }}
                                     ></div>
                                   )}

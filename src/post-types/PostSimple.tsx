@@ -38,7 +38,7 @@ export default function PostSimple(props: PostSimpleProps) {
   return (
     <div className="group hover:bg-slate-50">
       <Link
-        className={cn(options?.fontClassName, 'flex items-start gap-3 p-4')}
+        className={cn(options?.fontClassName, 'flex items-start gap-3 px-4 py-3.5 ')}
         href={post.uri || '/'}
       >
         <div className={cn('text-slate-600 relative')} id={`well-blog-${post.id}`}>

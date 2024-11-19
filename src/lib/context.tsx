@@ -41,6 +41,8 @@ export interface NotionContext {
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  postCreatedDate?: string
+  postLastModifiedDate?: string
   fontClass?: string
   discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
@@ -183,6 +185,8 @@ const defaultNotionContext: NotionContext = {
   customPreviewImage: null as any,
   useSimpleImage: false as any,
   discreteStyle: false as any,
+  postCreatedDate: null as any,
+  postLastModifiedDate: null as any,
   fontClass: null as any,
   discreteColsType: 'single',
   showUpdatedIndicator: false as any,

@@ -36,6 +36,8 @@ type PostBodyProps = {
   showUpdateButtonClassName?: string
   showUpdateButtonPositionClass?: string
   showBackToTopButton?: boolean
+  postCreatedDate?: string // used to show correctly the update blocks
+  postLastModifiedDate?: string // used to show correctly the update blocks
 }
 
 const Equation = dynamic(() => import('./BlockEquation'), {
@@ -104,6 +106,8 @@ export default function PostBody(props: PostBodyProps) {
           customPreviewImage={props.customPreviewImage}
           useSimpleImage={props.useSimpleImage}
           discreteStyle={props.discreteStyle}
+          postCreatedDate={props.postCreatedDate}
+          postLastModifiedDate={props.postLastModifiedDate}
           fontClass={props.fontClass}
           discreteColsType={props.discreteColsType}
           showUpdatedIndicator={showUpdatedIndicator}

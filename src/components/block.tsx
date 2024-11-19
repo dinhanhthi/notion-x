@@ -91,6 +91,8 @@ export const Block: React.FC<BlockProps> = props => {
     customPreviewImage,
     useSimpleImage,
     discreteStyle,
+    postCreatedDate,
+    postLastModifiedDate,
     discreteColsType,
     showUpdatedIndicator,
     simpleImageProps,
@@ -113,9 +115,21 @@ export const Block: React.FC<BlockProps> = props => {
     disableHeader
   } = props
 
+  const blockCreatedDate = postCreatedDate
+    ? new Date(postCreatedDate) < new Date(block.created_time)
+      ? postCreatedDate
+      : block.created_time
+    : block.created_time
+
+  const blockLastModifiedDate = postLastModifiedDate
+    ? new Date(postLastModifiedDate) < new Date(block.last_edited_time)
+      ? postLastModifiedDate
+      : block.last_edited_time
+    : block.last_edited_time
+
   const status = usePostDateStatus(
-    block.created_time ? new Date(block.created_time).toISOString() : undefined,
-    block.last_edited_time ? new Date(block.last_edited_time).toISOString() : undefined,
+    blockCreatedDate ? new Date(blockCreatedDate).toISOString() : undefined,
+    blockLastModifiedDate ? new Date(blockLastModifiedDate).toISOString() : undefined,
     blockOptions?.maxDaysWinthin || 7
   )
 

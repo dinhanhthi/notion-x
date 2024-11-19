@@ -29,6 +29,8 @@ export const NotionRenderer: React.FC<{
   customPreviewImage?: PreviewImage
   useSimpleImage?: boolean
   discreteStyle?: boolean
+  postCreatedDate?: string
+  postLastModifiedDate?: string
   fontClass?: string
   discreteColsType?: DiscreteColsType
   showUpdatedIndicator?: boolean
@@ -82,6 +84,8 @@ export const NotionRenderer: React.FC<{
   customPreviewImage,
   useSimpleImage,
   discreteStyle,
+  postCreatedDate,
+  postLastModifiedDate,
   fontClass,
   discreteColsType,
   showUpdatedIndicator,
@@ -134,6 +138,8 @@ export const NotionRenderer: React.FC<{
       customPreviewImage={customPreviewImage}
       useSimpleImage={useSimpleImage}
       discreteStyle={discreteStyle}
+      postCreatedDate={postCreatedDate}
+      postLastModifiedDate={postLastModifiedDate}
       fontClass={fontClass}
       discreteColsType={discreteColsType}
       showUpdatedIndicator={showUpdatedIndicator}

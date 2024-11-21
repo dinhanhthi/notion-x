@@ -1,6 +1,7 @@
 import cn from 'classnames'
 import Link from 'next/link'
 import React from 'react'
+import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
 import TooltipX from '../components/tooltip-x'
 import { Post } from '../interface'
@@ -10,6 +11,9 @@ import { usePostDateStatus } from '../lib/hooks'
 export type PostBlogSimpleOpts = {
   colorIndex?: number
   humanizeDate?: boolean
+  draftLabel?: string
+  tooltipDraftLabel?: string
+  autoHideAddedDate?: boolean
 } & CommonPostTypeOpts
 
 type PostBlogSimpleProps = {
@@ -22,7 +26,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
   const status = usePostDateStatus(post.createdDate!, post.date!, options?.maxDaysWinthin || 7)
   return (
     <Link href={post.uri || '/'}>
-      <div className="group flex gap-4 items-center p-4">
+      <div className="group flex gap-4 items-center p-4 hover:bg-slate-50">
         <div className="circle-wave w-12 h-12 flex-shrink-0 rounded-full">
           <div className="bottom-wave">
             <svg
@@ -68,36 +72,95 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
             </svg>
           </div>
         </div>
-        <div className="flex flex-col gap-0.5">
-          <div>
-            {props.post.language && props.post.language !== 'en' && (
-              <>
+        <div className="flex flex-col gap-1 flex-1">
+          <div className="flex flex-1 items-start justify-between gap-x-3 gap-y-1.5 flex-col md:flex-row">
+            <h3 className="flex-1">
+              {/* date status on mobile size */}
+              {post.date && (status === 'updatedWithin' || status === 'new') && (
                 <span
-                  id={`lang-${post.id}`}
-                  className="border text-sm rounded-md px-1.5 border-slate-300 mr-1.5 text-slate-600"
+                  className={cn(
+                    'inline-flex md:hidden mr-1.5 px-2 py-0.5 text-[0.7rem] rounded-md whitespace-nowrap gap-1 items-center',
+                    {
+                      'bg-green-200 text-green-900': status === 'updatedWithin',
+                      'bg-amber-200 text-amber-900': status === 'new'
+                    }
+                  )}
                 >
-                  {props.post.language}
+                  {status === 'updatedWithin' && <>updated</>}
+                  {status === 'new' && <>new</>}
                 </span>
-                <TooltipX id={`#lang-${post.id}`}>
-                  {post.language === 'vi' && 'Written in Vietnamese'}
-                  {post.language === 'fr' && 'Written in French'}
-                </TooltipX>
-              </>
-            )}
-            <span className="text-slate-800 group-hover:m2it-link-hover">{post.title}</span>
-            {(post.createdDate || post.date) && (
-              <>
-                {status === 'updatedWithin' && (
-                  <span className="align-middle ml-2 inline bg-green-200 text-green-900 px-2 py-0 text-[0.75rem] rounded-md whitespace-nowrap">
-                    updated
+              )}
+              {/* title */}
+              <span className='text-slate-800'>{post.title}</span>
+              {post.language && post.language !== 'en' && (
+                <>
+                  <span
+                    id={`lang-${post.id}`}
+                    className="border text-sm rounded-md px-1.5 border-slate-300 ml-1.5 text-slate-600"
+                  >
+                    {post.language}
                   </span>
+                  <TooltipX id={`#lang-${post.id}`}>
+                    {post.language === 'vi' && 'Written in Vietnamese'}
+                    {post.language === 'fr' && 'Written in French'}
+                  </TooltipX>
+                </>
+              )}
+              {/* draft */}
+              {post.isDraft && (
+                <>
+                  <span
+                    id={`draft-${post.id}`}
+                    className={cn(
+                      'bg-slate-100 text-slate-500 px-2 py-0 text-[0.8rem] rounded-md ml-1.5'
+                    )}
+                  >
+                    {options?.draftLabel || 'draft'}
+                  </span>
+                  <TooltipX id={`#draft-${post.id}`}>
+                    {options?.tooltipDraftLabel || 'The content is not so good yet'}
+                  </TooltipX>
+                </>
+              )}
+            </h3>
+            {/* date status on big screen */}
+            {(post.createdDate || post.date) && (
+              <div className="gap-2 items-center hidden md:flex">
+                {['updated', 'updatedWithin'].includes(status) && post.date && (
+                  <div
+                    className={cn(
+                      'px-3 py-0.5 rounded-md whitespace-nowrap gap-1 items-center',
+                      {
+                        'bg-slate-200 text-slate-800 text-[0.75rem]':
+                          status === 'updated' && !options?.autoHideAddedDate,
+                        'text-slate-500 text-[0.8rem]': status === 'updated' && options?.autoHideAddedDate,
+                        'bg-green-200 text-green-900 text-[0.75rem]': status === 'updatedWithin'
+                      }
+                    )}
+                  >
+                    <DateComponent
+                      dateString={post.date}
+                      format="MMM DD, YYYY"
+                      humanize={options?.humanizeDate}
+                      dateLabel={options?.updatedOnLabel || 'updated'}
+                    />
+                  </div>
                 )}
                 {status === 'new' && (
-                  <span className="align-middle ml-2 inline bg-amber-200 text-amber-900 px-2 py-0 text-[0.75rem] rounded-md whitespace-nowrap">
-                    new
-                  </span>
+                  <div className="px-3 py-0.5 text-[0.75rem] rounded-md whitespace-nowrap bg-amber-200 text-amber-900">
+                    {options?.newLabel || 'new'}
+                  </div>
                 )}
-              </>
+                {!(options?.autoHideAddedDate && status !== 'normal') && post.createdDate && (
+                  <DateComponent
+                    className="text-[0.8rem] text-slate-500 group-hover:text-slate-700 hidden md:flex"
+                    dateString={post.createdDate}
+                    format="MMM DD, YYYY"
+                    humanize={options?.humanizeDate}
+                    dateLabel={options?.addedOnLabel || 'added'}
+                  />
+                )}
+              </div>
             )}
           </div>
           {post.description && <div className="text-sm text-gray-500">{post.description}</div>}
@@ -108,9 +171,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
 }
 
 export const PostBlogSimpleSkeleton = (props: { postContainerClassName?: string }) => (
-  <div
-    className={cn('flex gap-4 items-center p-4', props.postContainerClassName)}
-  >
+  <div className={cn('flex gap-4 items-center p-4', props.postContainerClassName)}>
     <div className="w-12 h-12 flex-shrink-0 rounded-full bg-slate-200"></div>
     <div className="flex flex-col gap-2 w-full">
       <div className="h-4 w-1/2 rounded-xl bg-slate-200"></div>

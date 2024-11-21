@@ -24,6 +24,7 @@ export type PostSimpleOpts = {
   blogLabel?: string
   showPinned?: boolean
   maxDaysWinthin?: number
+  autoHideAddedDate?: boolean // when "new" or "updated" status is shown, hide the added date
 } & CommonPostTypeOpts
 
 type PostSimpleProps = {
@@ -84,7 +85,7 @@ export default function PostSimple(props: PostSimpleProps) {
               </span>
             )}
             {/* title */}
-            {post.title} {/* draft */}
+            {post.title}
             {post.language && post.language !== 'en' && (
               <>
                 <span
@@ -99,6 +100,7 @@ export default function PostSimple(props: PostSimpleProps) {
                 </TooltipX>
               </>
             )}
+            {/* draft */}
             {post.isDraft && (
               <>
                 <span
@@ -121,10 +123,12 @@ export default function PostSimple(props: PostSimpleProps) {
               {['updated', 'updatedWithin'].includes(status) && post.date && (
                 <div
                   className={cn(
-                    'px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap gap-1 items-center',
+                    'px-3 py-0.5 rounded-md whitespace-nowrap gap-1 items-center',
                     {
-                      'bg-slate-200 text-slate-800': status === 'updated',
-                      'bg-green-200 text-green-900': status === 'updatedWithin'
+                      'bg-slate-200 text-slate-800 text-[0.75rem]':
+                        status === 'updated' && !options?.autoHideAddedDate,
+                      'text-slate-500 text-[0.8rem]': status === 'updated' && options?.autoHideAddedDate,
+                      'bg-green-200 text-green-900 text-[0.75rem]': status === 'updatedWithin'
                     }
                   )}
                 >
@@ -137,11 +141,11 @@ export default function PostSimple(props: PostSimpleProps) {
                 </div>
               )}
               {status === 'new' && (
-                <div className="px-3 py-0.5 text-[0.8rem] rounded-md whitespace-nowrap bg-amber-200 text-amber-900">
+                <div className="px-3 py-0.5 text-[0.75rem] rounded-md whitespace-nowrap bg-amber-200 text-amber-900">
                   {options?.newLabel || 'new'}
                 </div>
               )}
-              {post.createdDate && (
+              {!(options?.autoHideAddedDate && status !== 'normal') && post.createdDate && (
                 <DateComponent
                   className="text-[0.8rem] text-slate-500 group-hover:text-slate-700 hidden md:flex"
                   dateString={post.createdDate}

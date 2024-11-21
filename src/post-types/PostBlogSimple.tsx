@@ -22,7 +22,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
   const status = usePostDateStatus(post.createdDate!, post.date!, options?.maxDaysWinthin || 7)
   return (
     <Link href={post.uri || '/'}>
-      <div className="group flex gap-4 items-center bg-white rounded-xl p-4">
+      <div className="group flex gap-4 items-center p-4">
         <div className="circle-wave w-12 h-12 flex-shrink-0 rounded-full">
           <div className="bottom-wave">
             <svg
@@ -69,7 +69,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
           </div>
         </div>
         <div className="flex flex-col gap-0.5">
-          <div className="font-medium">
+          <div>
             {props.post.language && props.post.language !== 'en' && (
               <>
                 <span
@@ -84,7 +84,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
                 </TooltipX>
               </>
             )}
-            <span className="text-slate-700 group-hover:m2it-link-hover">{post.title}</span>
+            <span className="text-slate-800 group-hover:m2it-link-hover">{post.title}</span>
             {(post.createdDate || post.date) && (
               <>
                 {status === 'updatedWithin' && (
@@ -109,7 +109,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
 
 export const PostBlogSimpleSkeleton = (props: { postContainerClassName?: string }) => (
   <div
-    className={cn('flex gap-4 items-center bg-white rounded-xl p-4', props.postContainerClassName)}
+    className={cn('flex gap-4 items-center p-4', props.postContainerClassName)}
   >
     <div className="w-12 h-12 flex-shrink-0 rounded-full bg-slate-200"></div>
     <div className="flex flex-col gap-2 w-full">

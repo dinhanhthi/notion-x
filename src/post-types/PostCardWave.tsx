@@ -6,6 +6,7 @@ import DateComponent from '../components/DateComponent'
 import { CommonPostTypeOpts } from '../components/PostsList'
 import TooltipX from '../components/tooltip-x'
 import { Post } from '../interface'
+import { getColorIndex, waveColors } from '../lib/helpers'
 import { usePostDateStatus } from '../lib/hooks'
 
 export type PostCardWaveOpts = {
@@ -124,20 +125,16 @@ export default function PostCardWave(props: PostCardWaveProps) {
   )
 }
 
-const waveColors = [
-  '0, 0, 255',
-  '255, 0, 166',
-  '0, 0, 0',
-  '166, 82, 0',
-  '0, 120, 0',
-  '166, 0, 82',
-  '166, 0, 255',
-  '0, 139, 139',
-  '0, 255, 255',
-  '0, 255, 166',
-  '166, 255, 0'
-]
-
-const getColorIndex = (index?: number) => {
-  return (index || 0) % waveColors.length
-}
+export const PostCardWaveSkeleton = (props: { postContainerClassName?: string }) => (
+  <div
+    className={cn(
+      'flex items-center justify-center w-full rounded-[12px] h-32 shadow-sm',
+      props.postContainerClassName
+    )}
+  >
+    <div className="w-full flex flex-col items-center gap-2 p-3">
+      <div className="h-4 w-full rounded-xl bg-slate-200"></div>
+      <div className="h-4 w-3/4 rounded-xl bg-slate-200"></div>
+    </div>
+  </div>
+)

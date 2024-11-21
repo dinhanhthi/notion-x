@@ -21,6 +21,7 @@ export type ImageType = {
 export type PostHeaderType = {
   id?: string
   title: string
+  description?: string
   rawTitle?: any
   featuredImage?: ImageType
   date?: string // the same as last modified date (or finalModified)

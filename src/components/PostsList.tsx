@@ -4,6 +4,7 @@ import cn from 'classnames'
 import React from 'react'
 
 import { Post } from '../interface'
+import PostBlogSimple, { PostBlogSimpleOpts } from '../post-types/PostBlogSimple'
 import PostCardWave, { PostCardWaveOpts } from '../post-types/PostCardWave'
 import PostCardWhiteBg, { PostCardWhiteBgOpts } from '../post-types/PostCardWhiteBg'
 import PostCardWhiteBgBig, { PostCardWhiteBgBigOpts } from '../post-types/PostCardWhiteBgBig'
@@ -19,6 +20,7 @@ export type PostType =
   | 'PostImageBackground'
   | 'PostCardWave'
   | 'PostSimple'
+  | 'PostBlogSimple'
 
 export type PostListStyle = 'default' | 'carousel'
 
@@ -38,6 +40,7 @@ export type PostTypeOpts =
   | PostImageBackgroundOpts
   | PostCardWaveOpts
   | PostSimpleOpts
+  | PostBlogSimpleOpts
 
 type PostListProps = {
   listStyle?: PostListStyle
@@ -99,5 +102,7 @@ function getPostTypeElement(
       return <PostCardWave post={post} options={{ ...postTypeOpts, colorIndex: index }} />
     case 'PostSimple':
       return <PostSimple post={post} options={postTypeOpts} />
+    case 'PostBlogSimple':
+      return <PostBlogSimple post={post} options={{ ...postTypeOpts, colorIndex: index }} />
   }
 }

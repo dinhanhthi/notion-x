@@ -157,3 +157,15 @@ export default function PostSimple(props: PostSimpleProps) {
     </div>
   )
 }
+
+export const PostSimpleSkeleton = (props: { postContainerClassName?: string }) => (
+  <div className={cn('flex items-center gap-3 py-3 px-2', props.postContainerClassName)}>
+    <div>
+      <HiOutlineDocumentText className="text-xl text-slate-700" />
+    </div>
+    <div className="flex-1 flex justify-start">
+      <div className="h-6 w-3/4 rounded-xl bg-slate-200"></div>
+    </div>
+    <div className="h-4 w-[150px] rounded-xl bg-slate-200"></div>
+  </div>
+)

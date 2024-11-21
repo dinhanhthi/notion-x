@@ -26,7 +26,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
         <div className="circle-wave w-12 h-12 flex-shrink-0 rounded-full">
           <div className="bottom-wave">
             <svg
-              className="waves !min-h-[45px]"
+              className="waves !h-[45px] !min-h-[50px]"
               preserveAspectRatio="none"
               shapeRendering="auto"
               viewBox="0 24 150 28"

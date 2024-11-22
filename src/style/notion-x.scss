@@ -370,7 +370,7 @@ pre > code::before {
   }
 
   .m2it-blockquote {
-    @apply font-inherit text-inherit my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic;
+    @apply font-inherit my-3 border border-y-0 border-l-4 border-r-0 border-slate-500 py-3 not-italic text-inherit;
   }
 
   .m2it-li {

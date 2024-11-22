@@ -3,8 +3,9 @@ import Link from 'next/link'
 import React from 'react'
 
 import DateComponent from '../components/DateComponent'
+import DraftBadgeComponent from '../components/DraftBadge'
+import LangBadgeComponent from '../components/LangBadge'
 import { CommonPostTypeOpts } from '../components/PostsList'
-import TooltipX from '../components/tooltip-x'
 import { Post } from '../interface'
 import { getColorIndex, waveColors } from '../lib/helpers'
 import { usePostDateStatus } from '../lib/hooks'
@@ -12,6 +13,8 @@ import { usePostDateStatus } from '../lib/hooks'
 export type PostCardWaveOpts = {
   colorIndex?: number
   humanizeDate?: boolean
+  draftLabel?: string
+  tooltipDraftLabel?: string
 } & CommonPostTypeOpts
 
 type PostCardWaveProps = {
@@ -33,21 +36,19 @@ export default function PostCardWave(props: PostCardWaveProps) {
             'leading-[1.35] text-[0.95rem]'
           )}
         >
+          {/* title */}
           <span>{props.post.title}</span>
-          {props.post.language && props.post.language !== 'en' && (
-            <>
-              <span
-                id={`lang-${post.id}`}
-                className="border text-sm rounded-md px-1.5 border-slate-300 ml-1.5 text-slate-600"
-              >
-                {props.post.language}
-              </span>
-              <TooltipX id={`#lang-${post.id}`}>
-                {post.language === 'vi' && 'Written in Vietnamese'}
-                {post.language === 'fr' && 'Written in French'}
-              </TooltipX>
-            </>
-          )}
+
+          {/* languages */}
+          <LangBadgeComponent post={post} type="written" />
+          <LangBadgeComponent post={post} type="available" />
+
+          {/* draft */}
+          <DraftBadgeComponent
+            post={post}
+            draftLabel={options?.draftLabel}
+            tooltipDraftLabel={options?.tooltipDraftLabel}
+          />
         </div>
         {(post.createdDate || post.date) && (
           <div className="gap-2 items-center">

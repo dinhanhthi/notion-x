@@ -2,8 +2,9 @@ import cn from 'classnames'
 import Link from 'next/link'
 import React from 'react'
 import DateComponent from '../components/DateComponent'
+import DraftBadgeComponent from '../components/DraftBadge'
+import { default as LangBadgeComponent } from '../components/LangBadge'
 import { CommonPostTypeOpts } from '../components/PostsList'
-import TooltipX from '../components/tooltip-x'
 import { Post } from '../interface'
 import { getColorIndex, waveColors } from '../lib/helpers'
 import { usePostDateStatus } from '../lib/hooks'
@@ -14,6 +15,7 @@ export type PostBlogSimpleOpts = {
   draftLabel?: string
   tooltipDraftLabel?: string
   autoHideAddedDate?: boolean
+  tooltipLanguageLabel?: string
 } & CommonPostTypeOpts
 
 type PostBlogSimpleProps = {
@@ -91,52 +93,31 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
                 </span>
               )}
               {/* title */}
-              <span className='text-slate-800'>{post.title}</span>
-              {post.language && post.language !== 'en' && (
-                <>
-                  <span
-                    id={`lang-${post.id}`}
-                    className="border text-sm rounded-md px-1.5 border-slate-300 ml-1.5 text-slate-600"
-                  >
-                    {post.language}
-                  </span>
-                  <TooltipX id={`#lang-${post.id}`}>
-                    {post.language === 'vi' && 'Written in Vietnamese'}
-                    {post.language === 'fr' && 'Written in French'}
-                  </TooltipX>
-                </>
-              )}
+              <span className="text-slate-800">{post.title}</span>
+
+              {/* languages */}
+              <LangBadgeComponent post={post} type="written" />
+              <LangBadgeComponent post={post} type="available" />
+
               {/* draft */}
-              {post.isDraft && (
-                <>
-                  <span
-                    id={`draft-${post.id}`}
-                    className={cn(
-                      'bg-slate-100 text-slate-500 px-2 py-0 text-[0.8rem] rounded-md ml-1.5'
-                    )}
-                  >
-                    {options?.draftLabel || 'draft'}
-                  </span>
-                  <TooltipX id={`#draft-${post.id}`}>
-                    {options?.tooltipDraftLabel || 'The content is not so good yet'}
-                  </TooltipX>
-                </>
-              )}
+              <DraftBadgeComponent
+                post={post}
+                draftLabel={options?.draftLabel}
+                tooltipDraftLabel={options?.tooltipDraftLabel}
+              />
             </h3>
             {/* date status on big screen */}
             {(post.createdDate || post.date) && (
               <div className="gap-2 items-center hidden md:flex">
                 {['updated', 'updatedWithin'].includes(status) && post.date && (
                   <div
-                    className={cn(
-                      'px-3 py-0.5 rounded-md whitespace-nowrap gap-1 items-center',
-                      {
-                        'bg-slate-200 text-slate-800 text-[0.75rem]':
-                          status === 'updated' && !options?.autoHideAddedDate,
-                        'text-slate-500 text-[0.8rem]': status === 'updated' && options?.autoHideAddedDate,
-                        'bg-green-200 text-green-900 text-[0.75rem]': status === 'updatedWithin'
-                      }
-                    )}
+                    className={cn('px-3 py-0.5 rounded-md whitespace-nowrap gap-1 items-center', {
+                      'bg-slate-200 text-slate-800 text-[0.75rem]':
+                        status === 'updated' && !options?.autoHideAddedDate,
+                      'text-slate-500 text-[0.8rem]':
+                        status === 'updated' && options?.autoHideAddedDate,
+                      'bg-green-200 text-green-900 text-[0.75rem]': status === 'updatedWithin'
+                    })}
                   >
                     <DateComponent
                       dateString={post.date}

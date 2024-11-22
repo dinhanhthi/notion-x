@@ -1,6 +1,6 @@
 {
   "name": "notion-x",
-  "version": "1.7.0",
+  "version": "1.7.1",
   "description": "My customization of NotionX's react-notion-x. For personal use only!",
   "main": "index.js",
   "repository": "git@github.com:dinhanhthi/notion-x.git",

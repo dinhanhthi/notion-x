@@ -1,3 +1,4 @@
+import cn from 'classnames'
 import React from 'react'
 import { Tooltip } from 'react-tooltip'
 
@@ -13,7 +14,7 @@ export default function TooltipX(props: TooltipXProps) {
     <Tooltip
       anchorSelect={props.id}
       place="bottom"
-      className="!text-sm !px-2 !py-0.5 !rounded-md !z-[9999]"
+      className={cn('!text-xs !px-2 !py-0.5 !rounded-md !z-[9999]', props.className)}
       noArrow={true}
       defaultIsOpen={props.defaultIsOpen}
     >

@@ -45,12 +45,14 @@ export type PostHeaderType = {
   discrete?: boolean
   blog?: boolean
   hide?: boolean
-  language?: 'vi' | 'en' | 'fr' // which language of the current post, default is 'en'
+  language?: Language // which language of the current post, default is 'en'
   vi?: string // slug of the Vietnamese version of the current post
   en?: string // slug of the English version of the current post
   fr?: string // slug of the French version of the current post
   notionUrl?: string // published url of the Notion page (if any)
 }
+
+export type Language = 'vi' | 'en' | 'fr'
 
 export interface Post extends PostHeaderType {
   slug: string

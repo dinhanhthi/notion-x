@@ -98,7 +98,7 @@ export default function PostToc(props: PostTocProps) {
                   {
                     'border-l pl-2 ml-2': isH3,
                     '-ml-1': isH2,
-                    'bg-slate-200 hover:m2it-link-hover': activeId === anchor && !props.inPost,
+                    'bg-slate-200 text-black hover:m2it-link-hover': activeId === anchor && !props.inPost,
                     'text-slate-700 hover:m2it-link-hover': activeId !== anchor || props.inPost
                   }
                 )}

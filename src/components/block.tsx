@@ -60,6 +60,7 @@ interface BlockProps {
 }
 
 export const blockMargin = 'my-3'
+const blockMarginMinus = 'md:-my-3'
 const blockMarginBigger = '!my-4'
 const blockMarginSmaller = '!my-2'
 
@@ -601,7 +602,7 @@ export const Block: React.FC<BlockProps> = props => {
         <div
           className={cn(
             'md:flex md:flex-nowrap md:gap-4 relative block-column-list',
-            blockMargin,
+            blockMarginMinus,
             blurBlockClassName,
             blockId
           )}

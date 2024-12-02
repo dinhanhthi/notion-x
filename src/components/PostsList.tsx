@@ -43,6 +43,7 @@ export type PostTypeOpts =
   | PostBlogSimpleOpts
 
 type PostListProps = {
+  className?: string
   listStyle?: PostListStyle
   posts: Post[]
   postType: PostType
@@ -59,7 +60,7 @@ export const postListGridCLass = cn(
 
 export default function PostList(props: PostListProps) {
   return (
-    <section>
+    <section className={props.className}>
       {(!props.listStyle || props.listStyle === 'default') && (
         <div className={props.options?.className || postListGridCLass}>
           {props.posts.map((post, index) => (

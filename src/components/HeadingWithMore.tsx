@@ -18,7 +18,7 @@ export default function HeadingWithMore(props: HeadingWithMoreProps) {
       id={makeSlugText(title)}
       className={cn(
         className,
-        'font-heading text-[1.6rem] font-medium text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
+        'font-heading text-[1.5rem] font-medium text-slate-700 flex items-baseline flex-wrap gap-y-0 gap-x-4'
       )}
     >
       <div className="flex items-center gap-2.5">

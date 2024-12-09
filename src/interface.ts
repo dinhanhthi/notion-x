@@ -34,10 +34,11 @@ export type PostHeaderType = {
   bookCover?: ImageType
   isDraft?: boolean // is this post a draft?
   isPage?: boolean // is this post a page?
-  icon?: {
-    emoji?: string
-    img?: ImageType
-  }
+  // icon?: {
+  //   emoji?: string
+  //   img?: ImageType
+  // }
+  icon?: string
   pageCover?: string
   coverPosition?: number
   wellWritten?: boolean

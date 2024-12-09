@@ -25,13 +25,15 @@ export const PageIconImpl: React.FC<{
   inline?: boolean
   hideDefaultIcon?: boolean
   defaultIcon?: string
+  inputIcon?: string // for custom emoji (new feature)
 }> = ({
   block,
   className,
   wrapperClassName,
   inline = true,
   hideDefaultIcon = false,
-  defaultIcon
+  defaultIcon,
+  inputIcon
 }) => {
   const { mapImageUrl, recordMap, darkMode } = useNotionContext()
   let isImage = false
@@ -51,11 +53,12 @@ export const PageIconImpl: React.FC<{
   }
 
   if (isIconBlock(block)) {
-    const icon = getBlockIcon(block, recordMap)?.trim() || defaultIcon
+    const icon = inputIcon ?? (getBlockIcon(block, recordMap)?.trim() || defaultIcon)
     const title = getBlockTitle(block, recordMap)
 
     if (icon && isUrl(icon)) {
       const url = mapImageUrl(icon, block)
+
       isImage = true
 
       content = (

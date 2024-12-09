@@ -217,9 +217,51 @@ export const retrieveBlockChildren = async (
   return res.json()
 }
 
+export async function getCustomEmojiBlock(opts: {
+  customEmojiId?: string
+  apiUrl?: string
+  tokenV2?: string
+  activeUser?: string
+}) {
+  const { customEmojiId, apiUrl, tokenV2, activeUser } = opts
+
+  if (!customEmojiId) throw new Error('customEmojiId is not defined')
+  if (!apiUrl) throw new Error('apiUrl is not defined')
+  if (!tokenV2) throw new Error('tokenV2 is not defined')
+  if (!activeUser) throw new Error('activeUser is not defined')
+
+  try {
+    const headers: any = {
+      'Content-Type': 'application/json',
+      cookie: `token_v2=${tokenV2}`,
+      'x-notion-active-user-header': activeUser
+    }
+    const body = {
+      requests: [
+        {
+          pointer: {
+            table: 'custom_emoji',
+            id: customEmojiId,
+            spaceId: process.env.SPACE_ID
+          },
+          version: -1
+        }
+      ]
+    }
+    const data = await fetch(`${apiUrl}/syncRecordValuesSpace`, {
+      method: 'POST',
+      headers,
+      body: JSON.stringify(body)
+    }).then(res => res.json())
+    return data?.recordMap?.custom_emoji?.[customEmojiId]?.value
+  } catch (error) {
+    console.error('🚨 Error in getCustomEmojiBlock()', error)
+    return []
+  }
+}
+
 /**
  * Get all nested blocks (in all levels) of a block.
- *
  */
 export async function getBlocks(
   blockId: string,

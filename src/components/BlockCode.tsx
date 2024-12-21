@@ -86,7 +86,7 @@ export default function BlockCode(props: BlockCodeProps) {
       <div
         className={`language-${formatCodeLang(
           language
-        )} syntax-highlighter text-[12.5px] relative overflow-hidden`}
+        )} syntax-highlighter text-[14px] relative overflow-hidden`}
       >
         <div className="w-full overflow-hidden">{syntaxWraper}</div>
       </div>

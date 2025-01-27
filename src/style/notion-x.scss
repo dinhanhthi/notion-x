@@ -40,11 +40,11 @@
   }
 
   .m2it-ol {
-    @apply my-0 pl-[1.45rem];
+    @apply my-0;
   }
 
   .m2it-ul {
-    @apply my-0 pl-[1.8rem];
+    @apply my-0;
   }
 
   .m2it-td {
@@ -282,36 +282,17 @@ ul > ul > ul > li {
 
 ol,
 ul {
-  & > ol,
-  & > ul {
-    & > *:not(li):not(ol):not(ul) {
-      margin-left: -1rem;
+  & > {
+    *:not(li):not(ol):not(ul) {
+      margin-left: -1rem !important;
     }
   }
 }
 
-ol > ol > ul,
-ul > ul > ol,
-ol > ol > ol {
-  margin-left: -1.25rem;
-}
-
 ol > ol,
 ul > ul {
-  & > *:not(li):not(ol):not(ul) {
-    margin-left: -1.25rem !important;
-  }
-
-  & > .toggle-container,
-  & > ol {
+  & > .toggle-container {
     margin-left: -1.5rem !important;
-  }
-}
-
-// Trick to force inside children nested to the parent container (and take effect of the parent's padding left)
-ol, ul {
-  & > *:not(li) {
-    margin-left: 0px !important;
   }
 }
 
@@ -327,14 +308,6 @@ ol, ul {
 // fix overflow auto numbering from \begin{equation}
 .katex .vlist-t2 {
   margin-right: 0 !important;
-}
-
-ol,
-ul {
-  & > *:not(li):not(ol):not(ul),
-  .block:not(li):not(ol):not(ul) {
-    margin: 0.5rem 0 !important;
-  }
 }
 
 li::marker {

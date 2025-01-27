@@ -57,6 +57,8 @@ interface BlockProps {
   disableHeader?: boolean
 
   children?: React.ReactNode
+
+  insideSync?: boolean
 }
 
 export const blockMargin = 'my-3'
@@ -113,7 +115,8 @@ export const Block: React.FC<BlockProps> = props => {
     pageFooter,
     pageAside,
     hideBlockId,
-    disableHeader
+    disableHeader,
+    insideSync
   } = props
 
   const blockCreatedDate = postCreatedDate
@@ -142,30 +145,36 @@ export const Block: React.FC<BlockProps> = props => {
   const showUpdated = status === 'updatedWithin' || status === 'new'
   const updatedBlock = (
     <>
-      {(level === 1 || block.type === 'transclusion_container') &&
-        showUpdated &&
-        showUpdatedIndicator && (
-          <>
-            <button
-              id={`updated-block-${block.id}`}
-              onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
-              className={cn(
-                'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 group button-indicator updated-block'
-              )}
-            >
-              <div
+      {
+        // show only for top level blocks or a synced block
+        (level === 1 || block.type === 'transclusion_container') &&
+          // Don't show update block in the discrete mode
+          !discreteStyle &&
+          showUpdated &&
+          // Only show update indicator when toggle is true
+          showUpdatedIndicator && (
+            <>
+              <button
+                id={`updated-block-${block.id}`}
+                onClick={() => props.setShowOnlyUpdatedBlocks(!props.showOnlyUpdatedBlocks)}
                 className={cn(
-                  'group-hover:w-full w-[0.25px] h-full transition-all duration-100 bg-green-400'
+                  'hidden md:block !absolute -left-4 top-0 shrink-0 min-h-full h-full w-2 !my-0 group button-indicator updated-block'
                 )}
-              ></div>
-            </button>
-            <TooltipX id={`#updated-block-${block.id}`}>
-              {!props.showOnlyUpdatedBlocks
-                ? 'Highlight only updated blocks'
-                : 'Back to default display'}
-            </TooltipX>
-          </>
-        )}
+              >
+                <div
+                  className={cn(
+                    'group-hover:w-full w-[0.25px] h-full transition-all duration-100 bg-green-400'
+                  )}
+                ></div>
+              </button>
+              <TooltipX id={`#updated-block-${block.id}`}>
+                {!props.showOnlyUpdatedBlocks
+                  ? 'Highlight only updated blocks'
+                  : 'Back to default display'}
+              </TooltipX>
+            </>
+          )
+      }
     </>
   )
   const blurBlockClassName = cn({
@@ -758,7 +767,7 @@ export const Block: React.FC<BlockProps> = props => {
     }
 
     case 'toggle':
-      if (discreteStyle && level === 1) {
+      if ((discreteStyle && level === 1) || (discreteStyle && level === 2 && insideSync)) {
         return (
           <BlockToggleDiscrete
             className={cn('relative')}

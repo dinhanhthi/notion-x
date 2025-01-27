@@ -164,10 +164,12 @@ export const NotionBlockRenderer: React.FC<{
   footer?: React.ReactNode
   disableHeader?: boolean
 
+  insideSync?: boolean
+
   blockId?: string
   hideBlockId?: boolean
   level?: number
-}> = ({ level = 0, blockId, ...props }) => {
+}> = ({ level = 0, blockId, insideSync, ...props }) => {
   const { recordMap } = useNotionContext()
   const id = blockId || Object.keys(recordMap.block)[0]
   const block = recordMap.block[id]?.value
@@ -181,12 +183,13 @@ export const NotionBlockRenderer: React.FC<{
   }
 
   return (
-    <Block key={id} level={level} block={block} {...props}>
+    <Block key={id} level={level} block={block} insideSync={insideSync} {...props}>
       {block?.content?.map(contentBlockId => (
         <NotionBlockRenderer
           key={contentBlockId}
           blockId={contentBlockId}
           level={level + 1}
+          insideSync={block.type === 'transclusion_container'}
           {...props}
         />
       ))}

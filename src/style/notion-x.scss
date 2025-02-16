@@ -283,7 +283,7 @@ ul > ul > ul > li {
 ol,
 ul {
   & > {
-    *:not(li):not(ol):not(ul) {
+    *:not(li):not(ol):not(ul):not(button.updated-block) {
       margin-left: -1rem !important;
     }
   }

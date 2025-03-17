@@ -68,7 +68,7 @@ export default function PostCardWhiteBgBig(props: PostCardWhiteBgBigProps) {
           <div className="group-hover:m2it-link-hover text-base font-bold leading-[1.35]">
             {title}
           </div>
-          {(!options?.hideDate || !options?.hideAuthor) && (
+          {(!options?.hideDate || !options?.hideAuthor) && !!authors?.length && (
             <div className="flex justify-center gap-2 p-2">
               {!options?.hideDate && date && (
                 <div className="text-[0.8rem] opacity-80 flex flex-row items-center gap-2 justify-center">

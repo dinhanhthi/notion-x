@@ -52,6 +52,10 @@ export async function getUnofficialDatabaseImpl(opts: {
       spaceId
     },
     loader: {
+      filter: {
+        operator: 'and',
+        filters: []
+      },
       type: 'reducer',
       reducers: {
         collection_group_results: {

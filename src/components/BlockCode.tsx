@@ -5,7 +5,7 @@ import { CodeBlock } from 'notion-types'
 import { getBlockTitle } from 'notion-utils'
 import * as React from 'react'
 import { useState } from 'react'
-import { CopyToClipboard } from 'react-copy-to-clipboard'
+import CopyToClipboard from "react-copy-to-clipboard";
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { prism } from 'react-syntax-highlighter/dist/esm/styles/prism'
 

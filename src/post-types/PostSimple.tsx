@@ -127,15 +127,17 @@ export default function PostSimple(props: PostSimpleProps) {
                   {options?.newLabel || 'new'}
                 </div>
               )}
-              {!(options?.autoHideAddedDate && status !== 'normal') && post.createdDate && (
-                <DateComponent
-                  className="text-[0.8rem] text-slate-500 group-hover:text-slate-700 hidden md:flex"
-                  dateString={post.createdDate}
-                  format="MMM DD, YYYY"
-                  humanize={options?.humanizeDate}
-                  dateLabel={options?.addedOnLabel || 'added'}
-                />
-              )}
+              {!(options?.autoHideAddedDate && status !== 'normal') &&
+                post.createdDate &&
+                !options?.hideOldDate && (
+                  <DateComponent
+                    className="text-[0.8rem] text-slate-500 group-hover:text-slate-700 hidden md:flex"
+                    dateString={post.createdDate}
+                    format="MMM DD, YYYY"
+                    humanize={options?.humanizeDate}
+                    dateLabel={options?.addedOnLabel || 'added'}
+                  />
+                )}
             </div>
           )}
         </div>

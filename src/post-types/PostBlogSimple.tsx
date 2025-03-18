@@ -16,6 +16,7 @@ export type PostBlogSimpleOpts = {
   tooltipDraftLabel?: string
   autoHideAddedDate?: boolean
   tooltipLanguageLabel?: string
+  hideOldDate?: boolean // hide the date if it's older than maxDaysWinthin
 } & CommonPostTypeOpts
 
 type PostBlogSimpleProps = {
@@ -107,7 +108,7 @@ export default function PostBlogSimple(props: PostBlogSimpleProps) {
               />
             </h3>
             {/* date status on big screen */}
-            {(post.createdDate || post.date) && (
+            {(post.createdDate || post.date) && (status !== 'updated' || !options?.hideOldDate) && (
               <div className="gap-2 items-center hidden md:flex">
                 {['updated', 'updatedWithin'].includes(status) && post.date && (
                   <div

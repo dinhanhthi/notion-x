@@ -27,6 +27,7 @@ export type PostSimpleOpts = {
   showPinned?: boolean
   maxDaysWinthin?: number
   autoHideAddedDate?: boolean // when "new" or "updated" status is shown, hide the added date
+  hideOldDate?: boolean // hide the date if it's older than maxDaysWinthin
 } & CommonPostTypeOpts
 
 type PostSimpleProps = {
@@ -101,7 +102,7 @@ export default function PostSimple(props: PostSimpleProps) {
             />
           </h3>
           {/* date status on big screen */}
-          {(post.createdDate || post.date) && (
+          {(post.createdDate || post.date) && (status !== 'updated' || !options?.hideOldDate) && (
             <div className="gap-2 items-center hidden md:flex">
               {['updated', 'updatedWithin'].includes(status) && post.date && (
                 <div

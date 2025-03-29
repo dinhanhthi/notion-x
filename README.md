@@ -7,7 +7,13 @@ See it in action?
 - [dinhanhthi.com](https://dinhanhthi.com/) ([source](https://github.com/dinhanhthi/dinhanhthi.com))
 - [math2it.com](https://math2it.com/)
 
-## Install
+## Install (as a standalone package)
+
+```bash
+yarn add github:dinhanhthi/notion-x
+```
+
+## Install (as a submodule)
 
 You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in your project.
 

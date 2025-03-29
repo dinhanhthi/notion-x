@@ -22,7 +22,8 @@
     "prettier": "prettier --write \"**/*.{tsx,ts,css,scss}\"",
     "build": "rimraf dist && tsc && yarn build:esm",
     "build:esm": "tsc --module esnext --outDir dist/esm",
-    "prepare": "yarn build"
+    "prepare": "yarn build",
+    "watch": "rimraf dist && tsc --watch"
   },
   "peerDependencies": {
     "react": ">=16.8.0",

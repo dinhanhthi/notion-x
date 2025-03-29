@@ -2,7 +2,13 @@
   "name": "notion-x",
   "version": "1.7.4",
   "description": "My customization of NotionX's react-notion-x. For personal use only!",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
   "repository": "git@github.com:dinhanhthi/notion-x.git",
   "author": "Thi <me@dinhanhthi.com>",
   "packageManager": "yarn@4.1.1",
@@ -13,7 +19,14 @@
   },
   "scripts": {
     "reinstall": "rimraf node_modules && rimraf yarn.lock && yarn",
-    "prettier": "prettier --write \"**/*.{tsx,ts,css,scss}\""
+    "prettier": "prettier --write \"**/*.{tsx,ts,css,scss}\"",
+    "build": "rimraf dist && tsc && yarn build:esm",
+    "build:esm": "tsc --module esnext --outDir dist/esm",
+    "prepare": "yarn build"
+  },
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
   },
   "dependencies": {
     "@fisch0920/medium-zoom": "^1.0.7",

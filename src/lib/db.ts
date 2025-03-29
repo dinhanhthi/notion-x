@@ -96,8 +96,18 @@ export async function queryDatabaseImpl(opts: {
   startCursor?: string
   pageSize?: number
   sorts?: NotionSorts[]
+  notionToken?: string
+  notionVersion?: string
 }): Promise<QueryDatabaseResponse> {
-  const { dbId, filter, startCursor, pageSize = notionMaxRequest, sorts } = opts
+  const {
+    dbId,
+    filter,
+    startCursor,
+    pageSize = notionMaxRequest,
+    sorts,
+    notionToken,
+    notionVersion
+  } = opts
   try {
     const url = `https://api.notion.com/v1/databases/${dbId}/query`
     const requestBody = {
@@ -109,8 +119,8 @@ export async function queryDatabaseImpl(opts: {
     const res = await fetch(url, {
       method: 'POST',
       headers: {
-        Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-        'Notion-Version': process.env.NOTION_VERSION as string,
+        Authorization: `Bearer ${notionToken || process.env.NOTION_TOKEN}`,
+        'Notion-Version': notionVersion || process.env.NOTION_VERSION as string,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify(requestBody)
@@ -132,7 +142,9 @@ export async function queryDatabaseImpl(opts: {
           filter,
           startCursor: nextCursor!,
           pageSize,
-          sorts
+          sorts,
+          notionToken,
+          notionVersion
         })
         if (get(data, 'results')) {
           const lst = data['results'] as any[]
@@ -146,7 +158,15 @@ export async function queryDatabaseImpl(opts: {
     if (retryAfter || error?.status === 502) {
       console.log(`Retrying after ${retryAfter} seconds`)
       await new Promise(resolve => setTimeout(resolve, retryAfter * 1000 + 500))
-      return await queryDatabaseImpl({ dbId, filter, startCursor, pageSize, sorts })
+      return await queryDatabaseImpl({
+        dbId,
+        filter,
+        startCursor,
+        pageSize,
+        sorts,
+        notionToken,
+        notionVersion
+      })
     }
     console.error(error)
     return { results: [] } as any
@@ -160,13 +180,17 @@ export const queryDatabase = pMemoize(queryDatabaseImpl, {
 /**
  * https://developers.notion.com/reference/retrieve-a-database
  */
-export const retrieveDatabaseImpl = async (dbId: string) => {
+export const retrieveDatabaseImpl = async (
+  dbId: string,
+  notionToken?: string,
+  notionVersion?: string
+) => {
   const url = `https://api.notion.com/v1/databases/${dbId}`
   const res = await fetch(url, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-      'Notion-Version': process.env.NOTION_VERSION as string,
+      Authorization: `Bearer ${notionToken || process.env.NOTION_TOKEN}`,
+      'Notion-Version': notionVersion || process.env.NOTION_VERSION as string,
       'Content-Type': 'application/json'
     }
   })
@@ -180,13 +204,17 @@ export const retrieveDatabase = pMemoize(retrieveDatabaseImpl, {
 /**
  * https://developers.notion.com/reference/retrieve-a-page
  */
-export const retrievePageImpl = async (pageId: string) => {
+export const retrievePageImpl = async (
+  pageId: string,
+  notionToken?: string,
+  notionVersion?: string
+) => {
   const url = `https://api.notion.com/v1/pages/${pageId}`
   const res = await fetch(url, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-      'Notion-Version': process.env.NOTION_VERSION as string,
+      Authorization: `Bearer ${notionToken || process.env.NOTION_TOKEN}`,
+      'Notion-Version': notionVersion || process.env.NOTION_VERSION as string,
       'Content-Type': 'application/json'
     }
   })
@@ -203,7 +231,9 @@ export const retrievePage = pMemoize(retrievePageImpl, {
 export const retrieveBlockChildren = async (
   pageId: string,
   pageSize?: number,
-  startCursor?: string
+  startCursor?: string,
+  notionToken?: string,
+  notionVersion?: string
 ) => {
   let url = `https://api.notion.com/v1/blocks/${pageId}/children`
   if (pageSize) {
@@ -214,8 +244,8 @@ export const retrieveBlockChildren = async (
   const res = await fetch(url, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${process.env.NOTION_TOKEN}`,
-      'Notion-Version': process.env.NOTION_VERSION as string
+      Authorization: `Bearer ${notionToken || process.env.NOTION_TOKEN}`,
+      'Notion-Version': notionVersion || process.env.NOTION_VERSION as string
     }
   })
   return res.json()
@@ -271,9 +301,11 @@ export async function getBlocks(
   blockId: string,
   initNumbering?: string,
   getPageUri?: (pageId: string) => Promise<string | undefined>,
-  parseImgurUrl?: (url: string) => string
+  parseImgurUrl?: (url: string) => string,
+  notionToken?: string,
+  notionVersion?: string
 ): Promise<ListBlockChildrenResponse['results']> {
-  let data = await retrieveBlockChildren(blockId)
+  let data = await retrieveBlockChildren(blockId, undefined, undefined, notionToken, notionVersion)
   let blocks = data?.results as
     | (BlockObjectResponse & {
         list_item?: string
@@ -289,7 +321,7 @@ export async function getBlocks(
   if (data && data['has_more']) {
     while (data!['has_more']) {
       const startCursor = data!['next_cursor'] as string
-      data = await retrieveBlockChildren(blockId, undefined, startCursor)
+      data = await retrieveBlockChildren(blockId, undefined, startCursor, notionToken, notionVersion)
       if (get(data, 'results') && get(data, 'results').length) {
         const lst = data!['results'] as any[]
         blocks = [...blocks, ...lst]
@@ -339,7 +371,7 @@ export async function getBlocks(
     }
 
     if (block.has_children) {
-      const children = await getBlocks(block.id, block['list_item'], getPageUri, parseImgurUrl)
+      const children = await getBlocks(block.id, block['list_item'], getPageUri, parseImgurUrl, notionToken, notionVersion)
       block['children'] = children
     }
 

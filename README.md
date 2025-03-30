@@ -13,7 +13,19 @@ See it in action?
 yarn add github:dinhanhthi/notion-x
 ```
 
-Add to your project's global css (Tailwind v4),
+For tailwind v3,
+
+```ts
+// add to tailwind.config.ts
+content: [
+  './node_modules/notion-x/**/*.{js,ts,jsx,tsx}'
+]
+
+// in your main app
+import '../../node_modules/notion-x/src/style/notion-x.scss' // relative path
+```
+
+For tailwind v4, in your global style file,
 
 ```css
 @import '../../node_modules/notion-x/src/style/notion-x.scss';

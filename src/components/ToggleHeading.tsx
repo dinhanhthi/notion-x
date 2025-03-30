@@ -24,7 +24,7 @@ export default function BlockHeadingToggle(props: BlockHeadingToggleProps) {
             {props.updatedBlock}
             <DisclosureButton className="rounded-md p-1 hover:bg-slate-200 z-20">
               <BsFillCaretRightFill
-                className={cn('text-lg transform ease-in-out transition-all duration-[400ms]', {
+                className={cn('text-lg transform ease-in-out transition-all duration-300', {
                   'rotate-90': open,
                   'rotate-0': !open
                 })}

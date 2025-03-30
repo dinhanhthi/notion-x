@@ -66,7 +66,7 @@ export default function PostToc(props: PostTocProps) {
         <div className={cn('text-[0.95em]')}>{props.labelTocTitle || 'In this post'}</div>
         <div>
           <IoIosArrowDown
-            className={cn('text-xl ease-in-out transition-all duration-[400ms]', {
+            className={cn('text-xl ease-in-out transition-all duration-300', {
               'rotate-0': showContent,
               'rotate-[-90deg]': !showContent
             })}

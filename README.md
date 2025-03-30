@@ -13,6 +13,13 @@ See it in action?
 yarn add github:dinhanhthi/notion-x
 ```
 
+Add to your project's global css (Tailwind v4),
+
+```css
+@import '../../node_modules/notion-x/src/style/notion-x.scss';
+@source '../../node_modules/notion-x/**/*.{js,ts,jsx,tsx}';
+```
+
 ## Install (as a submodule)
 
 You have to [install Tailwind CSS](https://tailwindcss.com/docs/installation) in your project.

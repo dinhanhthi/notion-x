@@ -11,6 +11,8 @@ See it in action?
 
 ```bash
 yarn add github:dinhanhthi/notion-x
+# update
+yarn upgrade notion-x
 ```
 
 For tailwind v3,
@@ -31,6 +33,7 @@ For tailwind v4, in your global style file,
 @import '../../node_modules/notion-x/src/style/notion-x.scss';
 @source '../../node_modules/notion-x/**/*.{js,ts,jsx,tsx}';
 ```
+
 
 ## Install (as a submodule)
 
@@ -102,6 +105,12 @@ Put below line in `tailwind.config.ts`,
 > 💡 **Tip**: You can edit the files in the submodule BUT don't commit and push it. After finishing editing, just `cd notion-x` and then `git checkout <file-path>` to discard all changes.
 
 For Code Editor to work with Yarn's PnP ([Plug'n'Play](https://yarnpkg.com/features/pnp)), follow [this official guide](https://yarnpkg.com/getting-started/editor-sdks#vscode).
+
+## Troubleshooting
+
+Problem with `react-syntax-highlighter`, install `@types/react-syntax-highlighter`.
+
+Problem with `react-copy-to-clipboard`, copy file `src/react-copy-to-clipboard.d.ts` to your project and include it in your `tsconfig.json`!
 
 ## Update something new (for me only)
 

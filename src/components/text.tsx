@@ -80,7 +80,9 @@ export const Text: React.FC<{
               // console.log('p', blockId)
 
               const postSlug =
-                linkedBlock?.properties?.[`${process.env.NEXT_PUBLIC_ID_SLUG}`]?.[0]?.[0]
+                linkedBlock?.properties?.[
+                  `${blockOptions?.slugKey ?? process.env.NEXT_PUBLIC_ID_SLUG}`
+                ]?.[0]?.[0]
 
               return (
                 <components.PageLink

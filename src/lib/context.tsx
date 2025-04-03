@@ -23,6 +23,7 @@ export type BlockOptionsContextType = {
   expandTocOnMobile?: boolean // show TOC on mobile
   notelabel?: string // /note/ or /blog/ or something like that
   maxDaysWinthin?: number // maximum number of days to show the "update" label
+  slugKey?: string // used to get the slug of @tagged posts, the process.env.NEXT_PUBLIC_ID_SLUG isn't working
 }
 
 export interface NotionContext {

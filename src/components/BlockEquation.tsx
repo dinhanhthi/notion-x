@@ -12,7 +12,7 @@ const katexSettings = {
 }
 
 export default function BlockEquation(props: {
-  block: EquationBlock
+  block?: EquationBlock
   math?: string
   inline?: boolean
   className?: string
@@ -21,7 +21,7 @@ export default function BlockEquation(props: {
 }) {
   const { block, math, inline = false, className } = props
   const { recordMap } = useNotionContext()
-  const math2Use = math || getBlockTitle(block, recordMap)
+  const math2Use = math ?? (!!block ? getBlockTitle(block, recordMap) : null)
   if (!math2Use) return null
 
   return (

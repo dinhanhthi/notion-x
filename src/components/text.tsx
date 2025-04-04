@@ -6,6 +6,7 @@ import { useNotionContext } from '../lib/context'
 import { mapNoteUri, removeBaseUrl } from '../lib/helpers'
 import { formatDate, getHashFragmentValue } from '../lib/utils'
 import { NotionComponents } from '../types'
+import BlockEquation from './BlockEquation'
 import { EOI } from './eoi'
 import { GracefulImage } from './graceful-image'
 import { LazyImage } from './lazy-image'
@@ -165,7 +166,7 @@ export const Text: React.FC<{
             }
 
             case 'e':
-              return <components.Equation math={decorator[1]} inline />
+              return <BlockEquation math={decorator[1]} inline />
 
             case 'm':
               // comment / discussion

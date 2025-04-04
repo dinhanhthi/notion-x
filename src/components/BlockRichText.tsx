@@ -6,10 +6,13 @@ import {
 import dynamic from 'next/dynamic'
 import React from 'react'
 
+import SigmaIcon from '../icons/SigmaIcon'
 import { TextIgnoreField } from '../interface'
 import BlockText from './BlockText'
 
-const DynamicInlineEquation = dynamic(() => import('./BlockInlineEquation'))
+const DynamicInlineEquation = dynamic(() => import('./BlockInlineEquation'), {
+  loading: () => <SigmaIcon className="w-4 h-4 text-slate-500 animate-pulse" />
+})
 
 type BlockRichTextProps = {
   richText: RichTextItemResponse

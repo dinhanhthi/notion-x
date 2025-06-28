@@ -1,6 +1,6 @@
 {
   "name": "notion-x",
-  "version": "1.8.1",
+  "version": "1.8.2",
   "description": "My customization of NotionX's react-notion-x. For personal use only!",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",

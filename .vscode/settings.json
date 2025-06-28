@@ -32,7 +32,9 @@
     "**/out": true,
     "**/.open-next": true
   },
-  "editor.rulers": [100],
+  "editor.rulers": [
+    100
+  ],
   "typescript.tsdk": ".yarn/sdks/typescript/lib",
   "search.useIgnoreFiles": false,
   "explorer.excludeGitIgnore": false,

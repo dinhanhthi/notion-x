@@ -486,3 +486,55 @@ export async function searchNotion(
     body: JSON.stringify(body)
   }).then(response => response.json())
 }
+
+// When a database is publised, we open that page and use the search API to get the results
+// It doesn't use notion.so/api/v1/search, it uses personal.notion.site/api/v3/search instead
+// It doesn't require any token or active user!
+export async function searchNotionPersonal(
+  params: SearchParams,
+  apiUrl: string,
+  dbId: string
+): Promise<any> {
+  if (!apiUrl) throw new Error('apiUrl is not defined')
+
+  const headers: any = {
+    'Content-Type': 'application/json'
+  }
+
+  if (!dbId) {
+    throw new Error('dbId is not defined')
+  }
+
+  const body = {
+    type: 'BlocksInAncestor',
+    query: params.query,
+    ancestorId: idToUuid(dbId),
+    source: 'quick_find_input_change',
+    sort: {
+      field: 'relevance'
+    },
+    limit: params.limit || 100,
+    filters: {
+      isDeletedOnly: false,
+      excludeTemplates: false,
+      navigableBlockContentOnly: false,
+      requireEditPermissions: false,
+      includePublicPagesWithoutExplicitAccess: true,
+      ancestors: [],
+      createdBy: [],
+      editedBy: [],
+      lastEditedTime: {},
+      createdTime: {},
+      inTeams: [],
+      ...params.filters
+    }
+  }
+
+  const url = `${apiUrl}/search`
+
+  return fetch(url, {
+    method: 'POST',
+    headers: headers,
+    body: JSON.stringify(body)
+  }).then(response => response.json())
+}
